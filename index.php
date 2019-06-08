@@ -1,10 +1,10 @@
 
 <?php
-require "header.html";
+require "header.php";
 ?>
 <main class="container">
 
 </main>
 <?php
-require "footer.html"
+require "footer.php"
 ?>
