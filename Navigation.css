@@ -1,0 +1,23 @@
+h1{
+    text-align: center;
+    background-color: slategray;
+    margin-top: 20px;
+}
+nav {
+    background-color: darkslategray;
+}
+li a{
+    float: left;
+    text-align: center;
+    display: block;
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+
+}
+ul {
+    height:50px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
