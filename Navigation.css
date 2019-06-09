@@ -1,7 +1,8 @@
 h1{
-    text-align: center;
+    margin: 0;
     background-color: slategray;
-    margin-top: 20px;
+    padding-top: 20px;
+    text-align: center;
 }
 nav {
     background-color: darkslategray;
@@ -13,11 +14,16 @@ li a{
     color: white;
     padding: 14px 16px;
     text-decoration: none;
-
+    font-size: larger;
 }
 ul {
     height:50px;
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+body{
+    margin: 0;
+
 }
