@@ -2,27 +2,16 @@
 require "header.php";
 ?>
 <main class="container">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <div class="col">
-        <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Books" width="500" height="300">
-    </div>
+    <div class="body">
+        <section class="first_page_main_image">
+            <img src="images/patrick-tomasso-71909-unsplash.jpg" width="440px" height="300px;">
+            <div class="new_user_reg">
+                <h2>Ny här? Skapa ett konto gratis!</h2>
 
-    <div class="col">
-        <h2 class="newUserMessage">
-            Ny här? Skapa ett konto gratis!
-        </h2>
-        <!-- Ändra PATH -->
-        <form action="/action_page.php">
-            <input type="text" placeholder="Namn" name="user[first_name]" id="user_first_name">
-            <input type="email" placeholder="Email Adress" name="user[email]" id="user_email">
-            <input type="password" placeholder="Lösenord" name="user[password]" id="user_password_signup">
-            <button type="submit_sign_up">Registrera</button>
-        </form>
-    </div>
-
-    <div class="col">
-        <h2>Hej</h2>
+            </div>
+        </section>
     </div>
 
 </main>
