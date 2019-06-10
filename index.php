@@ -11,6 +11,53 @@ require "header.php";
 
         <div class="col">
             <h2>Hej</h2>
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
+            Massor med text.Massor med text.Massor med text.Massor med text.Massor med text.
         </div>
 
         <div class="col">
@@ -20,20 +67,27 @@ require "header.php";
             <!-- Ändra PATH -->
             <form action="/action_page.php">
                 <!-- Kanske göra som en lista och ha divs i varje li så att dem alltid blir på exakt samma höjd-->
-                <ul id="registerLeft">
-                    <li id="left">Förnamn: </li>
-                    <li id="left">Efternamn: </li>
-                    <li id="left">Epost:</li>
-                    <li id="left">Lösenord:</li>
-                    <li id="left">Återuppreppa Lösenord:</li>
-
-                </ul>
-                <ul id="registerRight">
-                    <li id="right"><input type="text" placeholder="Förnamn" name="user[first_name]" id="user_first_name"></li>
-                    <li id="right"><input type="text" placeholder="Efternamn" name="user[last_name]" id="user_last_name"></li>
-                    <li id="right"><input type="email" placeholder="Email Adress" name="user[email]" id="user_email"></li>
-                    <li id="right"><input type="password" placeholder="Lösenord" name="user[password]" id="user_password_signup"></li>
-                    <li id="right"><input type="password" placeholder="Lösenord" name="user[password]" id="user_repassword_signup"></li>
+                <ul id="register">
+                    <li id="space">
+                        <div id="left">Förnamn: </div>
+                        <div id="right"><input type="text" placeholder="Förnamn" name="user[first_name]" id="user_first_name"></div>
+                    </li>
+                    <li id="space">
+                        <div id="left">Efternamn: </div>
+                        <div id="right"><input type="text" placeholder="Efternamn" name="user[last_name]" id="user_last_name"></div>
+                    </li>
+                    <li id=space>
+                        <div id="left">Epost: </div>
+                        <div id="right"><input type="email" placeholder="Email Adress" name="user[email]" id="user_email"></div>
+                    </li>
+                    <li id="space">
+                        <div id="left">Lösenord: </div>
+                        <div id="right"><input type="password" placeholder="Lösenord" name="user[password]" id="user_password_signup"></div>
+                    </li>
+                    <li id="space">
+                        <div id="left">Återuppreppa Lösenord: </div>
+                        <div id="right"><input type="password" placeholder="Lösenord" name="user[password]" id="user_repassword_signup"></div>
+                    </li>
                     <li id="right"><button type="submit_sign_up">Registrera</button></li>
                 </ul>
             </form>
