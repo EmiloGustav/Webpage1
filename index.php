@@ -4,9 +4,14 @@ require "header.php";
 <main class="container">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="js/index.js"></script>
+
     <div class="workspace">
         <div class="col">
             <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Books" width="426" height="250">
+            <img class="woman" src="images/woman_with_book.png" alt="" width="200px" height="200px">
         </div>
 
         <div class="col">
