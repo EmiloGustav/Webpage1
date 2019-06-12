@@ -20,11 +20,18 @@ $color = "red";
 <body>
     <header>
         <h1>Coolbooks1996</h1>
-        <nav>
+        <nav id="navbar">
             <div class="workspace">
                 <ul>
                     <li><a href="index.php">Hem</a></li>
-                    <li><a href="controls.php">Mina böcker</a></li>
+                    <li><a href="minsida.php">Mina böcker</a></li>
+                    <li>
+                        <div class="search">
+                            <form action="search.php">
+                                <input id="search" type="text" placeholder="Sök efter en bok" name="book">
+                            </form>
+                        </div>
+                    </li>
                     <li><div class="login-container">
                         <!-- Ändra PATH -->
                         <form action="/action_page.php">
@@ -37,3 +44,18 @@ $color = "red";
             </div>
         </nav>
     </header>
+    <script type="text/javascript">
+        window.onscroll = function(){
+            followPage();
+        }
+        var navbar = document.getElementById("navbar");
+        var sticky=navbar.offsetTop
+
+        function followPage() {
+            if(window.pageYOffset >= sticky){
+                navbar.classList.add("sticky")
+            }else {
+                navbar.classList.remove("sticky")
+            }
+        }
+    </script>
