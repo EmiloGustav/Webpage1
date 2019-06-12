@@ -4,12 +4,19 @@
 
 h1 {
     margin: 0;
-    background-color: rgb(182, 182, 182);
+    background: linear-gradient(to right,
+    rgba(249, 107, 142, 1),
+    rgba(218,103,210,1),
+    rgba(130,125,253,1));
     padding-top: 20px;
     text-align: center;
 }
 nav {
-    background-color: darkslategray;
+    background: linear-gradient(to right,
+    rgba(249, 107, 142, 1),
+    rgba(218,103,210,1),
+    rgba(130,125,253,1));
+    justify-content: center;
 }
 li a{
     float: left;

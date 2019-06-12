@@ -20,6 +20,7 @@ html, body, head {
     float: left;
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 .col#footer {
     width: 33.3%;
