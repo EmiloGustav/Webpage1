@@ -25,6 +25,7 @@ $color = "red";
                 <ul>
                     <li><a href="index.php">Hem</a></li>
                     <li><a href="minsida.php">Mina böcker</a></li>
+                    <li><a href="isprinsessan_camilla_lackberg.php">En bok</a></li>
                     <li>
                         <div class="search">
                             <form action="search.php">
