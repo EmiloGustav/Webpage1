@@ -55,14 +55,42 @@ nav input[type=text] {
     width: 100px;
 }
 
-nav .login-container button {
+.login-container button {
     float: right;
     padding: 3px;
     margin-top: 15px;
     margin-right: 16px;
-    background: rgb(182, 182, 182);
+    color: white;
+    background-color: rgb(0, 156, 13);
+    text-align: center;
     border: none;
+    transition: all 0.5s;
     cursor: pointer;
+}
+
+.login-container button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.login-container button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 20px;
+    transition: 0.5s;
+  }
+  
+.login-container button span {
+  padding-right: 15px;
+}
+  
+.login-container button:hover span:after {
+   opacity: 1;
+   right: 0;
 }
 
 body {

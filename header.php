@@ -36,7 +36,7 @@ $color = "red";
                     <li><div class="login-container">
                         <!-- Ändra PATH -->
                         <form action="/action_page.php">
-                            <button type="submit_login">Login</button>
+                            <button type="submit_login"><span>Login</span></button>
                             <input type="text" placeholder="Lösenord" name="password">
                             <input type="text" placeholder="Användarnamn" name="username">
                         </form>

@@ -1,4 +1,4 @@
-/* Script for slideshow! */
+/* Script for the slideshow! */
 var slideIndex = 1;
 showSlides(slideIndex);
 
