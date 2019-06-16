@@ -50,40 +50,50 @@ require "header.php";
         </div>
 
         <div class="col">
-            <h2 class="newUserMessage">
+            <?php
+            if(!isset($_SESSION['userId'])){
+                echo '
+                <h2 class="newUserMessage">
                 Ny här? Skapa ett konto gratis!
-            </h2>
-            <!-- Ändra PATH -->
-            <form action="/action_page.php">
-                <!-- Kanske göra som en lista och ha divs i varje li så att dem alltid blir på exakt samma höjd-->
-                <ul id="register">
-                    <li id="space">
-                        <div id="left">Förnamn: </div>
-                        <div id="right"><input type="text" placeholder="Förnamn" name="user[first_name]" id="user_first_name"></div>
-                    </li>
-                    <li id="space">
-                        <div id="left">Efternamn: </div>
-                        <div id="right"><input type="text" placeholder="Efternamn" name="user[last_name]" id="user_last_name"></div>
-                    </li>
-                    <li id=space>
-                        <div id="left">Epost: </div>
-                        <div id="right"><input type="email" placeholder="Email Adress" name="user[email]" id="user_email"></div>
-                    </li>
-                    <li id="space">
-                        <div id="left">Lösenord: </div>
-                        <div id="right"><input type="password" placeholder="Lösenord" name="user[password]" id="user_password_signup"></div>
-                    </li>
-                    <li id="space">
-                        <div id="left">Återuppreppa Lösenord: </div>
-                        <div id="right"><input type="password" placeholder="Lösenord" name="user[password]" id="user_repassword_signup"></div>
-                    </li>
-                    <li id="right"><button type="submit_sign_up">Registrera</button></li>
-                </ul>
-            </form>
+                </h2>
+                <!-- Ändra PATH -->
+                <form action="includes/signup.inc.php" method="post">
+                    <!-- Kanske göra som en lista och ha divs i varje li så att dem alltid blir på exakt samma höjd-->
+                    <ul id="register">
+                        <li id="space">
+                            <div id="left">Användarnamn </div>
+                            <div id="right"><input type="text" placeholder="Användarnamn" name="username" id="username"></div>
+                        </li>
+                        <li id=space>
+                            <div id="left">Epost: </div>
+                            <div id="right"><input type="email" placeholder="Email Adress" name="email" id="user_email"></div>
+                        </li>
+                        <li id="space">
+                            <div id="left">Lösenord: </div>
+                            <div id="right"><input type="password" placeholder="Lösenord" name="password" id="user_password_signup"></div>
+                        </li>
+                        <li id="space">
+                            <div id="left">Återuppreppa Lösenord: </div>
+                            <div id="right"><input type="password" placeholder="Lösenord" name="re-password" id="user_repassword_signup"></div>
+                        </li>
+                        <li id="right"><button type="submit" name="signup-submit">Registrera</button></li>
+                    </ul>
+                </form>
+                ';
+            }else {
+               echo ' <h2 class="newUserMessage">
+                Välkommen!
+                </h2>
+                ';
+            }
+            ?>
+
         </div>
     </div>
 
 </main>
+
+
 <?php
 require "footer.php"
 ?>

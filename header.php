@@ -1,5 +1,6 @@
 <?php
 $color = "red";
+session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,14 +34,28 @@ $color = "red";
                             </form>
                         </div>
                     </li>
-                    <li><div class="login-container">
+                    <li>
+                        <div class="login-container">
                         <!-- Ändra PATH -->
-                        <form action="/action_page.php">
-                            <button type="submit_login"><span>Login</span></button>
-                            <input type="text" placeholder="Lösenord" name="password">
-                            <input type="text" placeholder="Användarnamn" name="username">
-                        </form>
-                    </div></li>
+                            <?php
+                            if(!isset($_SESSION['userId'])){
+                                echo '
+                                    <form action="includes/login.inc.php" method="post">
+                                        <button type="submit" name="login-submit"><span>Login</span></button>
+                                        <input type="password" placeholder="Lösenord..." name="password">
+                                        <input type="text" placeholder="Användarnamn..." name="username">
+                                    </form>';
+                            }else {
+                                echo '
+                                    <form action="includes/logout.inc.php" method="post">
+                                        <button type="submit" name="logout-submit"><span>Logga ut</span></button>
+                                    </form>';
+                            }
+                            ?>
+
+                        </div>
+
+                    </li>
                 </ul>
             </div>
         </nav>

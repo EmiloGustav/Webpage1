@@ -115,7 +115,7 @@ body {
 
 .search{
     float:left;
-    margin-left: 22%;
+    margin-left: auto;
 }
 #search{
     -webkit-border-radius: 5px;
