@@ -59,9 +59,6 @@ html, body, head {
     float:left;
     margin-top: 3px;
 }
-#space{
-    padding: 13px 12px
-}
 
 input[type=text] [type=password] [type=email] {
     border: 1px solid lightblue;

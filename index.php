@@ -4,7 +4,7 @@ require "header.php";
 <main class="container">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="js/index.js"></script>
+
 
     <div class="workspace">
         <div class="col">
@@ -54,31 +54,9 @@ require "header.php";
             if(!isset($_SESSION['userId'])){
                 echo '
                 <h2 class="newUserMessage">
-                Ny här? Skapa ett konto gratis!
+                    Ny här? <a href="signup.php">Skapa ett konto gratis!</a>
                 </h2>
-                <!-- Ändra PATH -->
-                <form action="includes/signup.inc.php" method="post">
-                    <!-- Kanske göra som en lista och ha divs i varje li så att dem alltid blir på exakt samma höjd-->
-                    <ul id="register">
-                        <li id="space">
-                            <div id="left">Användarnamn </div>
-                            <div id="right"><input type="text" placeholder="Användarnamn" name="username" id="username"></div>
-                        </li>
-                        <li id=space>
-                            <div id="left">Epost: </div>
-                            <div id="right"><input type="email" placeholder="Email Adress" name="email" id="user_email"></div>
-                        </li>
-                        <li id="space">
-                            <div id="left">Lösenord: </div>
-                            <div id="right"><input type="password" placeholder="Lösenord" name="password" id="user_password_signup"></div>
-                        </li>
-                        <li id="space">
-                            <div id="left">Återuppreppa Lösenord: </div>
-                            <div id="right"><input type="password" placeholder="Lösenord" name="re-password" id="user_repassword_signup"></div>
-                        </li>
-                        <li id="right"><button type="submit" name="signup-submit">Registrera</button></li>
-                    </ul>
-                </form>
+
                 ';
             }else {
                echo ' <h2 class="newUserMessage">
@@ -90,7 +68,7 @@ require "header.php";
 
         </div>
     </div>
-
+    <script src="js/index.js"></script>
 </main>
 
 

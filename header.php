@@ -23,40 +23,46 @@ session_start();
         <h1>Coolbooks1996</h1>
         <nav id="navbar">
             <div class="workspace">
-                <ul>
-                    <li><a href="index.php">Hem</a></li>
-                    <li><a href="minsida.php">Mina böcker</a></li>
-                    <li><a href="isprinsessan_camilla_lackberg.php">En bok</a></li>
-                    <li>
-                        <div class="search">
-                            <form action="search.php">
-                                <input id="search" type="text" placeholder="Sök efter en bok" name="book">
-                            </form>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="login-container">
+                <div class="col">
+                    <ul>
+                        <li><a href="index.php">Hem</a></li>
+                        <li><a href="minsida.php">Mina böcker</a></li>
+                        <li><a href="isprinsessan_camilla_lackberg.php">En bok</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <div class="search">
+                        <form action="search.php">
+                            <input id="search" type="text" placeholder="Sök efter en bok" name="book">
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="login-container">
                         <!-- Ändra PATH -->
-                            <?php
-                            if(!isset($_SESSION['userId'])){
-                                echo '
+                        <?php
+                        if(!isset($_SESSION['userId'])){
+                            echo '  
+                                    <form action="signup.php" method="post">
+                                        <button type="submit" name="signup"><span>Skapa konto</span></button>
+                                    </form>
+                                    
                                     <form action="includes/login.inc.php" method="post">
                                         <button type="submit" name="login-submit"><span>Login</span></button>
-                                        <input type="password" placeholder="Lösenord..." name="password">
-                                        <input type="text" placeholder="Användarnamn..." name="username">
+                                        <input type="password" placeholder="Lösenord..." name="password" id="right" style="width:106px;">
+                                        <input type="text" placeholder="Användarnamn..." name="username" id="right">
                                     </form>';
-                            }else {
-                                echo '
+                        }else {
+                            echo '
                                     <form action="includes/logout.inc.php" method="post">
-                                        <button type="submit" name="logout-submit"><span>Logga ut</span></button>
-                                    </form>';
-                            }
-                            ?>
-
-                        </div>
-
-                    </li>
-                </ul>
+                                        <button type="submit" name="logout-submit" id="right"><span>Logga ut</span></button>
+                                    </form>
+                                    <a href="profile.php" id="profile">',$_SESSION['userUid'],'\'s profil </a>
+                                    ';
+                        }
+                        ?>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
