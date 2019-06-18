@@ -19,27 +19,27 @@ require "header.php";
         </div>
 
         <div class=" col ">
-            <div class=" slideshow - container ">
+            <div class="slideshow-container">
                 <h2>Månadens populäraste böcker</h2>
 
-                <div class=" mySlides fade ">
-                    <div class=" numbertext ">1 / 4</div>
-                    <img src=" images / greatgatsby . jpg " width=" 200 px " height=" 300 px ">
+                <div class="mySlides fade">
+                    <div class="numbertext">1 / 4</div>
+                    <img src="images/greatgatsby.jpg" width=" 200 px " height=" 300 px ">
                 </div>
 
-                <div class=" mySlides fade ">
+                <div class="mySlides fade">
                     <div class=" numbertext ">2 / 4</div>
-                    <img src=" images / tokillamockingbird . jpg " width=" 200 px " height=" 300 px ">
+                    <img src=" images/tokillamockingbird.jpg " width=" 200 px " height=" 300 px ">
                 </div>
 
-                <div class=" mySlides fade ">
+                <div class="mySlides fade">
                     <div class=" numbertext ">3 / 4</div>
-                    <img src=" images / harrypotter . jpg " width=" 200 px " height=" 300 px ">
+                    <img src=" images/harrypotter.jpg " width=" 200 px " height=" 300 px ">
                 </div>
 
-                <div class=" mySlides fade ">
+                <div class="mySlides fade">
                     <div class=" numbertext ">4 / 4</div>
-                    <img src=" images / fahrenheit . jpg " width=" 200 px " height=" 300 px ">
+                    <img src=" images/fahrenheit.jpg " width=" 200 px " height=" 300 px ">
                 </div>
 
                 <a class=" prev " onclick=" plusSlides (- 1) ">&#10094;</a>
@@ -52,8 +52,6 @@ require "header.php";
                 <span class=" dot " onclick=" currentSlide(3) "></span>
                 <span class=" dot " onclick=" currentSlide(4) "></span>
             </div>
-
-
         </div>
 
         <div class=" col ">
