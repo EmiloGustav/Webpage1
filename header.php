@@ -36,7 +36,6 @@ session_start();
                     </li>
                     <li>
                         <div class="login-container">
-                        <!-- Ändra PATH -->
                             <?php
                             if(!isset($_SESSION['userId'])){
                                 echo '
@@ -44,6 +43,7 @@ session_start();
                                         <button type="submit" name="login-submit"><span>Login</span></button>
                                         <input type="password" placeholder="Lösenord..." name="password">
                                         <input type="text" placeholder="Användarnamn..." name="username">
+                                        <a href="reset-password.php">Glömt ditt lösenord?</a>
                                     </form>';
                             }else {
                                 echo '

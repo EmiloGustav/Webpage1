@@ -9,79 +9,86 @@ require "header.php";
     <div class="workspace">
         <div class="col">
             <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Books" width="426" height="250">
+            <?php
+                if (isset($_GET["newpwd"])) {
+                    if ($_GET["newpwd"] == "passwordupdated") {
+                        echo '<p class="signupsucess">Ditt lösenord har blivit återställt!</p>';
+                    }
+                }
+            ?>
         </div>
 
-        <div class="col">
-            <div class="slideshow-container">
+        <div class=" col ">
+            <div class=" slideshow - container ">
                 <h2>Månadens populäraste böcker</h2>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">1 / 4</div>
-                    <img src="images/greatgatsby.jpg" width="200px" height="300px">
+                <div class=" mySlides fade ">
+                    <div class=" numbertext ">1 / 4</div>
+                    <img src=" images / greatgatsby . jpg " width=" 200 px " height=" 300 px ">
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">2 / 4</div>
-                    <img src="images/tokillamockingbird.jpg" width="200px" height="300px">
+                <div class=" mySlides fade ">
+                    <div class=" numbertext ">2 / 4</div>
+                    <img src=" images / tokillamockingbird . jpg " width=" 200 px " height=" 300 px ">
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">3 / 4</div>
-                    <img src="images/harrypotter.jpg" width="200px" height="300px">
+                <div class=" mySlides fade ">
+                    <div class=" numbertext ">3 / 4</div>
+                    <img src=" images / harrypotter . jpg " width=" 200 px " height=" 300 px ">
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">4 / 4</div>
-                    <img src="images/fahrenheit.jpg" width="200px" height="300px">
+                <div class=" mySlides fade ">
+                    <div class=" numbertext ">4 / 4</div>
+                    <img src=" images / fahrenheit . jpg " width=" 200 px " height=" 300 px ">
                 </div>
 
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                <a class=" prev " onclick=" plusSlides (- 1) ">&#10094;</a>
+                <a class=" next " onclick=" plusSlides(1) ">&#10095;</a>
             </div>
 
-            <div style="text-align:center">
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
-                <span class="dot" onclick="currentSlide(4)"></span>
+            <div style=" text - align: center ">
+                <span class=" dot " onclick=" currentSlide(1) "></span>
+                <span class=" dot " onclick=" currentSlide(2) "></span>
+                <span class=" dot " onclick=" currentSlide(3) "></span>
+                <span class=" dot " onclick=" currentSlide(4) "></span>
             </div>
 
 
         </div>
 
-        <div class="col">
+        <div class=" col ">
             <?php
-            if(!isset($_SESSION['userId'])){
+            if (!isset($_SESSION['userId'])) {
                 echo '
-                <h2 class="newUserMessage">
+                <h2 class=" newUserMessage ">
                 Ny här? Skapa ett konto gratis!
                 </h2>
                 <!-- Ändra PATH -->
-                <form action="includes/signup.inc.php" method="post">
+                <form action=" includes / signup . inc . php " method=" post ">
                     <!-- Kanske göra som en lista och ha divs i varje li så att dem alltid blir på exakt samma höjd-->
-                    <ul id="register">
-                        <li id="space">
-                            <div id="left">Användarnamn </div>
-                            <div id="right"><input type="text" placeholder="Användarnamn" name="username" id="username"></div>
+                    <ul id=" register ">
+                        <li id=" space ">
+                            <div id=" left ">Användarnamn </div>
+                            <div id=" right "><input type=" text " placeholder=" Användarnamn " name=" username " id=" username "></div>
                         </li>
                         <li id=space>
-                            <div id="left">Epost: </div>
-                            <div id="right"><input type="email" placeholder="Email Adress" name="email" id="user_email"></div>
+                            <div id=" left ">Epost: </div>
+                            <div id=" right "><input type=" email " placeholder=" Email Adres s" name= "emai l" id= "user_emai l"></div>
                         </li>
-                        <li id="space">
-                            <div id="left">Lösenord: </div>
-                            <div id="right"><input type="password" placeholder="Lösenord" name="password" id="user_password_signup"></div>
+                        <li id= "spac e">
+                            <div id= "lef t">Lösenord: </div>
+                            <div id= "righ t"><input type= "passwor d" placeholder= "Lösenor d" name= "passwor d" id= "user_password_signu p"></div>
                         </li>
-                        <li id="space">
-                            <div id="left">Återuppreppa Lösenord: </div>
-                            <div id="right"><input type="password" placeholder="Lösenord" name="re-password" id="user_repassword_signup"></div>
+                        <li id= "spac e">
+                            <div id= "lef t">Återuppreppa Lösenord: </div>
+                            <div id= "righ t"><input type= "passwor d" placeholder= "Lösenor d" name= "r e -passwor d" id= "user_repassword_signu p"></div>
                         </li>
-                        <li id="right"><button type="submit" name="signup-submit">Registrera</button></li>
+                        <li id= "righ t"><button type= "submi t" name= "signu p -submi t">Registrera</button></li>
                     </ul>
                 </form>
                 ';
-            }else {
-               echo ' <h2 class="newUserMessage">
+            } else {
+                echo ' <h2 class= "newUserMessag e">
                 Välkommen!
                 </h2>
                 ';
@@ -95,5 +102,5 @@ require "header.php";
 
 
 <?php
-require "footer.php"
+require  "footer.php"
 ?>

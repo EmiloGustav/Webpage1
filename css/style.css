@@ -75,6 +75,10 @@ input[type=text] [type=password] [type=email] {
     margin: auto;
 }
 
+.slideshow-container h2 {
+    color: lightblue;  
+}
+
 /*Hide the images by default */
 .mySlides {
     display: none;
