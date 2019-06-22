@@ -61,10 +61,9 @@ require "header.php";
                 <h2 class="newUserMessage">
                     Ny här? <a href="signup.php">Skapa ett konto gratis!</a>
                 </h2>
-
-                ';
+			    ';
             } else {
-                echo ' <h2 class= "newUserMessag e">
+                echo ' <h2 class= "newUserMessage">
                 Välkommen!
                 </h2>
                 ';

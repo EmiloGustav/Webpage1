@@ -15,7 +15,6 @@ h4 {
     text-align: left;
 }
 .commentfield{
-    margin-top:20px;
     width: 100%;
 
     border-style: solid;
@@ -41,19 +40,20 @@ h4 {
     float:right;
     text-align: left;
     border:none;
+    margin: 5px 12px;
+    padding: 6px 20px;
+    border-radius: 10px;
+    background-color: lightblue;
 }
 #ratingButton {
     float:left;
-    height: 25px;
-    padding:0 20px;
+    padding:6px 20px;
 }
 #ratingBox{
     margin-bottom: 50px;
-    margin-top: 10px;
 }
 .rate{
     height: 46px;
-    padding:0 10px;
 }
 .rate:not(:checked) > input {
     position:absolute;

@@ -32,18 +32,23 @@ require "header.php";
             </div>
             <div id="ratingBox" >
                 <button type="button" onclick="switchRating()" id="ratingButton">Visa betyg</button>
-                <div class="rate" id="rating">
-                    <input type="radio" id="star5" name="rate" value="5"><label for="star5" title="Perfekt"></label>
-                    <input type="radio" id="star4" name="rate" value="4"><label for="star4" title="Bra"></label>
-                    <input type="radio" id="star3" name="rate" value="3"><label for="star3" title="Okej"></label>
-                    <input type="radio" id="star2" name="rate" value="2"><label for="star2" title="Inte så bra"></label>
-                    <input type="radio" id="star1" name="rate" value="1"><label for="star1" title="Väldigt dålig"></label>
-                </div>
+                <p id="rating">
+                    <?php
+                    echo '4.45'
+                    ?>
+                </p>
+            </div>
+            <div class="rate">
+                <input type="radio" id="star5" name="rate" value="5"><label for="star5" title="Perfekt"></label>
+                <input type="radio" id="star4" name="rate" value="4"><label for="star4" title="Bra"></label>
+                <input type="radio" id="star3" name="rate" value="3"><label for="star3" title="Okej"></label>
+                <input type="radio" id="star2" name="rate" value="2"><label for="star2" title="Inte så bra"></label>
+                <input type="radio" id="star1" name="rate" value="1"><label for="star1" title="Väldigt dålig"></label>
             </div>
             <div class="commentfield">
                 Kommentarer:
                 <div class="comment">
-                    Camilla läckberg, vem frågar om en kvinnas ålder?! <br>
+                    Camilla läckberg, <br>
                     Fyfan vad bra!
                 </div>
                 <div class="comment">

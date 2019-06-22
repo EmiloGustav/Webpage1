@@ -32,7 +32,7 @@ session_start();
                 </div>
                 <div class="col">
                     <div class="search">
-                        <form action="search.php">
+                        <form action="searchResult.php" method="get">
                             <input id="search" type="text" placeholder="Sök efter en bok" name="book">
                         </form>
                     </div>
