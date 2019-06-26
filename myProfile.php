@@ -6,6 +6,7 @@ require "header.php";
 
     <style>
         .wrapper {
+            background-color: white;
             max-width: 900px;
             margin: auto;
             display: grid;
@@ -23,12 +24,28 @@ require "header.php";
             grid-template-columns: 30% 70%;
         }
 
-        .wrapper .leftContainer .top .image {
+        .top h4 {
+            font-size: 24px;
+            width: 50%;  
+            margin: 0px;
+            float: left;
+            padding: 5px 5px;
+        }
+
+        .top .image {
             font-size: 13px;
             text-align: center;
         }
 
-        .wrapper .leftContainer .top .info .location {
+        .top .editprofile {
+            font-size: 12px;
+            float: right;
+            margin-top: 13px;
+        }
+
+        .top .info .location,
+        .activity,
+        .about {
             font-size: 15px;
             font-weight: bold;
         }
@@ -44,10 +61,12 @@ require "header.php";
                     <p>0 recensioner</p>
                 </div>
                 <div class="info">
-                    <h3>Gustav Hultgren</h3>
+                    <h4><?php echo $_SESSION["userUid"];?></h4>
+                    <a class="editprofile" href="editProfilePage.php">Redigera profil</a>
                     <hr size="1" width=" 100%">
-                    <p1 class="location">Plats</p>
-                        <p1 class="activity">Gick med</p>
+                    <p class="location">Plats</p>
+                    <p class="activity">Gick med</p>
+                    <p class="about">Om</p>
                 </div>
             </div>
             <div class="bookshelf">
@@ -63,11 +82,12 @@ require "header.php";
                 <p>Gustav har tyvärr inte lagt till några citat.</p>
             </div>
         </div>
-        
+
         <!-- RIGHT CONTAINER -->
         <div class="rightContainer">
             <div class="favouriteAthour">
                 <h5>Gustavs favoritförfattare</h5>
+                <a class="edit" href="editprofile.php">Redigera</a>
                 <hr size="1" width=" 100%">
                 <p>Camilla Läckberg</p>
             </div>

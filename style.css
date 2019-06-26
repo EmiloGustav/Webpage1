@@ -4,7 +4,9 @@ main {
     width: 100%;
 }
 
-html, body, head {
+html,
+body,
+head {
     padding: 0;
     margin: 0;
 }
@@ -21,6 +23,7 @@ html, body, head {
     margin: 0;
     padding: 0;
 }
+
 .col#footer {
     width: 33.3%;
     max-width: 426px;
@@ -36,27 +39,30 @@ html, body, head {
     margin: auto;
     overflow: hidden;
 }
-.workspace{
+
+.workspace {
     max-width: 1280px;
     margin: 0 auto;
 }
 
-.footer{
+.footer {
     background-color: black;
-    width:100%;
+    width: 100%;
     min-height: 150px;
     max-height: 400px;
 }
 
-#right{
-    float:right;
+#right {
+    float: right;
 }
-#register{
-    display:inline-block;
+
+#register {
+    display: inline-block;
     list-style-type: none;
 }
-#left{
-    float:left;
+
+#left {
+    float: left;
     margin-top: 3px;
 }
 
