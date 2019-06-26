@@ -196,9 +196,10 @@ input[type=text] [type=password] [type=email] {
     border-color: black;
 }
 .pages-container {
-    witdh:100%;
+    width:100%;
     display:table;
     margin:0 auto;
+    padding-left: 20%;
 }
 .pageLeft{
     color: black;
