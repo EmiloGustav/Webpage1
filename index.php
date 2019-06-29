@@ -1,5 +1,6 @@
 <?php
 require "header.php";
+include "includes/getDb.inc.php";
 ?>
 <main class="container">
 
@@ -10,6 +11,7 @@ require "header.php";
         <div class="col">
             <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Books" width="426" height="250">
             <?php
+                changeUserData(getUserInfo(1));
                 if (isset($_GET["newpwd"])) {
                     if ($_GET["newpwd"] == "passwordupdated") {
                         echo '<p class="signupsucess">Ditt lösenord har blivit återställt!</p>';
