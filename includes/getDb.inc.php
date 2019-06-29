@@ -9,7 +9,7 @@ function getUserInfo($userId) {
     $sql = "SELECT * FROM info WHERE uid=?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        return "error";
+        return "error1";
     } else {
         mysqli_stmt_bind_param($stmt, 's', $userId);
         mysqli_stmt_execute($stmt);
@@ -21,58 +21,31 @@ function getUserInfo($userId) {
     }
 }
 function changeUserData($array) {
-    $oldData = getUserInfo($array['6']);
+    $uid =$array['6'];
+    $oldData = getUserInfo($uid);
     $conn = getConnection();
     $categories = getCategories('info');
     if (sizeof($categories) != sizeof($array)) {
-        return "error";
+        return "Error";
     }
     $stmt = mysqli_stmt_init($conn);
-    $newArray = array();
-
     for ($x = 0; $x < sizeof($array); $x++) {
-        $sql = "INSERT INTO (".strval($categories[strval($x)]).") VALUES=(?)";
-        if ($oldData[strval($x)] != $array[strval($x)]) {
-            mysqli_stmt_bind_param($stmt, 's', $array[strval($x)]);
-        }else {
-
-        }
-
+        $var = strval($categories[strval($x)]);
+        $sql = "UPDATE info SET  $var=? WHERE uid=$uid";
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            return "error";
-        }else {
-            mysqli_stmt_bind_param($stmt,$type, $newArray);
+            return "error".$sql;
+        }else{
+            if ($oldData[strval($x)] != $array[strval($x)]) {
+                mysqli_stmt_bind_param($stmt, 's', $array[strval($x)]);
+            }else {
+                mysqli_stmt_bind_param($stmt, 's', $oldData[strval($x)]);
+            }
+            mysqli_stmt_execute($stmt);
         }
     }
-
-
-
-    /*
-    $sql = "INSERT INTO info (";
-    for ($x = 0; $x < sizeof($array); $x++) {
-        if ($x != sizeof($array)-1) {
-            $sql .= strval($categories[strval($x)]).', ';
-        }else {
-            $sql .= strval($categories[strval($x)]).') ';
-        }
-    }
-    $sql .= "VALUES (" ;
-    for ($x = 0; $x < sizeof($array); $x++) {
-        if ($x != sizeof($array) - 1) {
-            $sql .= '?, ';
-        }else {
-            $sql .= '?)';
-        }
-    }
-
-    for ($x = 0; $x < sizeof($array); $x++) {
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
-            return "error";
-        }else {
-            mysqli_stmt_bind_param($stmt,$type, $newArray);
-        }
-    }
-*/
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return getUserInfo($uid);
 }
 
 // Returns the categories for a table with TABLE_NAME.
