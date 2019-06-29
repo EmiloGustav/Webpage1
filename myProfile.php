@@ -39,7 +39,7 @@ require "header.php";
 
         .top .editprofile {
             font-size: 12px;
-            float: right;
+            float: left;
             margin-top: 13px;
         }
 
@@ -50,6 +50,17 @@ require "header.php";
             font-weight: bold;
         }
     </style>
+
+    <?php
+    require 'dbh.inc.php';
+
+    //Retrieve common information about the user to later print it out.
+    $sql = "SELECT id, firstName, lastName, dateOfBirth, land FROM users";
+    $result = $conn->query($sql);
+    if($result->num_rows > 0) {
+        
+    }
+    ?>
 
     <div class="wrapper">
         <!-- LEFT CONTAINER -->
