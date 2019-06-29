@@ -1,3 +1,21 @@
 signup.php
 - Kanske lägga till stjärnor för vilka av fälten som måste fyllas i.
 - Koppla den nya datan till en databas.
+
+signup.inc.php
+- Göra prepared stmt av raden som hämtar uid'n
+
+searchResult.php
+- Testa om ... funkar och att den följer med om man har fler än 5 sidor
+- Lägga till så att den söker tills den inte får fler svar
+
+getDb.inc.php
+- Fixa någon typ av error hantering här.
+
+Övrigt
+- skapa en .htacess fil så att vi kan ha snygga url's
+
+
+
+Bra att ha:
+ För att se array struktur så kan man göra "echo print_r($array)"

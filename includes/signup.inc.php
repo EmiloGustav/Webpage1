@@ -17,7 +17,7 @@ if(isset($_POST['signup-submit'])) {
     $rePassword = $_POST['re-password'];
 
     // Extra usr information.
-    $firstanme = $_POST['fornamn'];
+    $firstname = $_POST['fornamn'];
     $surname = $_POST['efternamn'];
     $country = $_POST['country'];
 
@@ -41,24 +41,23 @@ if(isset($_POST['signup-submit'])) {
     }else{
         $sqlusr = "SELECT uidUsers FROM users WHERE uidUsers=?";
         $sqlemail = "SELECT emailUsers FROM users WHERE emailUsers=?";
-        $stmtusr = mysqli_stmt_init($conn);
-        $stmtemail = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($stmtusr,$sqlusr)) {
+        $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$sqlusr)) {
             header("Location: ../index.php?error=sqlerrorusr");
             exit();
-        }else if(!mysqli_stmt_prepare($stmtemail,$sqlemail)){
+        }else if(!mysqli_stmt_prepare($stmt,$sqlemail)){
             header("Location: ../index.php?error=sqlerroremail");
             exit();
         }else{
-            mysqli_stmt_bind_param($stmtusr,"s",$username);
-            mysqli_stmt_execute($stmtusr);
-            mysqli_stmt_store_result($stmtusr);
-            $resultCheckusr = mysqli_stmt_num_rows($stmtusr);
+            mysqli_stmt_bind_param($stmt,"s",$username);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_store_result($stmt);
+            $resultCheckusr = mysqli_stmt_num_rows($stmt);
 
-            mysqli_stmt_bind_param($stmtemail,"s",$email);
-            mysqli_stmt_execute($stmtemail);
-            mysqli_stmt_store_result($stmtemail);
-            $resultCheckemail = mysqli_stmt_num_rows($stmtemail);
+            mysqli_stmt_bind_param($stmt,"s",$email);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_store_result($stmt);
+            $resultCheckemail = mysqli_stmt_num_rows($stmt);
 
             if ($resultCheckusr > 0) {
                 header("Location: ../signup.php?error=usertaken&email=".$email);
@@ -78,64 +77,40 @@ if(isset($_POST['signup-submit'])) {
                     mysqli_stmt_bind_param($stmt,"sss",$username,$email, $hashedPwd);
                     mysqli_stmt_execute($stmt);
 
+                    // Kontot är nu skapat med det viktigaste
+
+                    $sql = "SELECT idUsers, uidUsers, CASE WHEN uidUsers='$username' THEN idUsers END FROM users";
+                    $result = mysqli_query($conn,$sql);
+
+                    while($row = mysqli_fetch_row($result)) {
+                       if(isset($row['2'])){
+                        $uid = $row['2'];
+                       }
+                    }
+
                     // Här under sätts infon som är frivillig att lämna in när databsen väl är färdig.
 
-             /*       if(isset($firstanme)) {
-                        $sqlFirstname = "SELECT firstname FROM info WHERE firstname = ?";
-                        $stmtFirstname = mysqli_stmt_init($conn);
-                        if (!mysqli_stmt_prepare($stmtFirstname, $sqlFirstname)) {
-                            header("Location: ../index.php?error=sqlerrorfirstname");
-                            exit();
-                        }
-                        mysqli_stmt_bind_param($stmtFirstname,'s',$firstname);
-                        mysqli_stmt_execute($stmtFirstname);
-                        $sqlInsert = "INSERT INTO info (firstname) VALUES (?)";
-                        $stmtInsert = mysqli_stmt_init($conn);
-                        if(!mysqli_stmt_prepare($stmtInsert,$sqlInsert)) {
-                            header("Location: ../index.php?error=sqlerrorfirstname2");
-                            exit();
-                        }else{
-                            mysqli_stmt_bind_param($stmtInsert,'s',$firstname);
-                            mysqli_stmt_execute($stmtInsert);
-                        }
-                    }else if(isset($surname)) {
-                        $sqlsurname = "SELECT surname FROM info WHERE surname = ?";
-                        $stmtsurname = mysqli_stmt_init($conn);
-                        if (!mysqli_stmt_prepare($stmtsurname, $sqlsurname)) {
-                            header("Location: ../index.php?error=sqlerrorsurname");
-                            exit();
-                        }
-                        mysqli_stmt_bind_param($stmtsurname,'s',$surname);
-                        mysqli_stmt_execute($stmtsurname);
-                        $sqlInsert = "INSERT INTO info (surname) VALUES (?)";
-                        $stmtInsert = mysqli_stmt_init($conn);
-                        if(!mysqli_stmt_prepare($stmtInsert,$sqlInsert)) {
-                            header("Location: ../index.php?error=sqlerrorsurname2");
-                            exit();
-                        }else{
-                            mysqli_stmt_bind_param($stmtInsert,'s',$surname);
-                            mysqli_stmt_execute($stmtInsert);
-                        }
-                    }else if(isset($country)) {
-                        $sqlcountry = "SELECT country FROM info WHERE country = ?";
-                        $stmtcountry = mysqli_stmt_init($conn);
-                        if (!mysqli_stmt_prepare($stmtcountry, $sqlcountry)) {
-                            header("Location: ../index.php?error=sqlerrorcountry");
-                            exit();
-                        }
-                        mysqli_stmt_bind_param($stmtcountry,'s',$country);
-                        mysqli_stmt_execute($stmtcountry);
-                        $sqlInsert = "INSERT INTO info (country) VALUES (?)";
-                        $stmtInsert = mysqli_stmt_init($conn);
-                        if(!mysqli_stmt_prepare($stmtInsert,$sqlInsert)) {
-                            header("Location: ../index.php?error=sqlerrorcountry2");
-                            exit();
-                        }else{
-                            mysqli_stmt_bind_param($stmtInsert,'s',$country);
-                            mysqli_stmt_execute($stmtInsert);
-                        }
+                    if(!isset($firstname)) {
+                        $firstname = NULL;
                     }
-            */
+                    if(!isset($surname)) {
+                        $surname = NULL;
+                    }
+                    if(!isset($surname)) {
+                        $surname = NULL;
+                    }
+
+                    $sql = "INSERT INTO info (firstname,surname,country,uid) VALUES (?,?,?,?)";
+                    $stmt = mysqli_stmt_init($conn);
+                    if(!mysqli_stmt_prepare($stmt,$sql)) {
+                        header("Location: ../index.php?error=sqlinfoerror");
+                        exit();
+                    }else {
+
+                        mysqli_stmt_bind_param($stmt, "ssss", $firstname, $surname, $country,$uid);
+                        mysqli_stmt_execute($stmt);
+                    }
+
                     header("Location: ../index.php?signup=success");
                     exit();
                 }
