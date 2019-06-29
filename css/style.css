@@ -39,6 +39,7 @@ head {
     width: 100%;
     margin: auto;
     overflow: hidden;
+    min-height: 800px;
 }
 
 .workspace {
@@ -215,4 +216,30 @@ input[type=text] [type=password] [type=email] {
     border-radius: 20px;
     border-color: lightblue;
     background-color: lightskyblue;
+}
+.error {
+    width: 80%;
+    background-color: red;
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid;
+    border-color: black;
+}
+.pages-container {
+    width:100%;
+    display:table;
+    margin:0 auto;
+    padding-left: 20%;
+}
+.pageLeft{
+    color: black;
+}
+.page{
+    color: black;
+}
+.pageRight{
+    color: black;
 }

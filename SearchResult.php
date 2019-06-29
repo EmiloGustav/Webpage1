@@ -137,8 +137,6 @@ require "header.php";
                     }catch(Exception $e) {
                         echo $e -> getMessage();
                     }
-
-
                    // print_r($obj['xsearch']['list']);
                 }
                 // returns true if $needle is a substring of $haystack
@@ -147,17 +145,83 @@ require "header.php";
                     return strpos($haystack, $needle) !== false;
                 }
                 function printArray($array) {
-                    for ($x = 1; $x < sizeof($array);$x++) {
-                        $hrefurl = 'bookpage.php?creator='.strval($array[strval($x)]['1']).'&title='.strval($array[strval($x)]['2']).'&identifier='.strval($array[strval($x)]['0']).'&isbn='.$array[strval($x)]['3'];
-                        echo '
+                    $amountOfPages = (sizeof($array)-sizeof($array)%10)/10 + 1; // add 1 for the page that is not full of articles
+                    $articlesPerPage = 10;
+                    $book = $_GET['book'];
+                    if(!isset($_GET['page'])){
+                        $page = 1;
+                    }else {
+                        $page = $_GET['page'];
+                    } if ($page < 1) {
+                        $page = 1;
+                    }else if ($page > $amountOfPages){
+                        $page = $amountOfPages;
+                    }
+                    if ($page < $amountOfPages) {
+                        for ($x = ($page - 1) * $articlesPerPage; $x < $page * $articlesPerPage; $x++) {
+                            $hrefurl = 'bookpage.php?creator=' . strval($array[strval($x)]['1']) . '&title=' . strval($array[strval($x)]['2']) . '&identifier=' . strval($array[strval($x)]['0']) . '&isbn=' . $array[strval($x)]['3'];
+                            echo '
+                                <a href="' . $hrefurl . '" class="searchResult">
+                                ', $array[strval($x)]['1'], ', ', $array[strval($x)]['2'], '
+                                </a>
+                                ';
+                        }
+                        printPageBar($amountOfPages,$page,$book);
+                    }else {
+                        for ($x = ($amountOfPages - 1) * $articlesPerPage; $x < sizeof($array); $x++) {
+                            $hrefurl = 'bookpage.php?creator='.strval($array[strval($x)]['1']).'&title='.strval($array[strval($x)]['2']).'&identifier='.strval($array[strval($x)]['0']).'&isbn='.$array[strval($x)]['3'];
+                            echo '
                         <a href="'.$hrefurl.'" class="searchResult">
                         ',$array[strval($x)]['1'],', ',$array[strval($x)]['2'],'
                         </a>
                         ';
+                        }
+                        if ($amountOfPages > 1) {
+                            printPageBar($amountOfPages,$page,$book);
+                        }
                     }
-
                 }
-
+                function printPageBar($amountOfPages, $currentPage, $book){
+                    echo '
+                            <div class="pages-container">
+                                <ul class="pages">
+                                    <li><a class="pageLeft" href="SearchResult.php?page='.strval($currentPage - 1).'&book='.$book.'"> << </a></li>';
+                    if ($currentPage > 3) {
+                        echo '<li class="page">...</li>';
+                    }
+                    if ($currentPage - 2 < 1 || $currentPage + 2 > $amountOfPages ) {
+                        if ($currentPage - 2 < 1 && $currentPage + 2 > $amountOfPages) {
+                            for ($x = 1; $x <= $amountOfPages; $x++) {
+                                echo '<li><a class="page" href="SearchResult.php?page='.strval($x).'&book='.$book.'"> '.strval($x).' </a></li>';
+                            }
+                        }else if ($currentPage + 2 > $amountOfPages){
+                            $difference = $amountOfPages - $currentPage - 2; // alltid negativ
+                            for ($x = -2; $x <= 2; $x++) {
+                                if ($currentPage + $x + $difference <= $amountOfPages && $currentPage + $x + $difference > 0) {
+                                    echo '  <li><a class="page" href="SearchResult.php?page='.strval($currentPage + $x + $difference).'&book='.$book.'"> '.strval($currentPage + $x + $difference).' </a></li>';
+                                }
+                            }
+                        }else if ($currentPage - 2 < 1) {
+                            $difference = 1 - $currentPage + 2;
+                            for ($x = -2; $x <= 2; $x++) {
+                                if ($currentPage + $x + $difference > 0 && $currentPage + $x + $difference <= $amountOfPages) {
+                                    echo '  <li><a class="page" href="SearchResult.php?page=' . strval($currentPage + $x + $difference) . '&book=' . $book . '"> ' . strval($currentPage + $x + $difference) . ' </a></li>';
+                                }
+                            }
+                        }
+                    }else {
+                        for ($x = -2; $x <= 2; $x++) {
+                            echo '<li><a class="page" href="SearchResult.php?page='.strval($currentPage + $x).'&book='.$currentPage.'"> '.strval($currentPage + $x).' </a></li>';
+                        }
+                    }
+                    if ($amountOfPages - $currentPage > 3){
+                        echo '<li class="page">...</li>';
+                    }
+                    echo '          <li><a class="pageRight" href="SearchResult.php?page='.strval($currentPage + 1).'&book='.$book.'"> >> </a></li>
+                                </ul>                           
+                            </div>
+                            ';
+                }
                 ?>
                 </div>
             </div>

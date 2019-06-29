@@ -1,0 +1,3 @@
+signup.php
+- Kanske lägga till stjärnor för vilka av fälten som måste fyllas i.
+- Koppla den nya datan till en databas.
