@@ -1,5 +1,7 @@
 <?php
 require "header.php";
+include "includes/getDb.inc.php";
+$userInfo = getUserInfo($_SESSION["userId"]);
 ?>
 
 <main class="container">
@@ -39,7 +41,7 @@ require "header.php";
         }
 
         input[type=submit] {
-            width: 100%;
+            width: 30%;
             background-color: #4CAF50;
             color: white;
             padding: 14px 20px;
@@ -321,13 +323,31 @@ require "header.php";
                         <option value="Zimbabwe">Zimbabwe</option>
                     </select>
 
-                    <input type="submit" value="Spara dina iställningar">
+                    <input type="submit" name="update-submit" value="Spara dina iställningar">
                 </form>
                 <hr size="1" width=" 100%">
             </div>
         </div>
 
 </main>
+
+<?php
+if (isset($_POST['update-submit'])) {
+    require "dbh.inc.php";
+
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $country = $_POST['country'];
+
+    $sql = "UPDATE info SET firstname=\'$firstname\', surname=\'$lastname\', country=\'$country\' WHERE uid = 3";
+    if(mysqli_query($conn, $sql)) {
+        header("refresh:1; url=myProfile.php");
+    }
+
+} else { 
+
+}
+?>
 
 <?php
 require "footer.php";

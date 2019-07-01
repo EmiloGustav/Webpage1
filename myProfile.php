@@ -1,5 +1,21 @@
 <?php
 require "header.php";
+include "includes/getDb.inc.php";
+$userInfo = getUserInfo($_SESSION["userId"]);
+/*
+    0: dateOfBirth
+    1: tbr
+    2: haveRead
+    3: wantToRead
+    4: ratedBooks
+    5: ratings
+    6: uid
+    7: country
+    8: firstname
+    9: surname
+    10: dateRegistered
+    11: about
+*/
 ?>
 
 <main class="container">
@@ -26,7 +42,7 @@ require "header.php";
 
         .top h4 {
             font-size: 24px;
-            width: 50%;  
+            width: 50%;
             margin: 0px;
             float: left;
             padding: 5px 5px;
@@ -39,28 +55,24 @@ require "header.php";
 
         .top .editprofile {
             font-size: 12px;
-            float: left;
+            float: right;
             margin-top: 13px;
         }
 
-        .top .info .location,
+        .location,
         .activity,
         .about {
             font-size: 15px;
             font-weight: bold;
+            width: 30%;
+            margin: 0px;
+            float: left;
+        }
+
+        .location-data .activity-data .about-data {
+            width 70%;
         }
     </style>
-
-    <?php
-    require 'dbh.inc.php';
-
-    //Retrieve common information about the user to later print it out.
-    $sql = "SELECT id, firstName, lastName, dateOfBirth, land FROM users";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0) {
-        
-    }
-    ?>
 
     <div class="wrapper">
         <!-- LEFT CONTAINER -->
@@ -72,12 +84,17 @@ require "header.php";
                     <p>0 recensioner</p>
                 </div>
                 <div class="info">
-                    <h4><?php echo $_SESSION["userUid"];?></h4>
-                    <a class="editprofile" href="editProfilePage.php">Redigera profil</a>
+                    <h4><?php echo $_SESSION["userUid"]; ?></h4>
+                    <a class="editprofile" href="editProfile.php">Redigera profil</a>
                     <hr size="1" width=" 100%">
-                    <p class="location">Plats</p>
-                    <p class="activity">Gick med</p>
-                    <p class="about">Om</p>
+                    <div class="description">
+                        <p class="location">Land</p>
+                        <p class="location-data"><?php echo print_r($userInfo['7']); ?></p>
+                        <p class="activity">Gick med</p>
+                        <p class="activity-data"><?php echo print_r($userInfo['10']); ?></p>
+                        <p class="about">Om</p>
+                        <p class="about-data"><?php echo print_r($userInfo['11']); ?></p>
+                    </div>
                 </div>
             </div>
             <div class="bookshelf">

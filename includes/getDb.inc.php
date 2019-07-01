@@ -1,8 +1,6 @@
 <?php
 require "dbh.inc.php";
 
-
-
 function getUserInfo($userId) {
     // Returns array with userinfo
     $conn = getConnection();
