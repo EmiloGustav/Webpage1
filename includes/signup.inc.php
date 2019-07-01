@@ -96,8 +96,8 @@ if(isset($_POST['signup-submit'])) {
                     if(!isset($surname)) {
                         $surname = NULL;
                     }
-                    if(!isset($surname)) {
-                        $surname = NULL;
+                    if(!isset($country)) {
+                        $country = NULL;
                     }
 
                     $sql = "INSERT INTO info (firstname,surname,country,uid) VALUES (?,?,?,?)";
