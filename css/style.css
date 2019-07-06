@@ -222,3 +222,37 @@ input[type=text] [type=password] [type=email] {
 .pageRight{
     color: black;
 }
+
+li a .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 1px;
+    background-color: #2196F3;
+    padding: 1px;
+}
+
+li a .grid-container > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+}
+
+.item1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end:3;
+}
+.item2{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end:1;
+}
+.item3{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end:2;
+}

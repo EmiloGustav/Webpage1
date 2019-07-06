@@ -19,7 +19,7 @@ nav {
     justify-content: center;
     height:54px;
 }
-li a{
+.col > ul li a{
     float: left;
     text-align: center;
     display: block;
@@ -57,7 +57,7 @@ li a:active {
 }
 
 ul {
-    height:50px;
+
     list-style-type: none;
     margin: 0;
     padding: 0;

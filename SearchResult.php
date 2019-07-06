@@ -5,6 +5,70 @@ include "includes/getDb.inc.php"
     <main class="container">
 
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <style>
+            li > .grid-container {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-template-rows: auto auto;
+                grid-gap: 3px;
+                background-color: #2196F3;
+                padding: 3px;
+                overflow: hidden;
+            }
+
+            li .grid-container > div {
+                background-color: rgba(255, 255, 255, 0.8);
+                text-align: center;
+            }
+
+            .item1 {
+                grid-column-start: 1;
+                grid-column-end: 2;
+                grid-row-start: 1;
+                grid-row-end:3;
+            }
+            .item2{
+                grid-column-start: 2;
+                grid-column-end: 4;
+                grid-row-start: 1;
+                grid-row-end:1;
+            }
+            .item3{
+                grid-column-start: 2;
+                grid-column-end: 4;
+                grid-row-start: 2;
+                grid-row-end:2;
+            }
+            h5 {
+                font-size: 15px;
+                margin: 30px auto;
+            }
+            .pages > li {
+                float:left;
+                text-align: center;
+                display: block;
+                color: black;
+                margin: 14px 0;
+                text-decoration: none;
+                font-size: larger;
+            }
+            .pages > li a {
+                padding: 14px 16px;
+                min-height: 14px;
+                min-width: 16px;
+            }
+            pages > li a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+            pages > li a:active {
+                background-color: #2196F3;
+                color: white;
+            }
+
+
+        </style>
 
 
         <div class="workspace">
@@ -513,24 +577,32 @@ include "includes/getDb.inc.php"
                         $page = $amountOfPages;
                     }
                     if ($page < $amountOfPages) {
+                        echo '<ul>';
                         for ($x = ($page - 1) * $articlesPerPage; $x < $page * $articlesPerPage; $x++) {
                             $hrefurl = 'bookpage.php?bookId=' . strval($array[strval($x)]['0']);
                             echo '
-                                <a href="' . $hrefurl . '" class="searchResult">
-                                ', $array[strval($x)]['1'], ', ', $array[strval($x)]['2'], '
-                                </a>
-                                ';
+                        <li><a href="'.$hrefurl.'" class="grid-container">
+                            <div class="item1"><img src="'.$array[strval($x)]['8'].'"></div>
+                            <div class="item2"><h5>',$array[strval($x)]['1'],', ',$array[strval($x)]['2'],'</h5></div>
+                            <div class="item3"><h5>'.$array[strval($x)]['10'].'</h5></div>
+                        </a></li>
+                        ';
                         }
+                        echo '</ul>';
                         printPageBar($amountOfPages,$page,$book);
                     }else {
+                        echo '<ul>';
                         for ($x = ($amountOfPages - 1) * $articlesPerPage; $x < sizeof($array); $x++) {
                             $hrefurl = 'bookpage.php?bookId=' . strval($array[strval($x)]['0']);
                             echo '
-                        <a href="'.$hrefurl.'" class="searchResult">
-                        ',$array[strval($x)]['1'],', ',$array[strval($x)]['2'],'
-                        </a>
+                        <li><a href="'.$hrefurl.'" class="grid-container">
+                            <div class="item1"><img src="'.$array[strval($x)]['8'].'"></div>
+                            <div class="item2"><h5>',$array[strval($x)]['1'],', ',$array[strval($x)]['2'],'</h5></div>
+                            <div class="item3"><h5>'.$array[strval($x)]['10'].'</h5></div>
+                        </a></li>
                         ';
                         }
+                        echo '</ul>';
                         if ($amountOfPages > 1) {
                             printPageBar($amountOfPages,$page,$book);
                         }
