@@ -1,6 +1,7 @@
 <?php
 require "header.php";
 include "includes/getDb.inc.php";
+//$array = getBookById('2E5OAgAAQBAJ');
 ?>
 <main class="container">
 
@@ -10,16 +11,18 @@ include "includes/getDb.inc.php";
     <div class="workspace">
         <div class="col">
             <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Books" width="426" height="250">
+
             <?php
-                if(isset($_SESSION['userId'])) {
+                /*if(isset($_SESSION['userId'])) {
                     $userInfo = getUserInfo($_SESSION['userId']);
                     $userInfo['2'] = 'hello23';
                     $newUserInfo=changeUserData($userInfo);
 
 
                     echo print_r($newUserInfo);
-                }
+                }*/
 
+                //echo '<img src="'.$array['9'].'"  width="80" height="80">';
                 if (isset($_GET["newpwd"])) {
                     if ($_GET["newpwd"] == "passwordupdated") {
                         echo '<p class="signupsucess">Ditt lösenord har blivit återställt!</p>';

@@ -26,7 +26,7 @@ session_start();
                 <div class="col">
                     <ul>
                         <li><a href="index.php">Hem</a></li>
-                        <li><a href="minsida.php">Mina böcker</a></li>
+                        <li><a href="myBooks.php">Mina böcker</a></li>
                         <li><a href="isprinsessan_camilla_lackberg.php">En bok</a></li>
                     </ul>
                 </div>

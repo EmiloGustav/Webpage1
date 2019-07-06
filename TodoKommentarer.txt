@@ -9,6 +9,7 @@ searchResult.php
 - Testa om ... funkar och att den följer med om man har fler än 5 sidor
 - Lägga till så att den söker tills den inte får fler svar
 
+
 getDb.inc.php
 - Fixa någon typ av error hantering här.
 

@@ -1,9 +1,8 @@
 <?php
-$identifier = $_GET['identifier'];
-$creator = $_GET['creator'];
-$title = $_GET['title'];
-$isbn = $_GET['isbn'];
+$bookId = $_GET['bookId'];
 require "header.php";
+include "includes/getDb.inc.php";
+$array = getBookByBookId($bookId);
 ?>
     <script type="text/javascript">
         function switchRating() {
@@ -28,18 +27,18 @@ require "header.php";
 
                 <!-- Hur ska vi göra med bilder här för att få generiskt, typ images/$creator/$title.jpg ?-->
 
-                <img src="images/isprinsessan.jpg" alt="Books" width="250px" height="400px">
+                <?php echo '<img src="'.$array['9'].'" alt="Books" width="250px" height="400px">'; ?>
             </div>
 
             <div class="col">
 
-                <h3><?php echo $title?></h3>
-                <h4><?php echo $creator?></h4>
+                <h3><?php echo $array['1'];?></h3>
+                <h4><?php echo $array['2']?></h4>
 
                 <!-- vi måste hitta summeringen någonstans så att vi kan lägga in den -->
 
                 <div class="summarise">
-                    Huset var ödsligt och tomt. Kylan trängde in i alla vrår. En tunn hinna av is hade bildats i badkaret. Hon hade börjat anta en lätt blåaktig ton. Han tyckte att hon såg ut som en prinsessa där hon låg. En isprinsessa. Golvet han satt på var iskallt, men kylan bekymrade honom inte. Han sträckte ut handen och rörde vid henne. Blodet på hennes handleder hade för länge sedan stelnat. Kärleken till henne hade aldrig varit starkare. Han smekte hennes arm, som om han smekte den själ som nu flytt kroppen. Han vände sig inte om när han gick. Det var inte adjö, utan på återseende.I debutromanen Isprinsessan förlägger Camilla Läckberg handlingen vintertid till sin hemort Fjällbacka och låter morden växa fram ur småstadsandans sämre sidor. Hon tecknar ett porträtt av ett slutet samhälle där alla, på gott och ont, vet allt om varandra och där det yttre skenet har stor betydelse. Något som under fel omständigheter kan bli ödesdigert ...
+                    <?php echo $array['5']; ?>
                 </div>
 
                 <!-- lägga till databs så att ratingen tas från den och läggs in där när någon klickar på stjärnorna -->
