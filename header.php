@@ -40,7 +40,6 @@ session_start();
                 </div>
                 <div class="col">
                     <div class="login-container">
-                        <!-- Ändra PATH -->
                         <?php
                         if(!isset($_SESSION['userId'])){
                             echo '  
@@ -58,7 +57,7 @@ session_start();
                                     <form action="includes/logout.inc.php" method="post">
                                         <button type="submit" name="logout-submit" id="right"><span>Logga ut</span></button>
                                     </form>
-                                    <a href="profile.php" id="profile">',$_SESSION['userUid'],'\'s profil </a>
+                                    <a href="myProfile.php" id="profile">',$_SESSION['userUid'],'\'s profil </a>
                                     ';
                         }
                         ?>

@@ -1,10 +1,12 @@
 main {
-    background-color: aliceblue;
+    background-color: white;
     min-height: 500px;
     width: 100%;
 }
 
-html, body, head {
+html,
+body,
+head {
     padding: 0;
     margin: 0;
 }
@@ -22,6 +24,7 @@ html, body, head {
     padding: 0;
     text-align: center;
 }
+
 .col#footer {
     width: 33.3%;
     max-width: 426px;
@@ -38,6 +41,7 @@ html, body, head {
     overflow: hidden;
     min-height: 800px;
 }
+
 .workspace {
     max-width: 1280px;
     margin: 0 auto;
@@ -45,36 +49,41 @@ html, body, head {
 
 .footer {
     background-color: black;
-    width:100%;
+    width: 100%;
     min-height: 150px;
     max-height: 400px;
 }
+
 #registerRight {
-    display:inline-block;
+    display: inline-block;
     float: right;
     list-style-type: none;
 }
+
 li#right {
     padding: 3px 3px;
 }
+
 #registerLeft {
     display: inline-block;
     float: left;
     list-style-type: none;
 }
-li#left{
+
+li#left {
     padding: 4.5px 4.5px;
 }
 
 #floatleft {
-    float:left;
+    float: left;
 }
 
 #floatright {
-    float:right;
+    float: right;
 }
-#space{
-    padding:12px 13px;
+
+#space {
+    padding: 12px 13px;
     margin-top: 5px;
 }
 
@@ -89,16 +98,21 @@ input[type=text] [type=password] [type=email] {
 }
 
 .slideshow-container h2 {
-    color: lightblue;  
+    color: lightblue;
 }
 
+
 /*Hide the images by default */
+
 .mySlides {
     display: none;
 }
 
+
 /* Next and previous button */
-.prev, .next {
+
+.prev,
+.next {
     cursor: pointer;
     position: absolute;
     top: 50%;
@@ -112,34 +126,42 @@ input[type=text] [type=password] [type=email] {
     user-select: none;
 }
 
+
 /* Position the "next button" to the right */
+
 .next {
     right: 3px;
     border-radius: 0 3px 3px 0;
-  }
+}
+
 .prev {
-    left:4px;
+    left: 4px;
     border-radius: 3px 0 0 3px;
 }
-  
-  /* On hover, add a black background color with a little bit see-through */
-  .prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
-    color: white;
-  }
 
-  /* Number text (1/3 etc) */
+
+/* On hover, add a black background color with a little bit see-through */
+
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+
+/* Number text (1/3 etc) */
+
 .numbertext {
     color: greenyellow;
     font-size: 12px;
     padding: 20px 12px;
     top: 60px;
-    left:40px;
+    left: 40px;
     text-align: center;
-    position:absolute;
-  }
+    position: absolute;
+}
 
-  .dot {
+.dot {
     cursor: pointer;
     height: 15px;
     width: 15px;
@@ -148,31 +170,42 @@ input[type=text] [type=password] [type=email] {
     border-radius: 50%;
     display: inline-block;
     transition: background-color 0.6s ease;
-  }
+}
 
-  .active, .dot:hover {
-      background-color: #717171;
-  }
+.active,
+.dot:hover {
+    background-color: #717171;
+}
 
-  .fade {
-      -webkit-animation-name: fade;
-      -webkit-animation-duration: 1s;
-      animation-name: fade;
-      animation-duration: 1s;
-  }
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1s;
+    animation-name: fade;
+    animation-duration: 1s;
+}
 
-  @-webkit-keyframes fade {
-    from {opacity: .7} 
-    to {opacity: 1}
-  }
-  
-  @keyframes fade {
-    from {opacity: .7} 
-    to {opacity: 1}
-  }
+@-webkit-keyframes fade {
+    from {
+        opacity: .7
+    }
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: .7
+    }
+    to {
+        opacity: 1
+    }
+}
+
 .searchResultBox {
     margin-top: 30px;
 }
+
 .searchResult {
     float: left;
     width: 100%;
@@ -187,10 +220,10 @@ input[type=text] [type=password] [type=email] {
     grid-template-columns: 30% 70%;
     grid-gap: 1em;
 }
-.searchResult>.thumbnail{
 
- }
-.searchResult>.righside{
+.searchResult>.thumbnail {}
+
+.searchResult>.righside {
     display: grid;
     grid-template-rows: 50% 50%;
     grid-gap: 0.5em;
@@ -207,19 +240,23 @@ input[type=text] [type=password] [type=email] {
     border: 1px solid;
     border-color: black;
 }
+
 .pages-container {
-    width:100%;
-    display:table;
-    margin:0 auto;
+    width: 100%;
+    display: table;
+    margin: 0 auto;
     padding-left: 20%;
 }
-.pageLeft{
+
+.pageLeft {
     color: black;
 }
-.page{
+
+.page {
     color: black;
 }
-.pageRight{
+
+.pageRight {
     color: black;
 }
 
@@ -231,7 +268,7 @@ li a .grid-container {
     padding: 1px;
 }
 
-li a .grid-container > div {
+li a .grid-container>div {
     background-color: rgba(255, 255, 255, 0.8);
     text-align: center;
     padding: 20px 0;
@@ -242,17 +279,19 @@ li a .grid-container > div {
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
-    grid-row-end:3;
+    grid-row-end: 3;
 }
-.item2{
+
+.item2 {
     grid-column-start: 2;
     grid-column-end: 4;
     grid-row-start: 1;
-    grid-row-end:1;
+    grid-row-end: 1;
 }
-.item3{
+
+.item3 {
     grid-column-start: 2;
     grid-column-end: 4;
     grid-row-start: 2;
-    grid-row-end:2;
+    grid-row-end: 2;
 }
