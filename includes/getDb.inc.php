@@ -19,7 +19,7 @@ function getUserInfo($userId) {
     }
 }
 function changeUserData($array) {
-    $uid =$array['6'];
+    $uid = $array['6'];
     $oldData = getUserInfo($uid);
     $conn = getConnection();
     $categories = getCategories('info');
@@ -80,3 +80,175 @@ function getConnection(){
     }
     return $conn;
 }
+// returns true if book is in db otherwise false
+function checkBookInDbById($googleId) {
+    $conn = getConnection();
+    $sql = "SELECT googleId FROM books WHERE googleId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt,"s",$googleId);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        $resultRows = mysqli_stmt_num_rows($stmt);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        if($resultRows > 0) {
+           // echo "id ".$googleId.' in library';
+            return true;
+        }else {
+           // echo "id ".$googleId.' NOT in library';
+            return false;
+        }
+
+    }
+}
+function checkBookInDbByTitleNAuthor($title, $author) {
+    $conn = getConnection();
+    $sql = "SELECT title FROM booksnotingoogle WHERE title=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $title);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        $resultRows = mysqli_stmt_num_rows($stmt);
+        if ($resultRows > 0) {
+            // echo $title.$author.' In booksnotingoogle';
+            return true;
+        }else {
+            $sql = "SELECT * FROM books WHERE title=?";
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                // TODO ERRORHANTERING
+                return false;
+            } else {
+                mysqli_stmt_bind_param($stmt, "s", $title);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                $array = mysqli_fetch_array($result, MYSQLI_NUM);
+                mysqli_stmt_close($stmt);
+                mysqli_close($conn);
+                if (strcasecmp($array['2'], $author) == 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+}
+
+function addToBookTable($title,$authors,$publisher,$publishedDate,$description,$isbn13,$isbn10,$smallthumbnail,$thumbnail,$textsnippet,$googleId){
+    if ($googleId != NULL) {
+        $conn = getConnection();
+        $sql = "INSERT INTO books (title,author,publisher,published,description,isbn13,isbn10,smallthumbnail,thumbnail,textsnippet,googleId) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            //TODO ERROR HANTERING
+
+            echo "Error" . $title . $authors . $publisher . $publishedDate . $description . $isbn13, $isbn10 . $smallthumbnail . $thumbnail . $textsnippet . $googleId;
+        } else {
+            mysqli_stmt_bind_param($stmt, "sssssssssss", $title, $authors, $publisher, $publishedDate, $description, $isbn13, $isbn10, $smallthumbnail, $thumbnail, $textsnippet, $googleId);
+            mysqli_stmt_execute($stmt);
+        }
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+    }else {
+        echo "google id == NULL";
+    }
+
+}
+function addToBooksNotInGoogle($title) {
+    echo "add ".$title;
+    $conn = getConnection();
+    $sql = "INSERT INTO booksnotingoogle (title) VALUES (?)";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        //TODO ERROR HANTERING
+
+        echo "Error" . $title;
+    } else {
+        mysqli_stmt_bind_param($stmt, "s", $title);
+        mysqli_stmt_execute($stmt);
+    }
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+function getBookByGoogleId($googleId) {
+    $conn = getConnection();
+    $sql = "SELECT * FROM books WHERE googleId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $googleId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $array;
+    }
+}
+function getBookByBookId($bookId) {
+    $conn = getConnection();
+    $sql = "SELECT * FROM books WHERE bookId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $bookId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $array;
+    }
+}
+function getBookByTitleNAuthor($title,$author) {
+    $conn = getConnection();
+    $sql = "SELECT * FROM books WHERE title=? AND author=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "ss", $title,$author);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $array;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

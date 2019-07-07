@@ -99,15 +99,17 @@ if(isset($_POST['signup-submit'])) {
                     if(!isset($country)) {
                         $country = NULL;
                     }
+                    date_default_timezone_set('Sweden/stockholm');
+                    $date = date('Y-m-d', time());
 
-                    $sql = "INSERT INTO info (firstname,surname,country,uid) VALUES (?,?,?,?)";
+                    $sql = "INSERT INTO info (firstname,surname,country,uid,dateRegistered) VALUES (?,?,?,?,?)";
                     $stmt = mysqli_stmt_init($conn);
                     if(!mysqli_stmt_prepare($stmt,$sql)) {
                         header("Location: ../index.php?error=sqlinfoerror");
                         exit();
                     }else {
 
-                        mysqli_stmt_bind_param($stmt, "ssss", $firstname, $surname, $country,$uid);
+                        mysqli_stmt_bind_param($stmt, "sssss", $firstname, $surname, $country,$uid,$date);
                         mysqli_stmt_execute($stmt);
                     }
 
