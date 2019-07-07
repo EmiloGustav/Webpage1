@@ -4,13 +4,13 @@
 
 h1 {
     margin: 0;
-    background: linear-gradient(to right, rgba(249, 107, 142, 1), rgba(218, 103, 210, 1), rgba(130, 125, 253, 1));
+    background: #EEF1EF;
     padding-top: 20px;
     text-align: center;
 }
 
 nav {
-    background: linear-gradient(to right, rgba(249, 107, 142, 1), rgba(218, 103, 210, 1), rgba(130, 125, 253, 1));
+    background: #EEF1EF;
     justify-content: center;
     height: 54px;
 }
@@ -19,7 +19,7 @@ nav {
     float: left;
     text-align: center;
     display: block;
-    color: white;
+    color: black;
     padding: 14px 16px;
     text-decoration: none;
     font-size: larger;
@@ -29,7 +29,7 @@ a#profile {
     float: right;
     text-align: center;
     display: block;
-    color: white;
+    color: black;
     padding: 14px 16px;
     text-decoration: none;
     font-size: larger;

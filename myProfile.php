@@ -28,6 +28,7 @@ $userInfo = getUserInfo($_SESSION["userId"]);
             display: grid;
             grid-template-columns: 70% 30%;
             grid-gap: 1em;
+            margin-top: 10px;
         }
 
         .wrapper>div {
@@ -89,11 +90,16 @@ $userInfo = getUserInfo($_SESSION["userId"]);
                     <hr size="1" width=" 100%">
                     <div class="description">
                         <p class="location">Land</p>
-                        <p class="location-data"><?php echo print_r($userInfo['7']); ?></p>
+                        <p class="location-data"><?php echo ($userInfo['7']); ?></p>
                         <p class="activity">Gick med</p>
-                        <p class="activity-data"><?php echo print_r($userInfo['10']); ?></p>
+                        <p class="activity-data">
+                            <?php
+                            $tmpArray = explode(" ", $userInfo['10']);
+                            echo ($tmpArray['0']);
+                            ?>
+                        </p>
                         <p class="about">Om</p>
-                        <p class="about-data"><?php echo print_r($userInfo['11']); ?></p>
+                        <p class="about-data"><?php echo ($userInfo['11']); ?></p>
                     </div>
                 </div>
             </div>

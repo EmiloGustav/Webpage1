@@ -14,6 +14,7 @@ $userInfo = getUserInfo($_SESSION["userId"]);
             display: grid;
             grid-template-columns: 100% 30% 50%;
             grid-gap: 1em;
+            margin-top: 10px;
         }
 
         .wrapper>div {
