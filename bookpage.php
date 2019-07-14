@@ -173,18 +173,29 @@ if(isset($_SESSION['userId'])) {
                         </div>
                     </li>
                     <li>
-                        <form action="includes/addBook.inc.php?type=rating&bookId=<?php strval($bookId)?>" method="post" class="rate">
+                        <form action="includes/addBook.inc.php?type=rating&bookId=<?php echo $bookId?>" method="post" class="rate">
                             <?php
+                            function contains($needle, $haystack)
+                            {
+                                return strpos($haystack, $needle) !== false;
+                            }
                             // TODO lägga till metod för att ta bort rating
                             function isBookRated($bookId,$userinfo){
                                 if(isset($userinfo['4'])) {
-                                    $ratedBooksId = explode(";:" , $userinfo['4']);
-                                    for($x = 0; $x < sizeof($ratedBooksId); $x++){
-                                        if(strcasecmp($bookId,$ratedBooksId[strval($x)]) == 0) {
-                                            return $x;
+                                    if(!contains(';:',$userinfo['4']) && strcasecmp($userinfo['4'],$bookId) == 0) {
+                                        return $userinfo['5'];
+                                    }else if(!contains(';:',$userinfo['4']) && strcasecmp($userinfo['4'],$bookId) != 0){
+                                        return false;
+                                    }else {
+                                        $ratedBooksId = explode(";:" , $userinfo['4']);
+                                        for($x = 0; $x < sizeof($ratedBooksId); $x++){
+                                            if(strcasecmp($bookId,$ratedBooksId[strval($x)]) == 0) {
+                                                $tmpArray = explode(';:',$userinfo['5']);
+                                                return $tmpArray[strval($x)];
+                                            }
                                         }
+                                        return false;
                                     }
-                                    return false;
                                 }
                             }
                             $bookRated = isBookRated($bookId,$userinfo);
@@ -195,35 +206,32 @@ if(isset($_SESSION['userId'])) {
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
                             }else {
-                                $tmp = explode(';:',$userinfo['5']);
-                                $rating = $tmp[strval($x)];
-                                switch ($rating){
-                                    case 1:
-                                        echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+                                if ($bookRated == 1) {
+                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();" checked="checked"><label for="star1" title="Väldigt dålig"></label>';
-                                    case 2:
-                                        echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+                                } else if ($bookRated == 2) {
+                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();" checked="checked"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                                    case 3:
-                                        echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+                                } else if ($bookRated == 3) {
+                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();" checked="checked"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                                    case 4:
-                                        echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+                                } else if ($bookRated == 4) {
+                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();" checked="checked"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                                    case 5:
-                                        echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();" checked="checked"><label for="star5" title="Perfekt" ></label>
+                                } else if ($bookRated == 5) {
+                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();" checked="checked"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>

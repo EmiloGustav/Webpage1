@@ -231,45 +231,66 @@ function getBookByTitleNAuthor($title,$author) {
     }
 }
 
-function addRatingToBook($rating,$bookId) {
-    if($_SESSION['userId']) {
-        $conn = getConnection();
-        $sql = "SELECT * FROM books WHERE bookId=?";
-        $stmt = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($stmt,$sql)) {
-            // TODO ERRORHANTERING
-            return false;
+function updateSqlWithRating($rating,$bookId,$removedRating = 0,$changedRating = 0){
+    $conn = getConnection();
+    $sql = "SELECT * FROM books WHERE bookId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $bookId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+
+        (float)$currentRating = $array['11'];
+        (int)$nrOfRatings = $array['14'];
+        if($rating == -1 && $removedRating != 0) {
+            if($currentRating == NULL){
+                // TODO error borde ej kunna vara null när man kommer till remove
+            }else if ((int) $nrOfRatings - 1 < 0) {
+                // TODO error, borde ej kunna gå
+            }else if ((int) $nrOfRatings == 1 ){
+                $currentRating = NULL;
+                $nrOfRatings = NULL;
+            }else{
+
+                // (4 * 2 - 4) / 1
+                // (4 * 2 - 3 ) / 1
+                $currentRating = (((float)$currentRating*$nrOfRatings)-$removedRating)/($nrOfRatings - 1);
+                $nrOfRatings--;
+            }
+        }else if ($rating == -2 && $removedRating != 0 && $changedRating != 0){
+            if($currentRating == NULL){
+                // TODO error borde ej kunna vara null när man kommer till change
+            }else if($nrOfRatings == 1) {
+                $currentRating = $rating;
+            }else{
+                $currentRating = ((((float)$currentRating*$nrOfRatings)-$removedRating)/($nrOfRatings - 1)+$changedRating)/2;
+            }
         }else {
-            mysqli_stmt_bind_param($stmt, "s", $bookId);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
-            $array = mysqli_fetch_array($result, MYSQLI_NUM);
-
-            $currentRating = $array['11'];
-            $nrOfRatings = $array['14'];
-
             if($currentRating == NULL){
                 $currentRating = $rating;
                 $nrOfRatings = 1;
             }else {
-                $currentRating = ($currentRating + $rating)/2;
+                (float)$currentRating = ($currentRating+$rating)/2;
                 $nrOfRatings++;
             }
-            $sql = "UPDATE books SET rating=$currentRating, nrOfRatings=$nrOfRatings WHERE bookId=$bookId";
-            if(!mysqli_stmt_prepare($stmt,$sql)) {
-                // TODO ERRORHANTERING
-                return false;
-            }else {
-                mysqli_stmt_bind_param($stmt, "s", $bookId);
-                mysqli_stmt_execute($stmt);
-            }
-            mysqli_stmt_close($stmt);
-            mysqli_close($conn);
         }
-    }else {
-        // TODO ERRORHNTEING
+        $sql = "UPDATE books SET rating=?, nrOfRatings=? WHERE bookId=?";
+        if(!mysqli_stmt_prepare($stmt,$sql)) {
+            // TODO ERRORHANTERING
+            return false;
+        }else {
+            mysqli_stmt_bind_param($stmt, "sss", $currentRating,$nrOfRatings,$bookId);
+            mysqli_stmt_execute($stmt);
+        }
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
     }
 }
+
 
 
 
