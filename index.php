@@ -1,8 +1,7 @@
 <?php
-if (isset($_SESSION['userId'])) {
-    require "header.php";
-}
 include "includes/getDb.inc.php";
+require 'header.php';
+
 //$array = getBookById('2E5OAgAAQBAJ');
 ?>
 <main class="container">
@@ -153,11 +152,23 @@ include "includes/getDb.inc.php";
         <header>
             <a href="index.html" class="header-logo">BonoLibro</a>
 
-            <form action="includes/login.inc.php" method="post">
-                <button type="submit" name="login-submit" class="login-button"><span>Logga in</span></button>
-                <input type="password" placeholder="Lösenord..." name="password" id="right" style="width:106px;">
-                <input type="text" placeholder="Användarnamn..." name="username" id="right">
-            </form>
+            <?php
+            if (!isset($_SESSION['userId'])) {
+                echo '  
+                    <form action="includes/login.inc.php" method="post">
+                        <button type="submit" name="login-submit" class="login-button"><span>Logga in</span></button>
+                        <input type="password" placeholder="Lösenord..." name="password" id="right" style="width:106px;">
+                        <input type="text" placeholder="Användarnamn..." name="username" id="right">
+                    </form>';
+            } else {
+                echo '
+                    <form action="includes/logout.inc.php" method="post">
+                       <button type="submit" name="logout-submit" id="right"><span>Logga ut</span></button>
+                    </form>
+                    <a href="myProfile.php" id="profile">', $_SESSION['userUid'], '\'s profil </a>
+                    ';
+            }
+            ?>
 
         </header>
 
