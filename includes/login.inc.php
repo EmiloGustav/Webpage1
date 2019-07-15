@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Emil
@@ -14,40 +15,39 @@ if (isset($_POST['login-submit'])) {
     if (empty($username) || empty($password)) {
         header("Location: ../index.php?error=emptyfields");
         exit();
-    }else{
+    } else {
         $sql = "SELECT * FROM users WHERE uidUsers=? OR emailUsers=?";
         $stmt = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($stmt,$sql)){
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
             header("Location: ../index.php?error=sqlerror");
             exit();
-        }else{
-            mysqli_stmt_bind_param($stmt,"ss",$username, $username);
+        } else {
+            mysqli_stmt_bind_param($stmt, "ss", $username, $username);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
             if ($row = mysqli_fetch_assoc($result)) {
                 $pwdCheck = password_verify($password, $row['pwdUsers']);
-                if($pwdCheck == false){
+                if ($pwdCheck == false) {
                     header("Location: ../index.php?error=wrongpassword");
                     exit();
-                }else if($pwdCheck == true) {
+                } else if ($pwdCheck == true) {
                     session_start();
                     $_SESSION[userId] = $row['idUsers'];
                     $_SESSION[userUid] = $row['uidUsers'];
                     $_SESSION[userEmail] = $row['emailUsers'];
                     header("Location: ../index.php?login=success");
                     exit();
-                }else {
+                } else {
                     header("Location: ../index.php?error=wrongpassword");
                     exit();
                 }
-            }else{
+            } else {
                 header("Location: ../index.php?error=nouser");
                 exit();
             }
         }
     }
-
-}else{
+} else {
     header("Location: ../index.php");
     exit();
 }
