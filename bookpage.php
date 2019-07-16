@@ -64,6 +64,26 @@ if(isset($_SESSION['userId'])) {
         .inputs:hover {
             background:lightcoral;
         }
+        .text{
+            width:80%;
+        }
+        .button1{
+            float: right;
+            padding: 9px 20px;
+        }
+        .name{
+            float:left;
+            font-style: italic;
+            font-size: 15px;
+        }
+        .comment-text{
+            font-style: normal;
+            font-size: 12px;
+        }
+        .edit-remove{
+            float:right;
+            font-size: 8px;
+        }
     </style>
     <main class="container">
         <link rel="stylesheet" type="text/css" href="css/bookpage.css">
@@ -71,7 +91,7 @@ if(isset($_SESSION['userId'])) {
 
             <div class="item1">
 
-                <!-- Hur ska vi göra med bilder här för att få generiskt, typ images/$creator/$title.jpg ?-->
+
 
                 <?php echo '<img src="'.$array['9'].'" alt="Books" width="250px" height="400px">'; ?>
 
@@ -107,7 +127,6 @@ if(isset($_SESSION['userId'])) {
                         }
 
                         ?>
-
                     </li>
                     <li>
                         <?php
@@ -140,7 +159,6 @@ if(isset($_SESSION['userId'])) {
                         }
 
                         ?>
-
                     </li>
                 </ul>
             </div>
@@ -179,7 +197,6 @@ if(isset($_SESSION['userId'])) {
                             {
                                 return strpos($haystack, $needle) !== false;
                             }
-                            // TODO lägga till metod för att ta bort rating
                             function isBookRated($bookId,$userinfo){
                                 if(isset($userinfo['4'])) {
                                     if(!contains(';:',$userinfo['4']) && strcasecmp($userinfo['4'],$bookId) == 0) {
@@ -205,7 +222,8 @@ if(isset($_SESSION['userId'])) {
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                            }else {
+                            }
+                            else {
                                 if ($bookRated == 1) {
                                     echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
@@ -239,7 +257,6 @@ if(isset($_SESSION['userId'])) {
                                 }
                             }
                             ?>
-
                         </form>
                     </li>
                 </ul>
@@ -247,14 +264,48 @@ if(isset($_SESSION['userId'])) {
 
                 <div class="commentfield">
                     Kommentarer:
-                    <div class="comment">
-                        Camilla läckberg, <br>
-                        Fyfan vad bra!
-                    </div>
-                    <div class="comment">
-                        Per, 54. <br>
-                        Denna var sjuk, läs den /Per
-                    </div>
+                    <?php
+
+                    // TODO lägga till så att ;: och :: är illegala tecken när man skriven en kommentar
+                    // TODO kanske ändra så att man inte får all info i getuserinfo
+                    if($array['12'] == NULL) {
+                        echo '<div class="comment">Var den första att skriva en kommentar för denna bok</div>';
+                    }else if (!contains(';:',$array['12'])) {
+                        $comment = explode('::',$array['12']);
+                        $commentUserinfo = getUserInfo($comment['0']);
+                        echo '<div class="comment"><div class="name">'.$commentUserinfo['8'].' '.$commentUserinfo['9'].'</div>';
+                        if(isset($_SESSION['userId']) && $_SESSION['userId'] == $comment['0']) {
+                            echo '<div class="edit-remove"><a href="includes/addBook.inc.php?type=removeComment&bookId='.$bookId.'&comment='.$array['12'].'">radera</a></div>';
+                        }
+                        echo '<br><div class="comment-text">'.$comment['1'].'</div></div>';
+                    }else {
+                        $comments = explode(';:',$array['12']);
+                        foreach ($comments as $x) {
+                            $comment = explode('::',$x);
+                            $commentUserinfo = getUserInfo($comment['0']);
+                            echo '<div class="comment"><div class="name">'.$commentUserinfo['8'].' '.$commentUserinfo['9'].'</div>';
+                            if($_SESSION['userId'] == $comment['0']) {
+                                echo '<div class="edit-remove"><a href="includes/addBook.inc.php?type=removeComment&bookId='.$bookId.'&comment='.$x.'">radera</a></div>';
+                            }
+                            echo '<br><div class="comment-text">'.$comment['1'].'</div></div>';
+                        }
+                    }
+                    if(isset($_SESSION['userId'])) {
+                        // TODO ta hand om tom textarea här
+                        // TODO lägga till så att man kan edita och ta bor kommentarer
+                        echo '<form action="includes/addBook.inc.php?type=comment&bookId='.$bookId.'" method="post">
+                            Kommentera:<br>
+                            <textarea class="text" name="comment"></textarea>
+                            <button type="submit" class="button1">Publicera</button>
+                        </form>';
+                    }else {
+                        // TODO länka till inlogning och skapa konto
+                        echo 'Logga in eller skapa ett konto för att skriva en kommentar';
+                    }
+
+
+                    ?>
+
                 </div>
             </div>
 

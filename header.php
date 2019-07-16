@@ -47,14 +47,14 @@ session_start();
                                         <button type="submit" name="signup"><span>Skapa konto</span></button>
                                     </form>
                                     
-                                    <form action="includes/login.inc.php" method="post">
+                                    <form action="includes/login.inc.php?page='.$_SERVER['REQUEST_URI'].'" method="post">
                                         <button type="submit" name="login-submit"><span>Login</span></button>
                                         <input type="password" placeholder="Lösenord..." name="password" id="right" style="width:106px;">
                                         <input type="text" placeholder="Användarnamn..." name="username" id="right">
                                     </form>';
                         }else {
                             echo '
-                                    <form action="includes/logout.inc.php" method="post">
+                                    <form action="includes/logout.inc.php?page='.$_SERVER['REQUEST_URI'].'" method="post">
                                         <button type="submit" name="logout-submit" id="right"><span>Logga ut</span></button>
                                     </form>
                                     <a href="myProfile.php" id="profile">',$_SESSION['userUid'],'\'s profil </a>

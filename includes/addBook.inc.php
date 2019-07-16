@@ -3,7 +3,7 @@ require "getDb.inc.php";
 session_start();
 if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])) {
     $userinfo = getUserInfo($_SESSION['userId']);
-    if(strcasecmp($_GET['type'],'tbr') == 0 ) {
+    if (strcasecmp($_GET['type'],'tbr') == 0 ) {
         // Check if there are any book in wtr
         if($userinfo['1'] == NULL ) {
             $userinfo['1'] = $_GET['bookId'];
@@ -11,7 +11,8 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
             $userinfo['1'] = $userinfo['1'].';:'.$_GET['bookId'];
         }
         changeUserData($userinfo);
-    } else if(strcasecmp($_GET['type'],'hr') == 0 ){
+    }
+    else if (strcasecmp($_GET['type'],'hr') == 0 ){
         // Check if there are any book in wtr
         if($userinfo['2'] == NULL ) {
             $userinfo['2'] = $_GET['bookId'];
@@ -20,7 +21,8 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
         }
         changeUserData($userinfo);
         // TODO Lägga till så att man frågar användaren om den vill sätta betyg eller ge en kommentar till boken
-    }else if(strcasecmp($_GET['type'],'rating') == 0 ){
+    }
+    else if (strcasecmp($_GET['type'],'rating') == 0 ){
         $bookId = $_GET['bookId'];
         $rating = $_POST['rate'];
         if($userinfo['4'] == NULL ) {
@@ -100,7 +102,8 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
         $userinfo['5'] = $tmpArrayRating;
         changeUserData($userinfo);
         //changeUserData($userinfo);
-    }else if(strcasecmp($_GET['type'],'tbrRemove') == 0 ) {
+    }
+    else if (strcasecmp($_GET['type'],'tbrRemove') == 0 ) {
         // Check if there are any book in wtr
         if($userinfo['1'] == NULL ) {
             // TODO error ska inte kunna vara null
@@ -127,7 +130,8 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
             }
         }
         changeUserData($userinfo);
-    }else if(strcasecmp($_GET['type'],'hrRemove') == 0 ) {
+    }
+    else if (strcasecmp($_GET['type'],'hrRemove') == 0 ) {
         // Check if there are any book in wtr
         if($userinfo['2'] == NULL ) {
             // TODO error ska inte kunna vara null
@@ -154,6 +158,49 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
             }
         }
         changeUserData($userinfo);
+    }
+    else if (strcasecmp($_GET['type'],'comment') == 0 ){
+        $comment = $_POST['comment'];
+        $bookId = $_GET['bookId'];
+        $currentComments = getCommentsByBookId($bookId);
+        // TODO check if already commented, max amount of comments?
+
+        if($currentComments == NULL) {
+            $currentComments = $_SESSION['userId'].'::'.$comment;
+            addComment($currentComments,$bookId);
+        }else {
+            $currentComments = $currentComments.';:'.$_SESSION['userId'].'::'.$comment;
+            addComment($currentComments,$bookId);
+        }
+    }
+    else if (strcasecmp($_GET['type'],'removeComment') == 0) {
+        $comment = $_GET['comment'];
+        $bookId = $_GET['bookId'];
+        $currentComments = getCommentsByBookId($bookId);
+        if(!contains(';:',$currentComments)) {
+            $currentComments = NULL;
+        }else {
+            $currentComments = explode(';:',$currentComments);
+            for($x = 0; $x < sizeof($currentComments);$x++){
+                if(strcasecmp($currentComments[strval($x)],$comment) == 0) {
+                    $match = $x;
+                }
+            }
+            array_splice($currentComments,$match,1);
+            $tmpString="";
+            for($x = 0;$x < sizeof($currentComments);$x++) {
+                if($x  == 0) {
+                    $tmpString = $currentComments[strval($x)];
+                }else {
+                    $tmpString = $tmpString.';:'.$currentComments[strval($x)];
+                }
+            }
+            if(strcasecmp('',$tmpString) == 0) {
+                $tmpString = NULL;
+            }
+            $currentComments = $tmpString;
+        }
+        addComment($currentComments,$bookId);
     }
     $bookId = $_GET['bookId'];
     header("Location: ../bookpage.php?bookId=".$bookId);

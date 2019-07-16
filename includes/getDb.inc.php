@@ -18,6 +18,22 @@ function getUserInfo($userId) {
         return $array;
     }
 }
+function getLists($userId) {
+    $conn = getConnection();
+    $sql = "SELECT * FROM lists WHERE uid=?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        return "error1";
+    } else {
+        mysqli_stmt_bind_param($stmt, 's', $userId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $array;
+    }
+}
 function changeUserData($array) {
     $uid = $array['6'];
     $oldData = getUserInfo($uid);
@@ -230,6 +246,23 @@ function getBookByTitleNAuthor($title,$author) {
         return $array;
     }
 }
+function getCommentsByBookId($bookId) {
+    $conn = getConnection();
+    $sql = "SELECT comments FROM books WHERE bookId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $bookId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_row($result);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $row['0'];
+    }
+}
 
 function updateSqlWithRating($rating,$bookId,$removedRating = 0,$changedRating = 0){
     $conn = getConnection();
@@ -265,7 +298,7 @@ function updateSqlWithRating($rating,$bookId,$removedRating = 0,$changedRating =
             if($currentRating == NULL){
                 // TODO error borde ej kunna vara null när man kommer till change
             }else if($nrOfRatings == 1) {
-                $currentRating = $rating;
+                $currentRating = $changedRating;
             }else{
                 $currentRating = ((((float)$currentRating*$nrOfRatings)-$removedRating)/($nrOfRatings - 1)+$changedRating)/2;
             }
@@ -288,6 +321,18 @@ function updateSqlWithRating($rating,$bookId,$removedRating = 0,$changedRating =
         }
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
+    }
+}
+function addComment($comment,$bookId) {
+    $conn = getConnection();
+    $sql = "UPDATE books SET comments=? WHERE bookId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "ss", $comment,$bookId);
+        mysqli_stmt_execute($stmt);
     }
 }
 

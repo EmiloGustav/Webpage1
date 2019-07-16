@@ -11,14 +11,23 @@ if (isset($_POST['login-submit'])) {
     require 'dbh.inc.php';
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $page = $_GET['page'];
     if (empty($username) || empty($password)) {
-        header("Location: ../index.php?error=emptyfields");
+        if(!contains('?',$page)) {
+            header("Location: http://$_SERVER[HTTP_HOST]$page?error=emptyfields");
+        }else {
+            header("Location: http://$_SERVER[HTTP_HOST]$page&error=emptyfields");
+        }
         exit();
     }else{
         $sql = "SELECT * FROM users WHERE uidUsers=? OR emailUsers=?";
         $stmt = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("Location: ../index.php?error=sqlerror");
+            if(!contains('?',$page)) {
+                header("Location: http://$_SERVER[HTTP_HOST]$page?error=sqlerror");
+            }else {
+                header("Location: http://$_SERVER[HTTP_HOST]$page&error=sqlerror");
+            }
             exit();
         }else{
             mysqli_stmt_bind_param($stmt,"ss",$username, $username);
@@ -27,21 +36,37 @@ if (isset($_POST['login-submit'])) {
             if ($row = mysqli_fetch_assoc($result)) {
                 $pwdCheck = password_verify($password, $row['pwdUsers']);
                 if($pwdCheck == false){
-                    header("Location: ../index.php?error=wrongpassword");
+                    if(!contains('?',$page)) {
+                        header("Location: http://$_SERVER[HTTP_HOST]$page?error=wrongpassword");
+                    }else {
+                        header("Location: http://$_SERVER[HTTP_HOST]$page&error=wrongpassword");
+                    }
                     exit();
                 }else if($pwdCheck == true) {
                     session_start();
-                    $_SESSION[userId] = $row['idUsers'];
-                    $_SESSION[userUid] = $row['uidUsers'];
-                    $_SESSION[userEmail] = $row['emailUsers'];
-                    header("Location: ../index.php?login=success");
+                    $_SESSION['userId'] = $row['idUsers'];
+                    $_SESSION['userUid'] = $row['uidUsers'];
+                    $_SESSION['userEmail'] = $row['emailUsers'];
+                    if(!contains('?',$page)) {
+                        header("Location: http://$_SERVER[HTTP_HOST]$page?login=success");
+                    }else {
+                        header("Location: http://$_SERVER[HTTP_HOST]$page&login=success");
+                    }
                     exit();
                 }else {
-                    header("Location: ../index.php?error=wrongpassword");
+                    if(!contains('?',$page)) {
+                        header("Location: http://$_SERVER[HTTP_HOST]$page?error=wrongpassword");
+                    }else {
+                        header("Location: http://$_SERVER[HTTP_HOST]$page&error=wrongpassword");
+                    }
                     exit();
                 }
             }else{
-                header("Location: ../index.php?error=nouser");
+                if(!contains('?',$page)) {
+                    header("Location: http://$_SERVER[HTTP_HOST]$page?error=nouser");
+                }else {
+                    header("Location: http://$_SERVER[HTTP_HOST]$page&error=nouser");
+                }
                 exit();
             }
         }
@@ -50,4 +75,8 @@ if (isset($_POST['login-submit'])) {
 }else{
     header("Location: ../index.php");
     exit();
+}
+function contains($needle, $haystack)
+{
+    return strpos($haystack, $needle) !== false;
 }

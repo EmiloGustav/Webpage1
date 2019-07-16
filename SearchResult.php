@@ -563,9 +563,11 @@ include "includes/getDb.inc.php"
                     return strpos($haystack, $needle) !== false;
                 }
 
+                // TODO sätta så att man kan ändra articlesPerPage på sidan
+                // Prints the items supposed to go on the site, prints x search results per page where x is yet to be set by a bar
                 function printArray($array) {
-                    $amountOfPages = (sizeof($array)-sizeof($array)%10)/10 + 1; // add 1 for the page that is not full of articles
                     $articlesPerPage = 10;
+                    $amountOfPages = (sizeof($array)-sizeof($array)%$articlesPerPage)/$articlesPerPage + 1; // add 1 for the page that is not full of articles
                     $book = $_GET['book'];
                     if(!isset($_GET['page'])){
                         $page = 1;
@@ -639,7 +641,7 @@ include "includes/getDb.inc.php"
                         }
                     }else {
                         for ($x = -2; $x <= 2; $x++) {
-                            echo '<li><a class="page" href="SearchResult.php?page='.strval($currentPage + $x).'&book='.$currentPage.'"> '.strval($currentPage + $x).' </a></li>';
+                            echo '<li><a class="page" href="SearchResult.php?page='.strval($currentPage + $x).'&book='.$book.'"> '.strval($currentPage + $x).' </a></li>';
                         }
                     }
                     if ($amountOfPages - $currentPage > 3){
