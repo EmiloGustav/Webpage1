@@ -193,10 +193,6 @@ if(isset($_SESSION['userId'])) {
                     <li>
                         <form action="includes/addBook.inc.php?type=rating&bookId=<?php echo $bookId?>" method="post" class="rate">
                             <?php
-                            function contains($needle, $haystack)
-                            {
-                                return strpos($haystack, $needle) !== false;
-                            }
                             function isBookRated($bookId,$userinfo){
                                 if(isset($userinfo['4'])) {
                                     if(!contains(';:',$userinfo['4']) && strcasecmp($userinfo['4'],$bookId) == 0) {

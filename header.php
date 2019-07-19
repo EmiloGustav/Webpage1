@@ -16,12 +16,12 @@ session_start();
 
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 
-    <title>Coolbooks1996</title>
+    <title>Böcker</title>
 </head>
 
 <body>
     <header>
-        <h1>Coolbooks1996</h1>
+        <h1>Böcker</h1>
         <nav id="navbar">
             <div class="workspace">
                 <div class="col">

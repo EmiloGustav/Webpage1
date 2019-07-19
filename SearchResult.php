@@ -557,11 +557,6 @@ include "includes/getDb.inc.php"
                     }*/
                 }
 
-                // returns true if $needle is a substring of $haystack
-                function contains($needle, $haystack)
-                {
-                    return strpos($haystack, $needle) !== false;
-                }
 
                 // TODO sätta så att man kan ändra articlesPerPage på sidan
                 // Prints the items supposed to go on the site, prints x search results per page where x is yet to be set by a bar

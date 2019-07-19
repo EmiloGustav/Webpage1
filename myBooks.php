@@ -66,7 +66,95 @@ if (isset($_SESSION['userId'])) {
             margin:auto 0;
             padding: 30px;
         }
+        .closeBtn {
+            float:right;
+            font-size: 14px;
+            border: none;
+            font-weight: bold;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%; /* Could be more or less, depending on screen size */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        h6 {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .btnYes {
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            background: grey;
+            margin-left: 42%;
+            margin-right: 10px;
+            padding: 10px 20px;
+
+            text-decoration:none;
+            color: #000;
+            font-size: 14px;
+        }
+        .btnNo{
+
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            background: grey;
+            margin-right: 10px;
+            padding: 10px 20px;
+
+            text-decoration:none;
+            color: #000;
+            font-size: 14px;
+        }
     </style>
+    <script type="text/javascript">
+        function addList() {
+            document.getElementById('buttonJs').remove();
+            var li = document.createElement('LI');
+            li.setAttribute('id','jsNew');
+            var form = document.createElement('FORM');
+            form.setAttribute('action','includes/lists.inc.php?type=addList');
+            form.setAttribute('method','POST');
+            form.setAttribute('id','formNew')
+            var input = document.createElement('INPUT') ;
+            input.setAttribute('type','text')
+            input.setAttribute('placeholder','Listans namn...')
+            input.setAttribute('name','listName')
+            var button = document.createElement('BUTTON');
+
+            button.innerHTML = 'Skapa';
+            button.setAttribute('type','submit');
+
+            document.getElementById('js').parentNode.insertBefore(li,document.getElementById('js'));
+            document.getElementById('jsNew').appendChild(form);
+            document.getElementById('formNew').appendChild(input);
+            document.getElementById('formNew').appendChild(button);
+        }
+
+    </script>
     <?php
         if(!isset($_SESSION['userId'])){
             echo '<div class="workspace2"><h3>Logga in för att se dina sidor</h3><br><a href="signup.php">Eller skapa ett konto här!</a></div>';
@@ -81,26 +169,36 @@ if (isset($_SESSION['userId'])) {
             //$userunfo = getUserInfo($_SESSION['userId']);
             $tbr = $userinfo['1'];
             $hr = $userinfo['2'];
-            echo '<ul><li><a href="myBooks.php?list=tbr">Vill läsa</a></li>';
+            echo '<ul id="jsparent"><li><a href="myBooks.php?list=tbr">Vill läsa</a></li>';
             echo '<li><a href="myBooks.php?list=hr">Har läst</a></li>';
             // Get nr of lists
             $numberOfLists = $userinfo['11'];
             if($numberOfLists != NULL) {
                 $lists = getLists($_SESSION['userId']);
                 if(!contains(';:',$lists['1'])) {
-                    echo '<li><a href="myBooks.php?list='.$lists['1'].'">'.$lists['1'].'</a></li>';
+                    echo '<li><a href="myBooks.php?list='.$lists['1'].'">'.$lists['1'].'</a><button class="closeBtn" onclick=deleteList("'.$lists['1'].'");>&times;</button></li>';
                 }else {
                     $listname = explode(';:',$lists['1']);
                     $listArticles = explode(';:',$lists['2']);
                     foreach ($listname as $x) {
-                        echo '<li><a href="myBooks.php?list='.$x.'">'.$x.'</a></li>';
+                        echo '<li><a href="myBooks.php?list='.$x.'">'.$x.'</a><button class="closeBtn" onclick=deleteList("'.$x.'");>&times;</button></li>';
                     }
                 }
             }
+            echo '<li id="js"><button id="buttonJs" onclick="addList();">Skapa en ny lista</button></li>';
         echo '</ul></div>
         </div>
 
         <div class="rightColumn">';
+
+        echo '  <div id="myModal" class="modal">
+                <div class="modal-content" id="modalContent">
+                <span class="close" id="modalSpan">&times;</span>
+                
+                
+                </div></div>';
+
+
         if(!isset($_GET['list'])) {
             // show tbr
             if($tbr == NULL) {
@@ -369,12 +467,40 @@ if (isset($_SESSION['userId'])) {
         }
     }
 
-    function contains($needle, $haystack)
-    {
-        return strpos($haystack, $needle) !== false;
-    }
     ?>
+    <script type="text/javascript">
+        var span = document.getElementById('modalSpan');
+        var modal = document.getElementById('myModal');
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
 
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        function deleteList(listName) {
+            var modal = document.getElementById('myModal');
+            modal.style.display='block';
+            var mc = document.getElementById('modalContent');
+            var h6 = document.createElement('H6');
+            h6.innerText = 'Är du säker på att du vill ta bort listan '+listName+' och alla böcker i den?';
+            var btnYes = document.createElement('A');
+            btnYes.innerText = "Ja";
+            btnYes.setAttribute('href','includes/lists.inc.php?type=removeList&listName='+listName);
+            btnYes.setAttribute('class','btnYes');
+            var btnNo = document.createElement('BUTTON');
+            btnNo.innerText = "Nej";
+            btnNo.setAttribute('class','btnNo');
+            btnNo.setAttribute('onclick','document.getElementById("myModal").style.display=none;');
+            mc.appendChild(h6);
+            mc.appendChild(btnYes);
+            mc.appendChild(btnNo);
+        }
+    </script>
 </main>
 
 <?php

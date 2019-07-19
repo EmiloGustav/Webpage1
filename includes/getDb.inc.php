@@ -336,8 +336,191 @@ function addComment($comment,$bookId) {
     }
 }
 
+function addList($listName,$userId){
+    $conn = getConnection();
+    $sql = "SELECT listName FROM lists WHERE uid=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $userId);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        $resultRows = mysqli_stmt_num_rows($stmt);
+        if($resultRows == 0) {
+            $sql = "INSERT INTO lists (uid,listName,list) VALUES (?,?,?)";
+            if(!mysqli_stmt_prepare($stmt,$sql)) {
+                // TODO ERRORHANTERING
+                return false;
+            }else {
+                $null = NULL;
+                mysqli_stmt_bind_param($stmt, "sss", $userId,$listName,$null);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+                mysqli_close($conn);
+                return true;
+            }
+        }else if($resultRows > 0) {
+            $sql = "SELECT * FROM lists WHERE uid=?";
+            if(!mysqli_stmt_prepare($stmt,$sql)) {
+                // TODO ERRORHANTERING
+                return false;
+            }else {
+                mysqli_stmt_bind_param($stmt, "s", $userId);
+                mysqli_stmt_execute($stmt);
 
+                $array = mysqli_fetch_array(mysqli_stmt_get_result($stmt), MYSQLI_NUM);
+                // listName already in list
+                if (contains($listName, $array['1'])) {
+                    // TODO hantera samma namn error
+                } else {
+                    if ($array['1'] == NULL) {
+                        $array['1'] = $listName;
+                    } else {
+                        $array['1'] = $array['1'] . ';:' . $listName;
+                    }
+                    $sql = "UPDATE lists SET listName=? WHERE uid=?";
+                    if (!mysqli_stmt_prepare($stmt, $sql)) {
+                        // TODO ERRORHANTERING
+                        return false;
+                    } else {
+                        mysqli_stmt_bind_param($stmt, "ss", $array['1'], $userId);
+                        mysqli_stmt_execute($stmt);
 
+                        mysqli_stmt_close($stmt);
+                        mysqli_close($conn);
+                        return true;
+
+                    }
+                }
+            }
+        }else {
+            // TODO Error
+            header("Location: ../myBooks.php?msg=error");
+            exit();
+        }
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+    return false;
+    }
+}
+function removeList($listName,$userId) {
+    $conn = getConnection();
+    $sql = "SELECT * FROM lists WHERE uid=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $userId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        // listName already in list
+        if(!contains($listName,$array['1'])) {
+            // TODO hantera samma namn error
+        }else {
+            if(!contains(';:',$array['1'])) {
+                $array['1'] = NULL;
+            }else if(contains(';:'.$listName,$array['1'])) {
+                $array['1'] = str_replace(';:'.$listName,'',$array['1']);
+            }else {
+                $array['1'] = str_replace($listName.';:','',$array['1']);
+            }
+            $sql = "UPDATE lists SET listName=? WHERE uid=?";
+            if(!mysqli_stmt_prepare($stmt,$sql)) {
+                // TODO ERRORHANTERING
+                return false;
+            }else {
+                mysqli_stmt_bind_param($stmt, "ss", $array['1'], $userId);
+                mysqli_stmt_execute($stmt);
+            }
+        }
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+    }
+}
+function addbookToList($listName,$bookId,$userId) {
+    $conn = getConnection();
+    $sql = "SELECT * FROM lists WHERE uid=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        // TODO ERRORHANTERING
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $userId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        $lists = $array['1'];
+        $listsBook = $array['2'];
+
+        if($lists == NULL) {
+            // TODO ERROR no list
+        }else {
+            if(!contains(';:',$lists)) {
+                if(strcasecmp($listName,$lists) == 0) {
+                    if($listsBook == NULL) {
+                        $listsBook = $bookId;
+                    }else {
+                        $listsBook =  $listsBook.'::'.$bookId;
+                    }
+                }else {
+                    // TODO ERROR no list with listname
+                }
+            }else {
+                $lists = explode(';:',$array['1']);
+                if($key=array_search($listName,$lists) != false) {
+                    $listsBook = explode(';:',$array['2']);
+                    if($listsBook[strval($key)] == NULL) {
+                        $listsBook[strval($key)] = $bookId;
+                    }else {
+                        $listsBook[strval($key)] =  $listsBook[strval($key)].'::'.$bookId;
+                    }
+                }else {
+                    // TODO ERROR no list with listname
+                }
+            }
+            $tmpListsBook = "";
+            $tmpLists = "";
+            for($x = 0;$x<sizeof($listsBook);$x++) {
+                if($x != 0) {
+                    $tmpListsBook = $tmpListsBook.';:'.$listsBook[strval($x)];
+                    $tmpLists = $tmpLists.';:'.$lists[strval($x)];
+                }else {
+                    $tmpListsBook = $listsBook[strval($x)];
+                    $tmpLists = $lists[strval($x)];
+                }
+            }
+            if($tmpListsBook == "") {
+                $tmpListsBook = NULL;
+            }
+            if($tmpLists == "") {
+                $tmpListsBook = NULL;
+            }
+            $sql = "UPDATE lists SET listName=?,list=? WHERE uid=?";
+            if(!mysqli_stmt_prepare($stmt,$sql)) {
+                // TODO ERRORHANTERING
+                return false;
+            }else {
+                mysqli_stmt_bind_param($stmt, "s", $tmpLists, $tmpListsBook, $userId);
+                mysqli_stmt_execute($stmt);
+            }
+        }
+    }
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+function removeBookFromList($listName,$bookId,$userId) {
+
+}
+
+// HELPER FUNCTIONS
+function contains($needle, $haystack)
+{
+    return strpos($haystack, $needle) !== false;
+}
 
 
 
