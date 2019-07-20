@@ -14,6 +14,7 @@ require "includes/dbh.inc.php";
             <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Books" width="426" height="250">
 
             <?php
+
                 /*if(isset($_SESSION['userId'])) {
                     $userInfo = getUserInfo($_SESSION['userId']);
                     $userInfo['2'] = 'hello23';
@@ -24,7 +25,7 @@ require "includes/dbh.inc.php";
                 }*/
 
                 //echo '<img src="'.$array['9'].'"  width="80" height="80">';
-/*
+                /*
                 $rating = -1;
                 $conn = getConnection();
                 $bookId = 9;

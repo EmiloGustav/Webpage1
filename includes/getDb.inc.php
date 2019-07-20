@@ -1,13 +1,29 @@
 <?php
 require "dbh.inc.php";
 
+function getConnection(){
+    // Starts a connection with the db and returns the connection.
+    $servername = "localhost";
+    $dBUsername = "root";
+    $dBPassword = "";
+    $dBName = "loginsystembok";
+
+    $conn = mysqli_connect($servername, $dBUsername,$dBPassword,$dBName);
+
+    if(!$conn) {
+        die("Connection failed: ".mysqli_connect_error());
+    }
+    return $conn;
+}
 function getUserInfo($userId) {
-    // Returns array with userinfo
+    // Returns array with userinfo, false if sql error
+    // userId is  the id defining the user from session
     $conn = getConnection();
     $sql = "SELECT * FROM info WHERE uid=?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        return "error1";
+        createErrorMsg(__FUNCTION__,"sql-error","userId=".$userId);
+        return false;
     } else {
         mysqli_stmt_bind_param($stmt, 's', $userId);
         mysqli_stmt_execute($stmt);
@@ -19,11 +35,14 @@ function getUserInfo($userId) {
     }
 }
 function getLists($userId) {
+    // Returns user created lists, false if sql error
+    // userId is  the id defining the user from session
     $conn = getConnection();
     $sql = "SELECT * FROM lists WHERE uid=?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        return "error1";
+        createErrorMsg(__FUNCTION__,"sql-error","userId=".$userId);
+        return false;
     } else {
         mysqli_stmt_bind_param($stmt, 's', $userId);
         mysqli_stmt_execute($stmt);
@@ -34,20 +53,173 @@ function getLists($userId) {
         return $array;
     }
 }
+function getCategories($TABLE_NAME) {
+    // Returns the categories for a table with TABLE_NAME, returns false if sql error.
+    // TABLE_NAME is the tables name in db
+    $conn = getConnection();
+    $sql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        createErrorMsg(__FUNCTION__,"sql-error","table_name=".$TABLE_NAME);
+        return false;
+    } else {
+        mysqli_stmt_bind_param($stmt,"s",$TABLE_NAME);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $categories = array();
+        while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
+            array_push($categories,$row['3']);
+        }
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $categories;
+    }
+}
+function getBookByGoogleId($googleId) {
+    // returns book information, returns false if sql error
+    // googleId is the id google uses to identify its books
+    $conn = getConnection();
+    $sql = "SELECT * FROM books WHERE googleId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        createErrorMsg(__FUNCTION__,"sql-error","googleId=".$googleId);
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $googleId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $array;
+    }
+}
+function getBookByBookId($bookId) {
+    // returns book information, returns false if sql error
+    // bookId is our id for the books
+    $conn = getConnection();
+    $sql = "SELECT * FROM books WHERE bookId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        createErrorMsg(__FUNCTION__,"sql-error","bookId=".$bookId);
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $bookId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $array;
+    }
+}
+function getBookByTitleNAuthor($title,$author) {
+    // returns book information, returns false if sql error
+    // title is the title of the book and author is the books author
+    $conn = getConnection();
+    $sql = "SELECT * FROM books WHERE title=? AND author=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        createErrorMsg(__FUNCTION__,"sql-error","title=".$title,"author=".$author);
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "ss", $title,$author);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $array;
+    }
+}
+function getCommentsByBookId($bookId) {
+    // returns comment for book, returns false if sql error
+    // bookId is our id for the books
+    $conn = getConnection();
+    $sql = "SELECT comments FROM books WHERE bookId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        createErrorMsg(__FUNCTION__,"sql-error","bookId=".$bookId);
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "s", $bookId);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_row($result);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $row['0'];
+    }
+}
+
+function addToBookTable($title,$authors,$publisher,$publishedDate,$description,$isbn13,$isbn10,$smallthumbnail,$thumbnail,$textsnippet,$googleId){
+    if ($googleId != NULL) {
+        $conn = getConnection();
+        $sql = "INSERT INTO books (title,author,publisher,published,description,isbn13,isbn10,smallthumbnail,thumbnail,textsnippet,googleId) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            createErrorMsg(__FUNCTION__,"sql-error","title=".$title,"author=".$authors,"publisher=".$publisher,"publishedDate=".$publishedDate,"description=".$description,"isbn13=".$isbn13,"isbn10=".$isbn10,"smallthumbnail=".$smallthumbnail,"thumbnail=".$thumbnail,"textsnippet=".$textsnippet,"googleId=".$googleId);
+            return false;
+        } else {
+            mysqli_stmt_bind_param($stmt, "sssssssssss", $title, $authors, $publisher, $publishedDate, $description, $isbn13, $isbn10, $smallthumbnail, $thumbnail, $textsnippet, $googleId);
+            mysqli_stmt_execute($stmt);
+        }
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+    }else {
+        createErrorMsg(__FUNCTION__,"general-error","googleId null","title=".$title,"author=".$authors,"publisher=".$publisher,"publishedDate=".$publishedDate,"description=".$description,"isbn13=".$isbn13,"isbn10=".$isbn10,"smallthumbnail=".$smallthumbnail,"thumbnail=".$thumbnail,"textsnippet=".$textsnippet,"googleId=".$googleId);
+        return false;
+    }
+}
+function addToBooksNotInGoogle($title) {
+    // Adds books to the db of books not in google
+    $conn = getConnection();
+    $sql = "INSERT INTO booksnotingoogle (title) VALUES (?)";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        createErrorMsg(__FUNCTION__,"sql-error","title=".$title);
+        return false;
+    } else {
+        mysqli_stmt_bind_param($stmt, "s", $title);
+        mysqli_stmt_execute($stmt);
+    }
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+function addComment($comment,$bookId) {
+    // adds comment to book with bookId
+    $conn = getConnection();
+    $sql = "UPDATE books SET comments=? WHERE bookId=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql)) {
+        createErrorMsg(__FUNCTION__,"sql-error","bookId=".$bookId,"comment=".$comment);
+        return false;
+    }else {
+        mysqli_stmt_bind_param($stmt, "ss", $comment,$bookId);
+        mysqli_stmt_execute($stmt);
+    }
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+
 function changeUserData($array) {
+    // Returns the changed userdata
+    // array is all of the userinfo from getUserInfo
     $uid = $array['6'];
     $oldData = getUserInfo($uid);
     $conn = getConnection();
     $categories = getCategories('info');
     if (sizeof($categories) != sizeof($array)) {
-        return "Error";
+        createErrorMsg(__FUNCTION__,"general-error","sizeof categories not matching array size","array=".$array);
+        return false;
     }
     $stmt = mysqli_stmt_init($conn);
     for ($x = 0; $x < sizeof($array); $x++) {
         $var = strval($categories[strval($x)]);
         $sql = "UPDATE info SET  $var=? WHERE uid=$uid";
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            return "error".$sql;
+            createErrorMsg(__FUNCTION__,"sql-error","array=".$array);
+            return false;
         }else{
             if ($oldData[strval($x)] != $array[strval($x)]) {
                 mysqli_stmt_bind_param($stmt, 's', $array[strval($x)]);
@@ -62,47 +234,14 @@ function changeUserData($array) {
     return getUserInfo($uid);
 }
 
-// Returns the categories for a table with TABLE_NAME.
-function getCategories($TABLE_NAME) {
-    $conn = getConnection();
-    $sql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=?";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        return "error";
-    } else {
-        mysqli_stmt_bind_param($stmt,"s",$TABLE_NAME);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $categories = array();
-        while ($row = mysqli_fetch_array($result, MYSQLI_NUM)) {
-            array_push($categories,$row['3']);
-        }
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        return $categories;
-    }
-}
-// Starts a connection with the db and returns the connection.
-function getConnection(){
-    $servername = "localhost";
-    $dBUsername = "root";
-    $dBPassword = "";
-    $dBName = "loginsystembok";
-
-    $conn = mysqli_connect($servername, $dBUsername,$dBPassword,$dBName);
-
-    if(!$conn) {
-        die("Connection failed: ".mysqli_connect_error());
-    }
-    return $conn;
-}
-// returns true if book is in db otherwise false
 function checkBookInDbById($googleId) {
+    // returns true if book is in db otherwise false
+    // googleId is the id google uses the identify the books
     $conn = getConnection();
     $sql = "SELECT googleId FROM books WHERE googleId=?";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
+        createErrorMsg(__FUNCTION__,"sql-error","googleId=".$googleId);
         return false;
     }else {
         mysqli_stmt_bind_param($stmt,"s",$googleId);
@@ -159,117 +298,12 @@ function checkBookInDbByTitleNAuthor($title, $author) {
     }
 }
 
-function addToBookTable($title,$authors,$publisher,$publishedDate,$description,$isbn13,$isbn10,$smallthumbnail,$thumbnail,$textsnippet,$googleId){
-    if ($googleId != NULL) {
-        $conn = getConnection();
-        $sql = "INSERT INTO books (title,author,publisher,published,description,isbn13,isbn10,smallthumbnail,thumbnail,textsnippet,googleId) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        $stmt = mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
-            //TODO ERROR HANTERING
-
-            echo "Error" . $title . $authors . $publisher . $publishedDate . $description . $isbn13, $isbn10 . $smallthumbnail . $thumbnail . $textsnippet . $googleId;
-        } else {
-            mysqli_stmt_bind_param($stmt, "sssssssssss", $title, $authors, $publisher, $publishedDate, $description, $isbn13, $isbn10, $smallthumbnail, $thumbnail, $textsnippet, $googleId);
-            mysqli_stmt_execute($stmt);
-        }
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-    }else {
-        echo "google id == NULL";
-    }
-
-}
-function addToBooksNotInGoogle($title) {
-    echo "add ".$title;
-    $conn = getConnection();
-    $sql = "INSERT INTO booksnotingoogle (title) VALUES (?)";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        //TODO ERROR HANTERING
-
-        echo "Error" . $title;
-    } else {
-        mysqli_stmt_bind_param($stmt, "s", $title);
-        mysqli_stmt_execute($stmt);
-    }
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
-}
-function getBookByGoogleId($googleId) {
-    $conn = getConnection();
-    $sql = "SELECT * FROM books WHERE googleId=?";
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
-        return false;
-    }else {
-        mysqli_stmt_bind_param($stmt, "s", $googleId);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $array = mysqli_fetch_array($result, MYSQLI_NUM);
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        return $array;
-    }
-}
-function getBookByBookId($bookId) {
-    $conn = getConnection();
-    $sql = "SELECT * FROM books WHERE bookId=?";
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
-        return false;
-    }else {
-        mysqli_stmt_bind_param($stmt, "s", $bookId);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $array = mysqli_fetch_array($result, MYSQLI_NUM);
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        return $array;
-    }
-}
-function getBookByTitleNAuthor($title,$author) {
-    $conn = getConnection();
-    $sql = "SELECT * FROM books WHERE title=? AND author=?";
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
-        return false;
-    }else {
-        mysqli_stmt_bind_param($stmt, "ss", $title,$author);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $array = mysqli_fetch_array($result, MYSQLI_NUM);
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        return $array;
-    }
-}
-function getCommentsByBookId($bookId) {
-    $conn = getConnection();
-    $sql = "SELECT comments FROM books WHERE bookId=?";
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
-        return false;
-    }else {
-        mysqli_stmt_bind_param($stmt, "s", $bookId);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $row = mysqli_fetch_row($result);
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        return $row['0'];
-    }
-}
-
 function updateSqlWithRating($rating,$bookId,$removedRating = 0,$changedRating = 0){
     $conn = getConnection();
     $sql = "SELECT * FROM books WHERE bookId=?";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
+        createErrorMsg(__FUNCTION__,"sql-error","rating=".$rating,"bookId=".$bookId,"removedRating=".$removedRating,"changedRating".$changedRating);
         return false;
     }else {
         mysqli_stmt_bind_param($stmt, "s", $bookId);
@@ -281,22 +315,22 @@ function updateSqlWithRating($rating,$bookId,$removedRating = 0,$changedRating =
         (int)$nrOfRatings = $array['14'];
         if($rating == -1 && $removedRating != 0) {
             if($currentRating == NULL){
-                // TODO error borde ej kunna vara null när man kommer till remove
+                createErrorMsg(__FUNCTION__,"general-error","can't remove rating when it's already null","rating=".$rating,"bookId=".$bookId,"removedRating=".$removedRating,"changedRating".$changedRating);
+                return false;
             }else if ((int) $nrOfRatings - 1 < 0) {
-                // TODO error, borde ej kunna gå
+                createErrorMsg(__FUNCTION__,"general-error","nr of ratings < 1 ","rating=".$rating,"bookId=".$bookId,"removedRating=".$removedRating,"changedRating".$changedRating);
+                return false;
             }else if ((int) $nrOfRatings == 1 ){
                 $currentRating = NULL;
                 $nrOfRatings = NULL;
             }else{
-
-                // (4 * 2 - 4) / 1
-                // (4 * 2 - 3 ) / 1
                 $currentRating = (((float)$currentRating*$nrOfRatings)-$removedRating)/($nrOfRatings - 1);
                 $nrOfRatings--;
             }
         }else if ($rating == -2 && $removedRating != 0 && $changedRating != 0){
             if($currentRating == NULL){
-                // TODO error borde ej kunna vara null när man kommer till change
+                createErrorMsg(__FUNCTION__,"general-error","can't change rating when it's already null","rating=".$rating,"bookId=".$bookId,"removedRating=".$removedRating,"changedRating".$changedRating);
+                return false;
             }else if($nrOfRatings == 1) {
                 $currentRating = $changedRating;
             }else{
@@ -313,7 +347,7 @@ function updateSqlWithRating($rating,$bookId,$removedRating = 0,$changedRating =
         }
         $sql = "UPDATE books SET rating=?, nrOfRatings=? WHERE bookId=?";
         if(!mysqli_stmt_prepare($stmt,$sql)) {
-            // TODO ERRORHANTERING
+            createErrorMsg(__FUNCTION__,"sql-error","rating=".$rating,"bookId=".$bookId,"removedRating=".$removedRating,"changedRating".$changedRating);
             return false;
         }else {
             mysqli_stmt_bind_param($stmt, "sss", $currentRating,$nrOfRatings,$bookId);
@@ -323,25 +357,14 @@ function updateSqlWithRating($rating,$bookId,$removedRating = 0,$changedRating =
         mysqli_close($conn);
     }
 }
-function addComment($comment,$bookId) {
-    $conn = getConnection();
-    $sql = "UPDATE books SET comments=? WHERE bookId=?";
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
-        return false;
-    }else {
-        mysqli_stmt_bind_param($stmt, "ss", $comment,$bookId);
-        mysqli_stmt_execute($stmt);
-    }
-}
 
+// BOOKLIST FUNCTIONS
 function addList($listName,$userId){
     $conn = getConnection();
     $sql = "SELECT listName FROM lists WHERE uid=?";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
+        createErrorMsg(__FUNCTION__,"sql-error","error 1","listName=".$listName,"userId".$userId);
         return false;
     }else {
         mysqli_stmt_bind_param($stmt, "s", $userId);
@@ -351,7 +374,7 @@ function addList($listName,$userId){
         if($resultRows == 0) {
             $sql = "INSERT INTO lists (uid,listName,list) VALUES (?,?,?)";
             if(!mysqli_stmt_prepare($stmt,$sql)) {
-                // TODO ERRORHANTERING
+                createErrorMsg(__FUNCTION__,"sql-error","error 2","listName=".$listName,"userId".$userId);
                 return false;
             }else {
                 $null = NULL;
@@ -364,7 +387,7 @@ function addList($listName,$userId){
         }else if($resultRows > 0) {
             $sql = "SELECT * FROM lists WHERE uid=?";
             if(!mysqli_stmt_prepare($stmt,$sql)) {
-                // TODO ERRORHANTERING
+                createErrorMsg(__FUNCTION__,"sql-error","error 3","listName=".$listName,"userId".$userId);
                 return false;
             }else {
                 mysqli_stmt_bind_param($stmt, "s", $userId);
@@ -373,7 +396,8 @@ function addList($listName,$userId){
                 $array = mysqli_fetch_array(mysqli_stmt_get_result($stmt), MYSQLI_NUM);
                 // listName already in list
                 if (contains($listName, $array['1'])) {
-                    // TODO hantera samma namn error
+                    createErrorMsg(__FUNCTION__,"general-error","ListName already in list","listName=".$listName,"userId".$userId);
+                    return false;
                 } else {
                     if ($array['1'] == NULL) {
                         $array['1'] = $listName;
@@ -382,23 +406,20 @@ function addList($listName,$userId){
                     }
                     $sql = "UPDATE lists SET listName=? WHERE uid=?";
                     if (!mysqli_stmt_prepare($stmt, $sql)) {
-                        // TODO ERRORHANTERING
+                        createErrorMsg(__FUNCTION__,"sql-error","error 4","listName=".$listName,"userId".$userId);
                         return false;
                     } else {
                         mysqli_stmt_bind_param($stmt, "ss", $array['1'], $userId);
                         mysqli_stmt_execute($stmt);
-
                         mysqli_stmt_close($stmt);
                         mysqli_close($conn);
                         return true;
-
                     }
                 }
             }
         }else {
-            // TODO Error
-            header("Location: ../myBooks.php?msg=error");
-            exit();
+            createErrorMsg(__FUNCTION__,"general-error","unknown error","listName=".$listName,"userId".$userId);
+            return false;
         }
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
@@ -410,7 +431,7 @@ function removeList($listName,$userId) {
     $sql = "SELECT * FROM lists WHERE uid=?";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
+        createErrorMsg(__FUNCTION__,"sql-error","listName=".$listName,"userId".$userId);
         return false;
     }else {
         mysqli_stmt_bind_param($stmt, "s", $userId);
@@ -419,7 +440,8 @@ function removeList($listName,$userId) {
         $array = mysqli_fetch_array($result, MYSQLI_NUM);
         // listName already in list
         if(!contains($listName,$array['1'])) {
-            // TODO hantera samma namn error
+            createErrorMsg(__FUNCTION__,"general-error","ListName already in list","listName=".$listName,"userId".$userId);
+            return false;
         }else {
             if(!contains(';:',$array['1'])) {
                 $array['1'] = NULL;
@@ -430,7 +452,7 @@ function removeList($listName,$userId) {
             }
             $sql = "UPDATE lists SET listName=? WHERE uid=?";
             if(!mysqli_stmt_prepare($stmt,$sql)) {
-                // TODO ERRORHANTERING
+                createErrorMsg(__FUNCTION__,"sql-error","listName=".$listName,"userId".$userId);
                 return false;
             }else {
                 mysqli_stmt_bind_param($stmt, "ss", $array['1'], $userId);
@@ -446,7 +468,7 @@ function addbookToList($listName,$bookId,$userId) {
     $sql = "SELECT * FROM lists WHERE uid=?";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$sql)) {
-        // TODO ERRORHANTERING
+        createErrorMsg(__FUNCTION__,"sql-error","error 1","listName=".$listName,"userId".$userId,"bookId=".$bookId);
         return false;
     }else {
         mysqli_stmt_bind_param($stmt, "s", $userId);
@@ -501,7 +523,7 @@ function addbookToList($listName,$bookId,$userId) {
             }
             $sql = "UPDATE lists SET listName=?,list=? WHERE uid=?";
             if(!mysqli_stmt_prepare($stmt,$sql)) {
-                // TODO ERRORHANTERING
+                createErrorMsg(__FUNCTION__,"sql-error","error 2","listName=".$listName,"userId".$userId);
                 return false;
             }else {
                 mysqli_stmt_bind_param($stmt, "s", $tmpLists, $tmpListsBook, $userId);
@@ -520,6 +542,28 @@ function removeBookFromList($listName,$bookId,$userId) {
 function contains($needle, $haystack)
 {
     return strpos($haystack, $needle) !== false;
+}
+function createErrorMsg($function,$logName, ...$params) {
+    $timestamp = time();
+    $error = date("F d, Y h:i:s A", $timestamp).': The function '.$function.' generated a sql error with ';
+    if($params != null && gettype($params) == "Array") {
+        $tmp = arrayToString($params,'::');
+    }else {
+        $tmp = $params;
+    }
+    $error = $error.$tmp;
+    error_log($error,3,"./tmp/logs/".$logName.".log" );
+}
+function arrayToString($array, $divider){
+    $tmp="";
+    foreach ($array as $x) {
+        if(gettype($x)=="Array") {
+            $tmp = $tmp.arrayToString($x,'::');
+        }else {
+            $tmp = $tmp.$divider.$x;
+        }
+    }
+    return $tmp;
 }
 
 

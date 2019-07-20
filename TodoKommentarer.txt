@@ -3,11 +3,15 @@ signup.php
 
 getDb.inc.php
 - Fixa någon typ av error hantering här.
+- se till så att connectionen är stäng överallt i getDB.inc.php
+- kolla över alla eroors vilka som inte borde loggas
 
 Övrigt
 - skapa en .htacess fil så att vi kan ha snygga url's
 - göra så att det inte går att ha ;: och :: i fält som ska fyllas i
 - hasha idn som ges till varje person och inte ha siffror utan blandat siffror och bokstyäver
+
+
 
 Bra att ha:
  För att se array struktur så kan man göra "echo print_r($array)"
