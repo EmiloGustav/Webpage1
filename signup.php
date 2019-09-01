@@ -76,6 +76,7 @@ require "header.php";
                             <div id="floatleft">Land: </div>
                             <div id="floatright"><?php readfile('html/countryDropdown.html'); ?></div>
                         </li>
+                        <li><p>Genom att klicka Registrera, så accepterar du BonoLibros användarvillkor.</p></li>
                         <li id="space"><button type="submit" name="signup-submit">Registrera</button></li>
                     </ul>
                 </form>

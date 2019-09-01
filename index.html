@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BonoLibro</title>
+    <style>
+        body {
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(100px, auto);
+            grid-gap: 10px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        
+        @media screen and (min-width: 760px) {
+            .content {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-auto-rows: minmax(100px, auto);
+                grid-gap: 10px;
+                max-width: 960px;
+                margin: 0 auto;
+            }
+        }
+        
+        .content>* {
+            background: #3bbced;
+            padding: 30px;
+        }
+        
+        .header {
+            grid-column: 1 / 5;
+        }
+        
+        .banner {
+            grid-column: 1 / 5;
+        }
+        
+        section {
+            grid-column: 1 / 5;
+        }
+        
+        footer {
+            grid-column: 1 / 5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="header">
+            <h1>BONOLIBRO</h1>
+        </div>
+        <div class="banner">
+            <h2>Din nya favoritbok väntar på dig.</h2>
+        </div>
+        <section>Section</section>
+        <section>Section</section>
+        <footer>Footer</footer>
+    </div>
+</body>
+
+</html>

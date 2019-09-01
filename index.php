@@ -1,10 +1,10 @@
 <?php
 include "includes/getDb.inc.php";
-require 'header.php';
+require 'header.php'
 
 //$array = getBookById('2E5OAgAAQBAJ');
 ?>
-<main class="container">
+<div class="container">
 
     <link href="https://fonts.googleapis.com/css?family=Catamaran&display=swap" rel="stylesheet">
 
@@ -29,11 +29,8 @@ require 'header.php';
 
         .index-banner {
             width: 100%;
-            height: 50vh;
-            background-image: url('images/bookshelf.jpg');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
+            height: 100vh;
+            background-color: #3F3F3F;
             display: table;
         }
 
@@ -44,49 +41,47 @@ require 'header.php';
 
         .index-banner h2 {
             font-family: 'Catamaran', sans-serif;
-            font-size: 60px;
+            font-size: 55px;
             font-weight: 900;
             color: #fff;
             text-align: center;
-            text-shadow: 2px 2px 4px #111;
         }
 
         .index-banner p {
-            max-width: 900px;
+            max-width: 600px;
             margin: auto;
             font-family: 'Catamaran', sans-serif;
-            font-size: 28px;
+            font-size: 20px;
             font-weight: 100;
-            line-height: 38px;
+            line-height: 28px;
             color: #fff;
             text-align: center;
-            text-shadow: 2px 2px 4px #111;
         }
 
-        .register-button button {
-            background: rgb(66, 184, 221, 0.8);
-            border: none;
-            border-radius: 6px;
+        .getstarted-a {
+            background: none;
+            border: 2px solid white;
             color: white;
-            padding: 10px 25px;
-            text-align: center;
-            margin-top: 25px;
+            padding: 10px 20px;
+            margin-top: 40px;
             text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 13px;
             cursor: pointer;
+            transition: background-color 0.5s;
         }
 
-        .register-button button:hover {
-            background: rgb(66, 184, 221);
+        a.getstarted-a:hover {
+            background-color: #fff;
+            color: black;
         }
 
         .main-content {
-            max-width: 1000px;
+            max-width: 1150px;
             margin: auto;
             margin-top: 10px;
             display: grid;
-            grid-template-columns: 60% 40%;
+            grid-template-columns: 100%;
             grid-column-gap: 1em;
             grid-row-gap: 1em;
             align-content: center;
@@ -94,9 +89,65 @@ require 'header.php';
         }
 
         .main-content>div {
-            border-top: 1px solid;
-            border-top-color: lightgray;
             padding: 1em;
+        }
+
+        .box-1 {
+            height: 100vh;
+            margin-top: 200px;
+            display: grid;
+            grid-template-columns: 55% 45%;
+        }
+
+        .box-1 hr {
+            border: 2px solid orange;
+            margin-right: 100%;
+            float: left;
+            width: 80px;
+        }
+
+        .box-1 h1.box1-title {
+            background: #fff;
+            color: #111;
+            float: left;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 40px;
+        }
+
+        .box-1 p {
+            float: left;
+            margin: auto;
+            margin-top: 10px;
+            line-height: 25px;
+            color: #737373;
+        }
+
+        .down-arrow {
+            grid-column-start: 1;
+            grid-column-end: 2;
+        }
+
+        .box-2 {
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+
+        .register-button {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 40px;
+            text-decoration: none;
+            font-family: 'Catamaran', sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.5s;
+        }
+
+        .register-button button:hover {
+            background-color: #fff;
+            color: black;
         }
 
         input[type=text],
@@ -144,63 +195,63 @@ require 'header.php';
         }
     </style>
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-
     <?php
     if (!isset($_SESSION['userId'])) {
         ?>
-        <header>
-            <a href="index.html" class="header-logo">BonoLibro</a>
-
-            <?php
-            if (!isset($_SESSION['userId'])) {
-                echo '  
-                    <form action="includes/login.inc.php" method="post">
-                        <button type="submit" name="login-submit" class="login-button"><span>Logga in</span></button>
-                        <input type="password" placeholder="Lösenord..." name="password" id="right" style="width:106px;">
-                        <input type="text" placeholder="Användarnamn..." name="username" id="right">
-                    </form>';
-            } else {
-                echo '
-                    <form action="includes/logout.inc.php" method="post">
-                       <button type="submit" name="logout-submit" id="right"><span>Logga ut</span></button>
-                    </form>
-                    <a href="myProfile.php" id="profile">', $_SESSION['userUid'], '\'s profil </a>
-                    ';
-            }
-            ?>
-
-        </header>
 
         <section class="index-banner">
             <div class="vertical-center">
-                <h2>Utforska världens böcker.</h2>
-                <p>På BonoLibro kan du hitta nästa spännande läsning, följa författare eller andra läsare...</p>
-                <form action="signup.php">
+                <h2>Din nya favoritbok väntar på dig.</h2>
+                <p>Samlar dina böcker som du har läst, ska läsa eller vill läsa.</p>
+
+                <a class="getstarted-a" href="#box-1">KOM IGÅNG</a>
+
+                <!--<form action="signup.php">
                     <div class="register-button" style="text-align:center">
-                        <button type="submit">Skapa ett konto</button>
-                    </div>
+                        <button type="submit" onclick="scrollFunction()">KOM IGÅNG</button>
+                    </div>-->
+
                 </form>
             </div>
 
         </section>
+
         <section class="main-content">
-            <div class="box-1">
-                <h2>Semesterns populäraste böcker</h2>
-                <p>BonoLibro har sammanställt de populäraste böckerna och författarna enligt er användare.</p>
-                <button type="button" class="findsummerbook-button">Hitta sommarens bok</button>
-            </div>
-            <div class="box-2">
-                <h1>Här är en lista eller slideshow.</h1>
-            </div>
-            <div class="box-3">
-                <h2>Är du författare eller utgivare?</h2>
-                <p>Gör reklam för böcker eller ett förlag och nå ut till BonoLibros användare.</p>
-                <button type="button" class="makead-button">Gör reklam</button>
-            </div>
-            <div class="box-4">
-                <h1>Här är reklam.</h1>
-            </div>
+            <section id="box-1">
+                <div class="box-1">
+                    <div class="image-side">
+                        <img src="images/books-and-beach.jpg" height="343px" width="530px">
+                    </div>
+                    <div class="description-side">
+                        <hr>
+                        <h1 class="box1-title">BonoLibro</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit
+                            amet ultricies est. Pellentesque non leo eget dui pulvinar hendrerit. Pellentesque non leo eget dui pulvinar hendrerit.</p>
+                        <form action="signup.php">
+                            <div class="register-button" style="text-align:center">
+                                <button type="submit">Starta ett konto</button>
+                            </div>
+                        </form>
+                    </div>
+                    <a href="#box-2" width="60" height="60">
+                        <img id="down-arrow" src="images/down-arrow.png" width="60" height="60">
+                    </a>
+                </div>
+            </section>
+
+            <section id="box-2">
+                <div class="box-2">
+                    <div class="image-side">
+                        <img src="images/fahrenheit.jpg" height="300px" width="200px">
+                    </div>
+                    <div class="description-side">
+                        <h2>Semesterns populäraste böcker</h2>
+                        <p>BonoLibro har sammanställt de populäraste böckerna och författarna enligt er användare.</p>
+                        <button type="button" class="findsummerbook-button">Hitta sommarens bok</button>
+                    </div>
+                </div>
+            </section>
+
         </section>
 
     <?php
@@ -211,7 +262,7 @@ require 'header.php';
                 <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop& w =1050&q=80" a l t="Books" wi d th="4 26" height="250">
 
                 <?php
-                /*if(isset($_SESSION['userId'])) {
+                    /*if(isset($_SESSION['userId'])) {
                         $userInfo = getUserInfo($_SESSION['userId']);
                         $userInfo['2'] = 'hello23';
                         $newUserInfo=changeUserData($userInfo);
@@ -220,13 +271,13 @@ require 'header.php';
                         echo print_r($newUserInfo);
                     }*/
 
-                //echo '<img src="'.$array['9'].'"  width="80" height="80">';
-                if (isset($_GET["newpwd"])) {
-                    if ($_GET["newpwd"] == "passwordupdated") {
-                        echo '<p class="signupsucess">Ditt lösenord har blivit återställt!</p>';
+                    //echo '<img src="'.$array['9'].'"  width="80" height="80">';
+                    if (isset($_GET["newpwd"])) {
+                        if ($_GET["newpwd"] == "passwordupdated") {
+                            echo '<p class="signupsucess">Ditt lösenord har blivit återställt!</p>';
+                        }
                     }
-                }
-                ?>
+                    ?>
             </div>
 
             <div class=" col ">
@@ -267,19 +318,19 @@ require 'header.php';
 
             <div class=" col ">
                 <?php
-                if (!isset($_SESSION['userId'])) {
-                    echo '
+                    if (!isset($_SESSION['userId'])) {
+                        echo '
                     <h2 class="newUserMessage">
                         Ny här? <a href="signup.php">Skapa ett konto gratis!</a>
                     </h2>
                     ';
-                } else {
-                    echo ' <h2 class= "newUserMessage">
+                    } else {
+                        echo ' <h2 class= "newUserMessage">
                     Välkommen!
                     </h2>
                     ';
-                }
-                ?>
+                    }
+                    ?>
 
             </div>
         </div>
@@ -288,9 +339,10 @@ require 'header.php';
     }
     ?>
 
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
     <script src="js/index.js"></script>
 
-</main>
+</div>
 
 <?php
 require  "footer.php"
