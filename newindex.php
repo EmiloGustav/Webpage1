@@ -1,109 +1,100 @@
-<!DOCTYPE html>
-<html>
-<html lang="en">
-
-<head>
-    <title>BonoLibro</title>
-    <meta name="author" content="Gustav och Emil">
-
-    <link rel="stylesheet" type="text/css" href="css/styleNewIndex.css">
-
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-</head>
-
-<body>
-    <div class="content">
-        <?php
-        if (!isset($_SESSION['userId'])) {
-            ?>
-            <header>
-                <div class="header_container">
-                    <a href="newindex.php" class="header-logo">BONOLIBRO</a>
-                    <div class="menu_login_container">
-                        <?php
-                            if (!isset($_SESSION['userId'])) {
-                                echo '  
-                                    <form action="includes/login.inc.php" method="post">    
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                     <label for="username">Användarnamn</label>
-                                                </td>
-                                                <td>
-                                                    <label for="password">Lösenord</label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" placeholder="Användarnamn..." name="username" id="right" style="width:130px;">
-                                                </td>
-                                                <td>
-                                                    <input type="password" placeholder="Lösenord..." name="password" id="right" style="width:130px;">
-                                                </td>
-                                                <td>
-                                                    <button type="submit" name="login-submit" class="login-button"><span>Logga in</span></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <a href="reset-password.php" id="forgot-password-link">Glömt lösenordet?</a>
-                                                </td>
-                                            </tr>
-                                            </table>
-                                    </form>';
-                            } else {
-                                echo ' 
-                <form action="includes/logout.inc.php" method="post">
-                <button type="submit" name="logout-submit" id="right"><span>Logga ut</span></button>
-                </form>
-                <a href="myProfile.php" id="profile">', $_SESSION['userUid'], '\'s profil </a>
-                    ';
-                            }
-                            ?>
-                    </div>
-                </div>
-            </header>
-
-            <section id="banner">
-                <h1>Din nya favoritbok väntar på dig.</h1>
-                <p>Samlar dina böcker som du har läst, ska läsa eller vill läsa.</p>
-                <a href="signup.php" id="banner-registerlink">Starta ett konto</a>
-                <br>
-                <br>
-                <a href="#section1">LÄS MER</a>
-            </section>
-
-            <section id="section1">
-                <div class="nested">
-                    <img src="images/books-and-beach.jpg" height="343px" width="530px">
-                    <div class="description">
-                        <hr>
-                        <h1 class="box1-title">Kom igång</h1>
-                        <p>Genom att starta ett konto får du möjligheten att börja samla dina böcker som du har läst, ska läsa eller vill läsa på en och samma plats.</p>
-                        <a href="signup.php" id="s1-registerlink">Starta ett konto</a>
-                    </div>
-                    <a href="#section2" id="down-arrow">
-                        <img id="down-arrow" src="images/down-arrow.png" width="60" height="60">
-                    </a>
-                </div>
-            </section>
-
-            <footer id="footer">
-
-            </footer>
-
-        <?php
-        } else {
-
-            ?>
-        <?php }
+<?php
+include "includes/getDb.inc.php";
+require 'header.php'
+?>
+<div class="content">
+    <?php
+    if (!isset($_SESSION['userId'])) {
         ?>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
-    <script src="js/index.js"></script>
+        <div class="global_container">
+            <div class="global_container_grid">
+                <div class="description_container">
+                    <h1>Välkommen</h1>
+                    <p>På BonoLibro kan du samla alla dina böcker som du har läst, läser eller vill läsa. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis cumque delectus repellat reiciendis. Dolorum sapiente doloribus harum optio, laborum ducimus voluptatibus aliquam culpa necessitatibus blanditiis doloremque veritatis, quis nobis perspiciatis.</p>
+                    
+                    <h1 id="createNewAccountH1">Är du ny här?</h1>
+                    <p>Fyll i informationen nedan och klicka sedan Skapa konto</p>
 
-</body>
+                    <?php
+                        if (isset($_GET['error'])) {
+                            if ($_GET['error'] == 'emptyfields') {
+                                echo '<div class="error">Alla fälten var inte ifyllda!</div>';
+                            } else if ($_GET['error'] == 'invalidemailusername') {
+                                echo '<div class="error">Både e-post och användernamn var otillåtna eller redan tagna!</div>';
+                            } else if ($_GET['error'] == 'invalidemail') {
+                                echo '<div class="error">Din e-post var otillåtet eller redan tagen!</div>';
+                            } else if ($_GET['error'] == 'invalidusername') {
+                                echo '<div class="error">Ditt användarnamn var otillåtet eller redan tagen!</div>';
+                            } else if ($_GET['error'] == 'pwdcheck') {
+                                echo '<div class="error">Lösenorden överensstämmer inte!</div>';
+                            } else if ($_GET['error'] == 'usertaken') {
+                                echo '<div class="error">Användernamnet eller e-posten används redan!</div>';
+                            }
+                        }
+                        ?>
+                    <form action="includes/signup.inc.php" method="post">
+                        <table class="table_registration">
+                            <tr>
+                                <td>
+                                    <?php
+                                        if (isset($_GET['username'])) {
+                                            echo '<div id="floatright"><input type="text" autocomplete="off" placeholder="Användarnamn" name="username" id="username" value="' . $_GET['username'] . '"></div>';
+                                        } else {
+                                            echo '<div id="floatright"><input type="text" autocomplete="off" placeholder="Användarnamn" name="username" id="username"></div>';
+                                        }
+                                        ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" name="email" placeholder="E-postaddress">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="password" placeholder="Lösenord" name="password" id="user_password_signup">
+                                </td>
+                                <td>
+                                    <input type="password" placeholder="Återupprepa lösenord" name="password" id="user_repassword_signup">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" placeholder="Förnamn" name="firstname">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="Efternamn" name="lastname">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="submit" name="signup-submit" class="signup-button">Skapa konto</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <p class="linkToTandC">Genom att klicka på Skapa konto godkänner du våra <a href="">användarvillkor</a>. Du kan läsa mer om hur vi samlar in och använder din data i vår <a href="">datapolicy</a> och hur vår <a href="">cookiespolicy</a> ser ut.</p>
+                </div>
 
-</html>
+                <div class="reg_container">
+                    <h1>Topplistor</h1>
+                    <ul>
+                        <li><a href="#">Bästa 2019</a></li>
+                        <li><a href="#">Bästa genom tiderna</a></li>
+                        <li><a href="#">Bästa i Sverige</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <?php
+    } else {
+
+        ?>
+    <?php }
+    ?>
+</div>
+<?php
+require 'footer.php'
+?>
