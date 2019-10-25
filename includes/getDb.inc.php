@@ -151,6 +151,7 @@ function getCommentsByBookId($bookId) {
         return $row['0'];
     }
 }
+// TODO getBookID
 
 function addToBookTable($title,$authors,$publisher,$publishedDate,$description,$isbn13,$isbn10,$smallthumbnail,$thumbnail,$textsnippet,$googleId){
     if ($googleId != NULL) {
