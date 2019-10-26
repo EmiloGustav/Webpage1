@@ -540,8 +540,7 @@ function removeBookFromList($listName,$bookId,$userId) {
 }
 
 // HELPER FUNCTIONS
-function contains($needle, $haystack)
-{
+function contains($needle, $haystack){
     return strpos($haystack, $needle) !== false;
 }
 function createErrorMsg($function,$logName, ...$params) {

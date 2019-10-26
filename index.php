@@ -7,7 +7,15 @@ require "includes/dbh.inc.php";
 <main class="container">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
+    <style>
+        #submit-bug {
+            height: 100%;
+            width: 0%;
+            overflow-x: hidden;
+            transition: 0.5s;
+            right: 100%
+        }
+    </style>
 
     <div class="workspace">
         <div class="col">
@@ -150,10 +158,28 @@ require "includes/dbh.inc.php";
                 ';
             }
             ?>
-
+            <div id="submit-bug-btn">
+                <button class="open-btn" onclick="openBug()">lalallaa</button>
+            </div>
+            <div id="submit-bug">
+                <form method="post" action="includes/send-email.php">
+                    <input type="text" name="name" placeholder="För och efternamn">
+                    <input type="text" name="email" placeholder="Email">
+                    <textarea type="text" name="meat" placeholder="Beskriv ditt fel"></textarea>
+                </form>
+            </div>
         </div>
     </div>
     <script src="js/index.js"></script>
+    <script>
+        function openBug(){
+            if(getComputedStyle(document.getElementById("submit-bug")).width === "0px") {
+                document.getElementById("submit-bug").style.width = "100%"
+            }else {
+                document.getElementById("submit-bug").style.width = "0%"
+            }
+        }
+    </script>
 </main>
 
 

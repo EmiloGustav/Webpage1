@@ -166,6 +166,7 @@ if (isset($_SESSION['userId'])) {
         <div class="list-container">';
             // TODO lägga till bilder som "previewar" vad som finns i listan
             // TODO stylea listorna
+            // TODO kolla vilak tecken man får ha i listorna.
             //$userunfo = getUserInfo($_SESSION['userId']);
             $tbr = $userinfo['1'];
             $hr = $userinfo['2'];
@@ -176,12 +177,14 @@ if (isset($_SESSION['userId'])) {
             if($numberOfLists != NULL) {
                 $lists = getLists($_SESSION['userId']);
                 if(!contains(';:',$lists['1'])) {
-                    echo '<li><a href="myBooks.php?list='.$lists['1'].'">'.$lists['1'].'</a><button class="closeBtn" onclick=deleteList("'.$lists['1'].'");>&times;</button></li>';
+                    $delfkn="deleteList('".$lists['1']."');";
+                    echo '<li><a href="myBooks.php?list='.$lists['1'].'">'.$lists['1'].'</a><button class="closeBtn" onclick="'.$delfkn.'">&times;</button></li>';
                 }else {
                     $listname = explode(';:',$lists['1']);
                     $listArticles = explode(';:',$lists['2']);
                     foreach ($listname as $x) {
-                        echo '<li><a href="myBooks.php?list='.$x.'">'.$x.'</a><button class="closeBtn" onclick=deleteList("'.$x.'");>&times;</button></li>';
+                        $delfkn="deleteList('".$x."');";
+                        echo '<li><a href="myBooks.php?list='.$x.'">'.$x.'</a><button class="closeBtn" onclick='.$delfkn.'>&times;</button></li>';
                     }
                 }
             }
@@ -487,7 +490,7 @@ if (isset($_SESSION['userId'])) {
             modal.style.display='block';
             var mc = document.getElementById('modalContent');
             var h6 = document.createElement('H6');
-            h6.innerText = 'Är du säker på att du vill ta bort listan '+listName+' och alla böcker i den?';
+            h6.innerText = 'Är du säker på att du vill ta bort listan '+listName.replace('+nsh+',' ' )+' och alla böcker i den?';
             var btnYes = document.createElement('A');
             btnYes.innerText = "Ja";
             btnYes.setAttribute('href','includes/lists.inc.php?type=removeList&listName='+listName);

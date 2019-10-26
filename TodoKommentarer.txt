@@ -1,5 +1,6 @@
 signup.php
 - Kanske lägga till stjärnor för vilka av fälten som måste fyllas i.
+- lägga till så att man inte kan bli sql injectad i lösenord eller användarnamn.
 
 getDb.inc.php
 - Fixa någon typ av error hantering här.
@@ -15,3 +16,5 @@ getDb.inc.php
 
 Bra att ha:
  För att se array struktur så kan man göra "echo print_r($array)"
+
+Fortsätta med att hantera listorna där det inte får vara spaces utan istället ersatt med +nsh+
