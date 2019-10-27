@@ -1,0 +1,230 @@
+body,
+html {
+    height: calc(100% - 2em);
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: #00342c;
+    /* Old browsers */
+    background: -moz-linear-gradient(45deg, #00342c 0%, #00f7bd 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #00342c 0%, #00f7bd 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #00342c 0%, #00f7bd 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00342c', endColorstr='#00f7bd', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+aside {
+    display: grid;
+    grid-template-columns: auto 40px;
+    padding: 2em;
+}
+
+aside figure {
+    margin: 0;
+}
+
+#logotype {
+    display: none;
+}
+
+aside figure figcaption {
+    color: #fff;
+    font-size: 1.6em;
+    font-weight: 100;
+}
+
+#menu-icon {
+    width: 40px;
+    cursor: pointer;
+}
+
+aside nav {
+    background-color: #fff;
+}
+
+.active {
+    position: absolute;
+    display: block;
+    background: #fff;
+    width: 50%;
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+
+ul {
+    display: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul hr {
+    border: 0;
+    height: 1px;
+    width: 90%;
+    background: #d1d1d1;
+}
+
+ul li a {
+    text-decoration: none;
+    font-size: 1.1em;
+    display: block;
+    padding: 1em 1.5em;
+    background-color: rgba(255, 255, 255, 0.35);
+    color: #111;
+    font-size: 16px;
+}
+
+main {
+    background-color: #f9f9f9;
+    padding: 1em 1em;
+}
+
+main h1 {
+    font-size: 18px;
+}
+
+#title-mobile {
+    margin: 0;
+}
+
+#title-desktop {
+    display: none;
+}
+
+main p {
+    font-size: 1.1em;
+    line-height: 1.5em;
+}
+
+.cna {
+    display: block;
+    color: white;
+    background: rgb(43, 161, 140);
+    text-decoration: none;
+    padding: 8px 50px;
+    font-size: 1.2em;
+    text-align: center;
+    border-radius: 4px;
+    margin: 2em 0;
+}
+
+.main-container-listOfPopularBooks {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-size: 14px;
+    padding: 0.5em;
+    background: #ffffff;
+    border: 1px solid #868686;
+    border-radius: 3px;
+}
+
+.main-container-listOfPopularBooks img {
+    max-width: 30%;
+    max-height: 30%;
+}
+
+.main-container-listOfPopularBooks a:not(.img-link) {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 17px;
+    color: rgb(255, 255, 255);
+    padding: 0.5em;
+    margin: 5px;
+    border: 1px solid rgb(110, 110, 110);
+    background: rgb(43, 161, 140);
+    transition: 0.3s;
+}
+
+.main-container-latestUpdates,
+.main-container-ads {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-size: 14px;
+    padding: 0.5em;
+    background: #ffffff;
+    border: 1px solid #868686;
+    border-radius: 3px;
+}
+
+@media only screen and (min-width: 768px) {
+    body {
+        display: grid;
+        grid-template-columns: 20% auto;
+        padding: 2em;
+    }
+    button,
+    input {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+    #menu-icon {
+        display: none;
+    }
+    aside {
+        background: #727272;
+        grid-template-columns: auto;
+        grid-template-rows: 25% 75%;
+        padding: 0;
+    }
+    figure {
+        text-align: center;
+    }
+    #logotype {
+        display: block;
+        padding: 1em;
+        max-width: 50%;
+        max-height: 50%;
+        margin: 0 auto;
+    }
+    nav {
+        background: none;
+    }
+    ul {
+        display: block;
+        background: #706f6f;
+        margin-top: 1em;
+        position: relative !important;
+        background: none !important;
+        width: 100% !important;
+    }
+    main {
+        padding: 3em;
+        margin-left: 20px;
+        margin-right: 0;
+        background: #f9f9f9 url('images/artshape.svg') no-repeat bottom right;
+        background-size: 35%;
+        display: grid;
+        grid-template-columns: 70% 30%;
+    }
+    .main-leftColumn {
+        margin-right: 40px;
+    }
+    #title-desktop {
+        display: block;
+        font-size: 2.8em;
+        margin: 0;
+    }
+    #title-mobile {
+        display: none;
+    }
+    main p {
+        font-size: 1.1em;
+        line-height: 1.5em;
+    }
+    .cna {
+        display: none;
+        font-size: 1.1em;
+        padding: .7em 2em;
+    }
+}

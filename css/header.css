@@ -8,7 +8,7 @@
 
 .inner-header {
     height: 100%;
-    width: 890px;
+    width: 1200px;
     display: block;
     margin: 0 auto;
 }
@@ -29,8 +29,8 @@
     font-family: 'Berkshire Swash', cursive;
     font-size: 40px;
     text-decoration: none;
-    background: -webkit-linear-gradient(to bottom, #1d976c, #4fff90);
-    background: linear-gradient(to bottom, #1d976c, #4fff90);
+    background: -webkit-linear-gradient(to right, #cb356b, #bd3f32);
+    background: linear-gradient(to right, #cb356b, #bd3f32);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

@@ -30,7 +30,7 @@ session_start();
             ?>
             <div class="inner-header">
                 <div class="logo-container">
-                    <h1><a href="index.php">BonoLibro</a></h1>
+                    <h1><a href="newindex.php">BonoLibro</a></h1>
                 </div>
 
                 <div class="login-container">
