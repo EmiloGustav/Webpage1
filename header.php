@@ -10,74 +10,57 @@ session_start();
     <meta name="description" content="This will often show up in search results">
     <meta name="viewport" content="width=device-width, initial scale=1">
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/Navigation.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
 
+    <link rel="stylesheet" type="text/css" href="css/styleNewIndex.css">
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">-->
 
-    <title>Böcker</title>
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash&display=swap" rel="stylesheet">
+
+    <title>BonoLibro</title>
 </head>
 
 <body>
-    <header>
-        <h1>Böcker</h1>
-        <nav id="navbar">
-            <div class="workspace">
-                <div class="col">
-                    <ul>
-                        <li><a href="index.php">Hem</a></li>
-                        <li><a href="myBooks.php">Mina böcker</a></li>
-                        <li><a href="isprinsessan_camilla_lackberg.php">En bok</a></li>
-                    </ul>
+    <div class="header">
+        <!-- Header for NOT logged in users. -->
+        <?php
+        if (!isset($_SESSION['userId'])) {
+            ?>
+            <div class="inner-header">
+                <div class="logo-container">
+                    <h1><a href="newindex.php">BonoLibro</a></h1>
+
                 </div>
-                <div class="col">
-                    <div class="search">
-                        <form action="SearchResult.php" method="get">
-                            <input id="search" type="text" placeholder="Sök efter en bok" name="book">
-                        </form>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="login-container">
-                        <?php
-                        if(!isset($_SESSION['userId'])){
-                            echo '  
-                                    <form action="signup.php" method="post">
-                                        <button type="submit" name="signup"><span>Skapa konto</span></button>
-                                    </form>
-                                    
-                                    <form action="includes/login.inc.php?page='.$_SERVER['REQUEST_URI'].'" method="post">
-                                        <button type="submit" name="login-submit"><span>Login</span></button>
-                                        <input type="password" placeholder="Lösenord..." name="password" id="right" style="width:106px;">
-                                        <input type="text" placeholder="Användarnamn..." name="username" id="right">
-                                    </form>';
-                        }else {
-                            echo '
-                                    <form action="includes/logout.inc.php?page='.$_SERVER['REQUEST_URI'].'" method="post">
-                                        <button type="submit" name="logout-submit" id="right"><span>Logga ut</span></button>
-                                    </form>
-                                    <a href="myProfile.php" id="profile">',$_SESSION['userUid'],'\'s profil </a>
-                                    ';
-                        }
-                        ?>
-                    </div>
+
+                <div class="login-container">
+                    <form action="includes/login.inc.php" method="post">
+                        <input type="text" placeholder="Användarnamn..." name="username" autocomplete="off">
+                        <input type="password" placeholder="Lösenord..." name="password">
+                        <button type="submit" name="login-submit" class="login-button"><span>Logga in</span></button>
+                    </form>
                 </div>
             </div>
-        </nav>
-    </header>
-    <script type="text/javascript">
-        window.onscroll = function(){
-            followPage();
-        }
-        var navbar = document.getElementById("navbar");
-        var sticky=navbar.offsetTop
 
-        function followPage() {
-            if(window.pageYOffset >= sticky){
-                navbar.classList.add("sticky")
-            }else {
-                navbar.classList.remove("sticky")
-            }
+            <!-- Header for logged in users. -->
+        <?php
+        } else { ?>
+            <div class="inner-header">
+                <div class="logo-container">
+                    <h1><a href="index.php">BonoLibro</a></h1>
+                </div>
+
+                <ul class="navigation">
+                    <li>
+                        <form action="includes/logout.inc.php" method="post">
+                            <button type="submit" name="logout-submit" id="right"><span>Logga ut</span></button>
+                        </form>
+                        <a href="myProfile.php" id="profile">'s profil </a>
+                    </li>
+                </ul>
+            </div>
+        <?php
         }
-    </script>
+        ?>
+
+    </div>

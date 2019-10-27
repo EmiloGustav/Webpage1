@@ -11,7 +11,7 @@ $userInfo = getUserInfo($_SESSION["userId"]);
     5: ratings
     6: uid
     7: country
-    8: firstname
+    8: firstname   
     9: surname
     10: dateRegistered
     11: about

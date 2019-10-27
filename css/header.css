@@ -1,0 +1,83 @@
+.header {
+    grid-area: 1 / 5;
+    height: 60px;
+    margin: 0 auto;
+    display: block;
+    border-bottom: 1px solid #ddd;
+}
+
+.inner-header {
+    height: 100%;
+    width: 1200px;
+    display: block;
+    margin: 0 auto;
+}
+
+.logo-container {
+    height: 100%;
+    display: table;
+    float: left;
+}
+
+.logo-container h1 {
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.logo-container h1 a {
+    font-family: 'Berkshire Swash', cursive;
+    font-size: 40px;
+    text-decoration: none;
+    background: -webkit-linear-gradient(to right, #cb356b, #bd3f32);
+    background: linear-gradient(to right, #cb356b, #bd3f32);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.inner-header .login-container {
+    height: 100%;
+    display: table;
+    float: right;
+}
+
+.login-container form {
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.login-container input[type=text] {
+    padding: 6px;
+    width: 120px;
+}
+
+.login-container input[type=password] {
+    padding: 6px;
+    width: 120px;
+}
+
+.login-container button {
+    padding: 6px;
+    background: #ddd;
+    border: none;
+    cursor: pointer;
+}
+
+.navigation {
+    height: 100%;
+    margin: 0;
+    float: right;
+}
+
+.navigation a li {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    font-size: 16px;
+}
+
+.navigation a:hover {
+    color: #fff;
+    background-color: rgb(1, 100, 158);
+}
