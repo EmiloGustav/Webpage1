@@ -1,19 +1,19 @@
 <?php
 include "includes/getDb.inc.php";
-require 'header.php'
-
+require "includes/dbh.inc.php";
 //$array = getBookById('2E5OAgAAQBAJ');
 ?>
 <div class="container">
-
-    <link href="https://fonts.googleapis.com/css?family=Catamaran&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <style>
-        header {
-            background-color: #fff;
-            width: 100%;
-            height: 35px;
+        #submit-bug {
+            height: 100%;
+            width: 0%;
+            overflow-x: hidden;
+            transition: 0.5s;
+            right: 100%
         }
+    </style>
 
         header .header-logo {
             float: left;
@@ -26,13 +26,12 @@ require 'header.php'
             text-decoration: none;
             display: block;
         }
+            <?php
 
-        .index-banner {
-            width: 100%;
-            height: 100vh;
-            background-color: #3F3F3F;
-            display: table;
-        }
+                /*if(isset($_SESSION['userId'])) {
+                    $userInfo = getUserInfo($_SESSION['userId']);
+                    $userInfo['2'] = 'hello23';
+                    $newUserInfo=changeUserData($userInfo);
 
         .vertical-center {
             display: table-cell;
@@ -46,17 +45,80 @@ require 'header.php'
             color: #fff;
             text-align: center;
         }
+                //echo '<img src="'.$array['9'].'"  width="80" height="80">';
+                /*
+                $rating = -1;
+                $conn = getConnection();
+                $bookId = 9;
+                $removedRating=5;
 
-        .index-banner p {
-            max-width: 600px;
-            margin: auto;
-            font-family: 'Catamaran', sans-serif;
-            font-size: 20px;
-            font-weight: 100;
-            line-height: 28px;
-            color: #fff;
-            text-align: center;
-        }
+                $sql = "SELECT * FROM books WHERE bookId=?";
+                $stmt = mysqli_stmt_init($conn);
+                if(!mysqli_stmt_prepare($stmt,$sql)) {
+                    // TODO ERRORHANTERING
+                    return false;
+                }else {
+                    mysqli_stmt_bind_param($stmt, "s", $bookId);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+                    $array = mysqli_fetch_array($result, MYSQLI_NUM);
+
+                    $currentRating = $array['11'];
+                    $nrOfRatings = $array['14'];
+                  //  echo $currentRating.'<br>';
+                  //  echo $nrOfRatings;
+                    if($rating == -1 && $removedRating != 0) {
+                        if($currentRating == NULL){
+                            // TODO error borde ej kunna vara null när man kommer till remove
+                        }else if ((int) $nrOfRatings - 1 < 0) {
+                            // TODO error, borde ej kunna gå
+                        }else if ((int) $nrOfRatings == 1 ){
+                            $currentRating = 0;
+                            $nrOfRatings = 0;
+                        }else{
+
+                            // (4 * 2 - 4) / 1
+                            // (4 * 2 - 3 ) / 1
+                            echo $currentRating.'<br>';
+                            echo $nrOfRatings.'<br>';
+                            (float)$tmpCurrentRating = (((float)$currentRating*$nrOfRatings)-$removedRating)/($nrOfRatings - 1);
+                            $currentRating = $tmpCurrentRating;
+                            $nrOfRatings--;
+                        }
+                    }else {
+                        if($currentRating == NULL){
+                            $currentRating = $rating;
+                            $nrOfRatings = 1;
+                        }else {
+                            (float)$currentRating = ($currentRating+$rating)/2;
+                            $nrOfRatings++;
+                        }
+                    }
+                    $sql = "UPDATE books SET rating=?, nrOfRatings=? WHERE bookId=?";
+                    if(!mysqli_stmt_prepare($stmt,$sql)) {
+                        // TODO ERRORHANTERING
+                        return false;
+                    }else {
+                        mysqli_stmt_bind_param($stmt, "sss", $currentRating,$nrOfRatings,$bookId);
+                        mysqli_stmt_execute($stmt);
+                    }
+                    mysqli_stmt_close($stmt);
+                    mysqli_close($conn);
+                }
+
+                if((int)$rating == -1) {
+                    echo gettype($rating);
+                }*/
+
+
+
+                if (isset($_GET["newpwd"])) {
+                    if ($_GET["newpwd"] == "passwordupdated") {
+                        echo '<p class="signupsucess">Ditt lösenord har blivit återställt!</p>';
+                    }
+                }
+            ?>
+        </div>
 
         .getstarted-a {
             background: none;
@@ -334,13 +396,44 @@ require 'header.php'
 
             </div>
         </div>
-
-    <?php
-    }
-    ?>
-
-    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+        <div class=" col ">
+            <?php
+            if (!isset($_SESSION['userId'])) {
+                echo '
+                <h2 class="newUserMessage">
+                    Ny här? <a href="signup.php">Skapa ett konto gratis!</a>
+                </h2>
+			    ';
+            } else {
+                echo ' <h2 class= "newUserMessage">
+                Välkommen!
+                </h2>
+                ';
+            }
+            ?>
+            <div id="submit-bug-btn">
+                <button class="open-btn" onclick="openBug()">lalallaa</button>
+            </div>
+            <div id="submit-bug">
+                <form method="post" action="includes/send-email.php">
+                    <input type="text" name="name" placeholder="För och efternamn">
+                    <input type="text" name="email" placeholder="Email">
+                    <textarea type="text" name="meat" placeholder="Beskriv ditt fel"></textarea>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="js/index.js"></script>
+    <script>
+        function openBug(){
+            if(getComputedStyle(document.getElementById("submit-bug")).width === "0px") {
+                document.getElementById("submit-bug").style.width = "100%"
+            }else {
+                document.getElementById("submit-bug").style.width = "0%"
+            }
+        }
+    </script>
+</main>
 
 </div>
 

@@ -19,7 +19,6 @@ session_start();
     <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash&display=swap" rel="stylesheet">
 
     <title>BonoLibro</title>
-
 </head>
 
 <body>
@@ -31,6 +30,7 @@ session_start();
             <div class="inner-header">
                 <div class="logo-container">
                     <h1><a href="newindex.php">BonoLibro</a></h1>
+
                 </div>
 
                 <div class="login-container">
