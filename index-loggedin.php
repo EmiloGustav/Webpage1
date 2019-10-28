@@ -55,7 +55,7 @@ session_start();
                     <img src="images/greatgatsby.jpg" alt="">
                     <img src="images/fahrenheit.jpg" alt="">
                     <img src="images/harrypotter.jpg" alt="">
-                    <a href="myBooks.php">Redigera</a>
+                    <a href="myBooks.php?list=hr?">Redigera</a>
                 </div>
 
                 <div class="container-wantToRead">
@@ -63,7 +63,7 @@ session_start();
                     <img src="images/tokillamockingbird.jpg" alt="">
                     <img src="images/fahrenheit.jpg" alt="">
                     <img src="images/harrypotter.jpg" alt="">
-                    <a href="myBooks.php">Redigera</a>
+                    <a href="myBooks.php?list=tbr">Redigera</a>
                 </div>
             </div>
 
