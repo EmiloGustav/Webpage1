@@ -438,5 +438,5 @@ require "includes/dbh.inc.php";
 </div>
 
 <?php
-require  "footer.php"
+require "footer.php";
 ?>
