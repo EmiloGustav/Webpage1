@@ -13,112 +13,20 @@ require "includes/dbh.inc.php";
             transition: 0.5s;
             right: 100%
         }
-    </style>
+
 
         header .header-logo {
             float: left;
             margin-left: 300px;
             font-family: 'Catamaran', sans-serif;
             font-size: 24px;
-            font-weight: 900px;
+
             color: #111;
             text-transform: uppercase;
             text-decoration: none;
             display: block;
         }
-            <?php
 
-                /*if(isset($_SESSION['userId'])) {
-                    $userInfo = getUserInfo($_SESSION['userId']);
-                    $userInfo['2'] = 'hello23';
-                    $newUserInfo=changeUserData($userInfo);
-
-        .vertical-center {
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .index-banner h2 {
-            font-family: 'Catamaran', sans-serif;
-            font-size: 55px;
-            font-weight: 900;
-            color: #fff;
-            text-align: center;
-        }
-                //echo '<img src="'.$array['9'].'"  width="80" height="80">';
-                /*
-                $rating = -1;
-                $conn = getConnection();
-                $bookId = 9;
-                $removedRating=5;
-
-                $sql = "SELECT * FROM books WHERE bookId=?";
-                $stmt = mysqli_stmt_init($conn);
-                if(!mysqli_stmt_prepare($stmt,$sql)) {
-                    // TODO ERRORHANTERING
-                    return false;
-                }else {
-                    mysqli_stmt_bind_param($stmt, "s", $bookId);
-                    mysqli_stmt_execute($stmt);
-                    $result = mysqli_stmt_get_result($stmt);
-                    $array = mysqli_fetch_array($result, MYSQLI_NUM);
-
-                    $currentRating = $array['11'];
-                    $nrOfRatings = $array['14'];
-                  //  echo $currentRating.'<br>';
-                  //  echo $nrOfRatings;
-                    if($rating == -1 && $removedRating != 0) {
-                        if($currentRating == NULL){
-                            // TODO error borde ej kunna vara null när man kommer till remove
-                        }else if ((int) $nrOfRatings - 1 < 0) {
-                            // TODO error, borde ej kunna gå
-                        }else if ((int) $nrOfRatings == 1 ){
-                            $currentRating = 0;
-                            $nrOfRatings = 0;
-                        }else{
-
-                            // (4 * 2 - 4) / 1
-                            // (4 * 2 - 3 ) / 1
-                            echo $currentRating.'<br>';
-                            echo $nrOfRatings.'<br>';
-                            (float)$tmpCurrentRating = (((float)$currentRating*$nrOfRatings)-$removedRating)/($nrOfRatings - 1);
-                            $currentRating = $tmpCurrentRating;
-                            $nrOfRatings--;
-                        }
-                    }else {
-                        if($currentRating == NULL){
-                            $currentRating = $rating;
-                            $nrOfRatings = 1;
-                        }else {
-                            (float)$currentRating = ($currentRating+$rating)/2;
-                            $nrOfRatings++;
-                        }
-                    }
-                    $sql = "UPDATE books SET rating=?, nrOfRatings=? WHERE bookId=?";
-                    if(!mysqli_stmt_prepare($stmt,$sql)) {
-                        // TODO ERRORHANTERING
-                        return false;
-                    }else {
-                        mysqli_stmt_bind_param($stmt, "sss", $currentRating,$nrOfRatings,$bookId);
-                        mysqli_stmt_execute($stmt);
-                    }
-                    mysqli_stmt_close($stmt);
-                    mysqli_close($conn);
-                }
-
-                if((int)$rating == -1) {
-                    echo gettype($rating);
-                }*/
-
-
-
-                if (isset($_GET["newpwd"])) {
-                    if ($_GET["newpwd"] == "passwordupdated") {
-                        echo '<p class="signupsucess">Ditt lösenord har blivit återställt!</p>';
-                    }
-                }
-            ?>
-        </div>
 
         .getstarted-a {
             background: none;
@@ -256,11 +164,6 @@ require "includes/dbh.inc.php";
             background-color: #f20000;
         }
     </style>
-
-    <?php
-    if (!isset($_SESSION['userId'])) {
-        ?>
-
         <section class="index-banner">
             <div class="vertical-center">
                 <h2>Din nya favoritbok väntar på dig.</h2>
@@ -316,9 +219,6 @@ require "includes/dbh.inc.php";
 
         </section>
 
-    <?php
-    } else {
-        ?>
         <div class="workspace">
             <div class="col">
                 <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop& w =1050&q=80" a l t="Books" wi d th="4 26" height="250">
@@ -436,6 +336,7 @@ require "includes/dbh.inc.php";
 </main>
 
 </div>
+
 
 <?php
 require "footer.php";
