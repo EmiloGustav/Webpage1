@@ -7,7 +7,7 @@ if (isset($_SESSION['userId'])) {
 
 ?>
 <main class="container"><!--uses the full size of the browser and hides the overflow if any -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/myBooks/myBooks.css">
     <style>
         .workspace2 {
             max-width: 1280px;

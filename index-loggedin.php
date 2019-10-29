@@ -34,7 +34,9 @@ session_start();
                 <ul>
                     <li><a href="index-loggedin.php">Hem</a></li>
                     <hr>
-                    <li><a href="myBooks.php">Mina böcker</a></li>
+                    <li><a href="myBooksV2.php">Mina böcker</a></li>
+                    <hr>
+                    <li><a href="myProfile.php">Min profil</a></li>
                     <hr>
                     <li><a href="inbox.php">Meddelanden</a></li>
                     <hr>
