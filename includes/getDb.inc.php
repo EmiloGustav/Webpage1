@@ -538,6 +538,9 @@ function addbookToList($listName,$bookId,$userId) {
 function removeBookFromList($listName,$bookId,$userId) {
 
 }
+function getListItems($listname,$userId) {
+
+}
 
 // HELPER FUNCTIONS
 function contains($needle, $haystack){

@@ -209,7 +209,3 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
     // TODO lägga till en header så att man kommer tillbaka om man kommit hit otillåtet eller om man inte är ionloggad
     //
 }
-function contains($needle, $haystack)
-{
-    return strpos($haystack, $needle) !== false;
-}
