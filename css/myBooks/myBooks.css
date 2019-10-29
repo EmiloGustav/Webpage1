@@ -218,6 +218,9 @@ main {
     .list-side {
         margin-right: 1em;
     }
+    .container-list {
+        margin-bottom: 0;
+    }
     .container-list img,
     .container-ads img {
         max-width: 60px;
@@ -225,7 +228,7 @@ main {
     .list-bookItem {
         display: grid;
         grid-template-columns: 20% 40% 40%;
-        grid-template-rows: 100px;
+        grid-template-rows: 90px;
     }
     .bookItem-description p {
         margin-top: 1em;
