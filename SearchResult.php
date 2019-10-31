@@ -119,8 +119,6 @@ include "includes/getDb.inc.php"
                 <h2>Sökresultat</h2>
                 <div class="searchResultBox">
 
-
-
                 <?php
                 // set articles per page as a global variable so you dont need to have 40 articles per page
                 if (!empty($_GET['book'])) {

@@ -81,6 +81,11 @@ ul li a {
     background-color: rgba(255, 255, 255, 0.35);
     color: #111;
     font-size: 16px;
+    transition: 0.2s;
+}
+
+ul li a:hover {
+    background-color: rgb(201, 201, 201);
 }
 
 main {
@@ -117,43 +122,68 @@ main p {
     margin: 2em 0;
 }
 
-.main-container-listOfPopularBooks {
+.main-container-search {
     margin: 0 auto;
     margin-bottom: 20px;
-    font-size: 14px;
     padding: 0.5em;
     background: #ffffff;
-    border: 1px solid #868686;
+    border: 1px solid #c9c9c9;
     border-radius: 3px;
 }
 
-.main-container-listOfPopularBooks img {
-    max-width: 30%;
-    max-height: 30%;
+.main-container-search form {
+    margin-bottom: 15px;
 }
 
-.main-container-listOfPopularBooks a:not(.img-link) {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    font-size: 17px;
+#searchbar {
+    width: 70%;
+    min-height: 25px;
+    padding: 6px 8px;
+    line-height: 20px;
+    color: #24292e;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27, 31, 35, .075);
+    box-sizing: border-box;
+}
+
+#btnSearch {
+    margin: 0 auto;
+    margin-left: 7px;
+    width: 25%;
+    background: rgb(152, 152, 152);
     color: rgb(255, 255, 255);
-    padding: 0.5em;
-    margin: 5px;
-    border: 1px solid rgb(110, 110, 110);
-    background: rgb(43, 161, 140);
-    transition: 0.3s;
+    padding: 6px 8px;
+    line-height: 20px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.main-container-latestUpdates,
-.main-container-ads {
+.main-container-slideshowOfPopularBooks,
+.main-container-latestUpdates {
     margin: 0 auto;
     margin-bottom: 20px;
     font-size: 14px;
     padding: 0.5em;
     background: #ffffff;
-    border: 1px solid #868686;
+    border: 1px solid #c9c9c9;
     border-radius: 3px;
+}
+
+.slideshow-item .book {
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.slideshow-item .book img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 @media only screen and (min-width: 768px) {
@@ -205,10 +235,10 @@ main p {
         background: #f9f9f9 url('images/artshape.svg') no-repeat bottom right;
         background-size: 35%;
         display: grid;
-        grid-template-columns: 70% 30%;
+        grid-template-columns: 65% 35%;
     }
     .main-leftColumn {
-        margin-right: 40px;
+        margin-right: 30px;
     }
     #title-desktop {
         display: block;
@@ -224,7 +254,5 @@ main p {
     }
     .cna {
         display: none;
-        font-size: 1.1em;
-        padding: .7em 2em;
     }
 }

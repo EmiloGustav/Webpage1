@@ -1,9 +1,9 @@
 <?php
 include 'includes/getDb.inc.php';
 session_start();
-if(isset($_SESSION['userId'])) {
-    header("Location: http://$_SERVER[HTTP_HOST]/Webpage1/index-loggedin.php");
-    exit();
+if (isset($_SESSION['userId'])) {
+	header("Location: http://$_SERVER[HTTP_HOST]/Webpage1/index-loggedin.php");
+	exit();
 }
 ?>
 <!DOCTYPE html>
@@ -47,22 +47,61 @@ if(isset($_SESSION['userId'])) {
 				<a href="signup.php" class="cna">Skapa ett nytt konto</a>
 			</div>
 
-			<div class="main-container-listOfPopularBooks">
-				<h1>Populärast just nu</h1>
-				<a href="bookpage.php" class="img-link"><img src="images/greatgatsby.jpg" alt=""></a>
-				<a href="bookpage.php" class="img-link"><img src="images/fahrenheit.jpg" alt=""></a>
-				<a href="bookpage.php" class="img-link"><img src="images/harrypotter.jpg" alt=""></a>
-				<a href="#">Fler topplistor</a>
+			<div class="main-container-search">
+				<h1>Sök och utforska böcker</h1>
+				<form action="SearchResult.php" method="get">
+					<input type="text" id="searchbar" name="book" placeholder="Titel, författare eller ISBN.." autocomplete="off">
+					<input type="submit" id="btnSearch" value="Sök">
+				</form>
 			</div>
+
 		</div>
 
 		<div class="main-rightColumn">
-			<div class="main-container-latestUpdates">
-				<h1>Senaste uppdateringarna</h1>
+			<div class="main-container-slideshowOfPopularBooks">
+
+				<h1>Populärast just nu</h1>
+
+				<div class="slideshow-item">
+					<div class="book">
+						<a href="bookpage.php" class="img-link"><img src="images/greatgatsby.jpg" alt=""></a>
+						<div class="description">
+							<h1>The Great Gatsbty</h1>
+							<p>Skriven av</p>
+							<a href="author.php" class="list-bookAuthor">Fitzergald</a>
+						</div>
+					</div>
+					
+
+				</div>
+
+				<div class="slideshow-item">
+					<div class="book">
+						<a href="bookpage.php" class="img-link"><img src="images/fahrenheit.jpg" alt=""></a>
+						<div class="description">
+							<h1><a>Fahrenheit</a></h1>
+							<p>Skriven av</p>
+							<a href="author.php" class="list-bookAuthor">Ray Bradbury</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="slideshow-item">
+					<div class="book">
+						<a href="bookpage.php" class="img-link"><img src="images/harrypotter.jpg" alt=""></a>
+						<div class="description">
+							<h1>Harry Potter</h1>
+							<p>Skriven av</p>
+							<a href="author.php" class="list-bookAuthor">J.K. Rowling</a>
+						</div>
+					</div>
+					
+				</div>
+
 			</div>
-			
-			<div class="main-container-ads">
-				<h1>Det här är reklam.</h1>
+
+			<div class="main-container-latestUpdates">
+				<h1>Nyheter</h1>
 			</div>
 		</div>
 	</main>
@@ -77,6 +116,25 @@ if(isset($_SESSION['userId'])) {
 				e.preventDefault();
 			});
 		})();
+	</script>
+
+	<script>
+		var slideIndex = 0;
+		showSlides();
+
+		function showSlides() {
+			var i;
+			var slides = document.getElementsByClassName("slideshow-item");
+			for (i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+			}
+			slideIndex++;
+			if (slideIndex > slides.length) {
+				slideIndex = 1;
+			}
+			slides[slideIndex - 1].style.display = "block";
+			setTimeout(showSlides, 3000);
+		}
 	</script>
 </body>
 
