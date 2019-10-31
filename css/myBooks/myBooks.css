@@ -251,7 +251,7 @@ main {
         padding: 1em;
         margin-left: 20px;
         margin-right: 0;
-        background: #f9f9f9 url('images/artshape.svg') no-repeat bottom right;
+        background: #f9f9f9 url('../../images/artshape.svg') no-repeat bottom right;
         background-size: 35%;
     }
     main p {
@@ -270,7 +270,7 @@ main {
     }
     .list-bookItem {
         display: grid;
-        grid-template-columns: 20% 40% 40%;
+        grid-template-columns: 20% 40% 35% 5%;
         grid-template-rows: 90px;
     }
     .bookItem-description p {
@@ -280,6 +280,9 @@ main {
     }
     .bookItem-data {
         display: block;
+    }
+    .edit-list{
+        display: none;
     }
 
 }
