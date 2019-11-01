@@ -569,22 +569,19 @@ function arrayToString($array, $divider){
     return $tmp;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function getHighestRatedBook($amountOfBooks) {
+    $conn = getConnection();
+    $sql = "SELECT title, author, published, smallthumbnail FROM books ORDER BY rating LIMIT ?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)) {
+        return false;
+    } else {
+        mysqli_stmt_bind_param($stmt, 's', $amountOfBooks);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $array = mysqli_fetch_array($result, MYSQLI_NUM);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+        return $array;
+    }
+}

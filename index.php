@@ -55,11 +55,13 @@ if (isset($_SESSION['userId'])) {
 				</form>
 			</div>
 
+			<div class="main-container-latestUpdates">
+				<h1>Nyheter</h1>
+			</div>
 		</div>
 
 		<div class="main-rightColumn">
 			<div class="main-container-slideshowOfPopularBooks">
-
 				<h1>Populärast just nu</h1>
 
 				<div class="slideshow-item">
@@ -71,8 +73,6 @@ if (isset($_SESSION['userId'])) {
 							<a href="author.php" class="list-bookAuthor">Fitzergald</a>
 						</div>
 					</div>
-					
-
 				</div>
 
 				<div class="slideshow-item">
@@ -95,13 +95,8 @@ if (isset($_SESSION['userId'])) {
 							<a href="author.php" class="list-bookAuthor">J.K. Rowling</a>
 						</div>
 					</div>
-					
 				</div>
 
-			</div>
-
-			<div class="main-container-latestUpdates">
-				<h1>Nyheter</h1>
 			</div>
 		</div>
 	</main>
