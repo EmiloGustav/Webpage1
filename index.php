@@ -64,35 +64,42 @@ if (isset($_SESSION['userId'])) {
 			<div class="main-container-slideshowOfPopularBooks">
 				<h1>Populärast just nu</h1>
 
+				<?php
+				$data = getTheThreeHighestRatedBooks();
+				?>
+
 				<div class="slideshow-item">
 					<div class="book">
-						<a href="bookpage.php" class="img-link"><img src="images/greatgatsby.jpg" alt=""></a>
+						<?php echo '<a href="bookpage.php" class="img-link"><img src="'.$data[0]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
-							<h1>The Great Gatsbty</h1>
-							<p>Skriven av</p>
-							<a href="author.php" class="list-bookAuthor">Fitzergald</a>
+							<?php echo '<h1>'.$data[0]['title'].'</h1>';
+							echo '<p>Skriven av</p>';
+							echo '<a href="author.php" class="list-bookAuthor">'.$data[0]['author'].'</a>';
+							?>
 						</div>
 					</div>
 				</div>
 
 				<div class="slideshow-item">
 					<div class="book">
-						<a href="bookpage.php" class="img-link"><img src="images/fahrenheit.jpg" alt=""></a>
+						<?php echo '<a href="bookpage.php" class="img-link"><img src="'.$data[1]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
-							<h1><a>Fahrenheit</a></h1>
-							<p>Skriven av</p>
-							<a href="author.php" class="list-bookAuthor">Ray Bradbury</a>
+							<?php echo '<h1>'.$data[1]['title'].'</h1>';
+							echo '<p>Skriven av</p>';
+							echo '<a href="author.php" class="list-bookAuthor">'.$data[1]['author'].'</a>';
+							?>
 						</div>
 					</div>
 				</div>
 
 				<div class="slideshow-item">
 					<div class="book">
-						<a href="bookpage.php" class="img-link"><img src="images/harrypotter.jpg" alt=""></a>
+						<?php echo '<a href="bookpage.php" class="img-link"><img src="'.$data[2]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
-							<h1>Harry Potter</h1>
-							<p>Skriven av</p>
-							<a href="author.php" class="list-bookAuthor">J.K. Rowling</a>
+							<?php echo '<h1>'.$data[2]['title'].'</h1>';
+							echo '<p>Skriven av</p>';
+							echo '<a href="author.php" class="list-bookAuthor">'.$data[2]['author'].'</a>';
+							?>
 						</div>
 					</div>
 				</div>

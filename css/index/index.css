@@ -165,6 +165,10 @@ main p {
     transition: 0.2s;
 }
 
+#btnSearch:hover {
+    background: rgb(73, 73, 73);
+}
+
 .main-container-slideshowOfPopularBooks,
 .main-container-latestUpdates {
     margin: 0 auto;
@@ -183,11 +187,12 @@ main p {
 .slideshow-item .book {
     display: grid;
     grid-template-columns: 30% 70%;
+    grid-template-rows: minmax(0, 130px);
 }
 
 .slideshow-item .book img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 95%;
+    height: 95%;
 }
 
 @media only screen and (min-width: 768px) {
