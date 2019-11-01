@@ -160,6 +160,21 @@ if(isset($_SESSION['userId'])) {
 
                         ?>
                     </li>
+                        <?php
+                        if($userinfo[11] != NULL) {
+                            echo '<li><form action="includes/addBook.inc.php?type=userCreatedList&bookId='.$bookId.'" method="post"><select name="personalList" id="personalList">';
+                            $listName = getLists($_SESSION['userId'])['1'];
+                            if(!contains(';:',$listName)) {
+                                echo '<option value="'.$listName.'">'.$listName.'</option>';
+                            }else {
+                                $listNameArray = explode(';:',$listName);
+                                foreach ($listNameArray as $i) {
+                                    echo '<option value="'.$i.'">'.$i.'</option>';
+                                }
+                            }
+                            echo '</select><input type="submit" value="Lägg till i listan"></form></li>';
+                        }
+                        ?>
                 </ul>
             </div>
 

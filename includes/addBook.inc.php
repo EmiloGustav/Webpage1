@@ -22,6 +22,49 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
         changeUserData($userinfo);
         // TODO Lägga till så att man frågar användaren om den vill sätta betyg eller ge en kommentar till boken
     }
+    else if(isset($_POST['personalList']) && strcasecmp($_GET['type'],'userCreatedList') == 0) {
+        $lists = getLists($_SESSION['userId']);
+        $listStringName = $lists['1'];
+        $listStringItems = $lists['2'];
+        if(!contains(';:',$listStringName)) {
+            if(!contains('::',$listStringItems)) {
+                if(strcasecmp($_GET['bookId'],$listStringItems) == 0) {
+                    // TODO error book already in list
+                }else {
+                    addbookToList($listStringName,$_GET['bookId'],$_SESSION['userId']);
+                }
+            }else {
+                $listArrayItems = explode('::',$listStringItems);
+                if(array_search($_GET['bookId'],$listArrayItems) == false) {
+                    addbookToList($listStringName,$_GET['bookId'],$_SESSION['userId']);
+                }else {
+                    // TODO error book already in list
+                }
+            }
+        }else {
+            $listArrayName = explode(';:',$listStringName);
+            $listNameKey = array_search($_POST['personalList'],$listArrayName);
+            if($listNameKey !== false) {
+                $listStringItems = explode(';:',$listStringItems)[$listNameKey];
+                if(!contains('::',$listStringItems)) {
+                    if(strcasecmp($_GET['bookId'],$listStringItems) == 0) {
+                        // TODO error book already in list
+                    }else {
+                        addbookToList($listArrayName[$listNameKey],$_GET['bookId'],$_SESSION['userId']);
+                    }
+                }else {
+                    $listArrayItems = explode('::',$listStringItems);
+                    if(array_search($_GET['bookId'],$listArrayItems) == false) {
+                        addbookToList($listArrayName[$listNameKey],$_GET['bookId'],$_SESSION['userId']);
+                    }else {
+                        // TODO error book already in list
+                    }
+                }
+            }else {
+                // TODO listname not in list (shouldnt be able to reach here)
+            }
+        }
+    }
     else if (strcasecmp($_GET['type'],'rating') == 0 ){
         $bookId = $_GET['bookId'];
         $rating = $_POST['rate'];
@@ -42,8 +85,8 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
                 $tmpArrayRating = $rating;
             }else {
                 updateSqlWithRating($rating,$bookId);
-                $tmpArrayBookId = $bookId;
-                $tmpArrayRating = $rating;
+                $tmpArrayBookId = $userinfo['4'].';:'.$bookId;
+                $tmpArrayRating = $userinfo['5'].';:'.$rating;
             }
         }else {
             // See if the rated book is previously rated
