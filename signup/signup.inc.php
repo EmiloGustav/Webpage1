@@ -24,29 +24,29 @@ if(isset($_POST['signup-submit'])) {
 
     // Kolla om alla fälten är ifyllda
     if(empty($username) || empty($email) || empty($password) || empty($rePassword)) {
-        header("Location: ../signup.php?error=emptyfields&username=".$username."&email=".$email);
+        header("Location: signup.php?error=emptyfields&username=".$username."&email=".$email);
         exit();
     }else if(!preg_match("/^[a-zA-Z0-9]*$/",$username) && !filter_var($email,FILTER_VALIDATE_EMAIL)) {
-        header("Location: ../signup.php?error=invalidemailusername");
+        header("Location: signup.php?error=invalidemailusername");
         exit();
     }else if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-        header("Location: ../signup.php?error=invalidemail&username=".$username);
+        header("Location: signup.php?error=invalidemail&username=".$username);
         exit();
     }else if(!preg_match("/^[a-zA-Z0-9]*$/",$username)) {
-        header("Location: ../signup.php?error=invalidusername&email=".$email);
+        header("Location: signup.php?error=invalidusername&email=".$email);
         exit();
     }else if($password !== $rePassword) {
-        header("Location: ../signup.php?error=pwdcheck&username=".$username."&email=".$email);
+        header("Location: signup.php?error=pwdcheck&username=".$username."&email=".$email);
         exit();
     }else{
         $sqlusr = "SELECT uidUsers FROM users WHERE uidUsers=?";
         $sqlemail = "SELECT emailUsers FROM users WHERE emailUsers=?";
         $stmt = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sqlusr)) {
-            header("Location: ../index.php?error=sqlerrorusr");
+            header("Location: ../index/index.php?error=sqlerrorusr");
             exit();
         }else if(!mysqli_stmt_prepare($stmt,$sqlemail)){
-            header("Location: ../index.php?error=sqlerroremail");
+            header("Location: ../index/index.php?error=sqlerroremail");
             exit();
         }else{
             mysqli_stmt_bind_param($stmt,"s",$username);
@@ -60,16 +60,16 @@ if(isset($_POST['signup-submit'])) {
             $resultCheckemail = mysqli_stmt_num_rows($stmt);
 
             if ($resultCheckusr > 0) {
-                header("Location: ../signup.php?error=usertaken&email=".$email);
+                header("Location: signup.php?error=usertaken&email=".$email);
                 exit();
             }else if($resultCheckemail > 0){
-                header("Location: ../signup.php?error=emailtaken&username=".$username);
+                header("Location: signup.php?error=emailtaken&username=".$username);
                 exit();
             }else{
                 $sql = "INSERT INTO users (uidUsers,emailUsers,pwdUsers) VALUES (?,?,?)";
                 $stmt = mysqli_stmt_init($conn);
                 if(!mysqli_stmt_prepare($stmt,$sql)) {
-                    header("Location: ../index.php?error=sqlerror2");
+                    header("Location: ../index/index.php?error=sqlerror2");
                     exit();
                 }else{
                     $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
@@ -105,7 +105,7 @@ if(isset($_POST['signup-submit'])) {
                     $sql = "INSERT INTO info (firstname,surname,country,uid,dateRegistered) VALUES (?,?,?,?,?)";
                     $stmt = mysqli_stmt_init($conn);
                     if(!mysqli_stmt_prepare($stmt,$sql)) {
-                        header("Location: ../index.php?error=sqlinfoerror");
+                        header("Location: ../index/index.php?error=sqlinfoerror");
                         exit();
                     }else {
 
@@ -113,7 +113,7 @@ if(isset($_POST['signup-submit'])) {
                         mysqli_stmt_execute($stmt);
                     }
 
-                    header("Location: ../index.php?signup=success");
+                    header("Location: ../index/index.php?signup=success");
                     exit();
                 }
             }
@@ -123,7 +123,7 @@ if(isset($_POST['signup-submit'])) {
     mysqli_close($conn);
 
 }else{
-    header("Location: ../index.php");
+    header("Location: ../index/index.php");
     exit();
 }
 

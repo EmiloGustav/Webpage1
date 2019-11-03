@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BonoLibro</title>
 
-    <link rel="stylesheet" type="text/css" href="css/signup/signup.css">
+    <link rel="stylesheet" type="text/css" href="signup.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 </head>
 
@@ -37,7 +37,7 @@
             ?>
 
             <div class="signup-form">
-                <form action="includes/signup.inc.php" method="post">
+                <form action="signup.inc.php" method="post">
                     <label for="username">Användarnamn</label>
                     <?php
                     if (isset($_GET['username'])) {

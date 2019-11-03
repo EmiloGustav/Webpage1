@@ -1,5 +1,5 @@
 <?php
-include 'includes/getDb.inc.php';
+include '../includes/getDb.inc.php';
 session_start();
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@ session_start();
 
     <!--<link rel="stylesheet" type="text/css" href="css/styleNewIndex.css">-->
 
-    <link rel="stylesheet" type="text/css" href="css/index/index-loggedin.css">
+    <link rel="stylesheet" type="text/css" href="index-loggedin.css">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
@@ -25,23 +25,23 @@ session_start();
 
         <aside>
             <figure>
-                <img id="logotype" src="images/books.png" alt="">
+                <img id="logotype" src="../images/books.png" alt="">
                 <figcaption>BonoLibro</figcaption>
             </figure>
-            <img id="menu-icon" src="images\menu.svg" alt="">
+            <img id="menu-icon" src="../images/menu.svg" alt="">
 
             <nav>
                 <ul>
                     <li><a href="index-loggedin.php">Hem</a></li>
                     <hr>
-                    <li><a href="myBooks.php">Mina böcker</a></li>
+                    <li><a href="../mybooks/myBooks.php">Mina böcker</a></li>
                     <hr>
-                    <li><a href="myProfile.php">Min profil</a></li>
+                    <li><a href="../profile/myProfile.php">Min profil</a></li>
                     <hr>
                     <li><a href="inbox.php">Meddelanden</a></li>
                     <hr>
                     <li>
-                        <form action="includes/logout.inc.php" method="post">
+                        <form action="../login-logout/logout.inc.php" method="post">
                             <button type="submit" name="logout-submit" id="btn-logout">Logga ut</button>
                         </form>
                     </li>
@@ -54,18 +54,18 @@ session_start();
             <div class="1of3">
                 <div class="container-readsNow">
                     <h1>Läser nu</h1>
-                    <img src="images/greatgatsby.jpg" alt="">
-                    <img src="images/fahrenheit.jpg" alt="">
-                    <img src="images/harrypotter.jpg" alt="">
-                    <a href="myBooks.php?list=hr">Redigera</a>
+                    <img src="../images/greatgatsby.jpg" alt="">
+                    <img src="../images/fahrenheit.jpg" alt="">
+                    <img src="../images/harrypotter.jpg" alt="">
+                    <a href="../mybooks/myBooks.php?list=hr">Redigera</a>
                 </div>
 
                 <div class="container-wantToRead">
                     <h1>Vill läsa</h1>
-                    <img src="images/tokillamockingbird.jpg" alt="">
-                    <img src="images/fahrenheit.jpg" alt="">
-                    <img src="images/harrypotter.jpg" alt="">
-                    <a href="myBooks.php?list=tbr">Redigera</a>
+                    <img src="../images/tokillamockingbird.jpg" alt="">
+                    <img src="../images/fahrenheit.jpg" alt="">
+                    <img src="../images/harrypotter.jpg" alt="">
+                    <a href="../mybooks/myBooks.php?list=tbr">Redigera</a>
                 </div>
             </div>
 

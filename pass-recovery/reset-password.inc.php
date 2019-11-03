@@ -2,16 +2,16 @@
 
 if (isset($_POST["reset-password-submit"])) {
     /* Hämta användarens inmatade data */
-    $selector = $POST["selector"];
-    $validator = $POST["validator"];
-    $password = $POST["pwd"];
-    $passwordRepeat = $POST["pwd-reapeat"];
+    $selector = $_POST["selector"];
+    $validator = $_POST["validator"];
+    $password = $_POST["pwd"];
+    $passwordRepeat = $_POST["pwd-reapeat"];
 
     if (empty($password) || empty($passwordRepeat)) {
-        header("Location: ../index.php?newpwd=empty");
+        header("Location: ../index/index.php?newpwd=empty");
         exit();
     } else if ($password != $passwordRepeat) {
-        header("Location: ../index.php?newpwd=pwdnotsame");
+        header("Location: ../index/index.php?newpwd=pwdnotsame");
         exit();
     }
 
@@ -81,7 +81,7 @@ if (isset($_POST["reset-password-submit"])) {
                             } else {
                                 mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
                                 mysqli_stmt_execute($stmt);
-                                header("Location: ../index.php?newpwd=passwordupdated");
+                                header("Location: ../index/index.php?newpwd=passwordupdated");
                             }
                         }
                     }
@@ -90,5 +90,5 @@ if (isset($_POST["reset-password-submit"])) {
         }
     }
 } else {
-    header("Location: ../index.php");
+    header("Location: ../index/index.php");
 }

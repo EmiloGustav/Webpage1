@@ -125,7 +125,7 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
                         $tmpArrayRating = $rating;
                     }else {
                         $tmpArrayBookId = $tmpArrayBookId.';:'.$bookId;
-                        $tmpArrayRating = $rating.';:'.$rating;
+                        $tmpArrayRating = $tmpArrayRating.';:'.$rating;
                     }
                 }
                 if (strcasecmp('',$tmpArrayRating) == 0) {

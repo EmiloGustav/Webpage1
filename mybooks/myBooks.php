@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'includes/getDb.inc.php';
+include '../includes/getDb.inc.php';
 if (isset($_SESSION['userId'])) {
     $userinfo = getUserInfo($_SESSION['userId']);
 }
@@ -16,7 +16,7 @@ if (isset($_SESSION['userId'])) {
 
     <title>Mina böcker</title>
 
-    <link rel="stylesheet" href="css/myBooks/myBooks.css">
+    <link rel="stylesheet" href="myBooks.css">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 </head>
@@ -28,7 +28,7 @@ if (isset($_SESSION['userId'])) {
         var li = document.createElement('LI');
         li.setAttribute('id','jsNew');
         var form = document.createElement('FORM');
-        form.setAttribute('action','includes/lists.inc.php?type=addList');
+        form.setAttribute('action','../includes/listHandler.inc.php?type=addList');
         form.setAttribute('method','POST');
         form.setAttribute('id','formNew')
         var input = document.createElement('INPUT') ;
@@ -49,12 +49,12 @@ if (isset($_SESSION['userId'])) {
 </script>
     <aside>
         <figure>
-            <a href="index.php"><img id="logotype" src="images/books.png" alt=""></a>
-            <a href="index.php">
+            <a href="../index/index.php"><img id="logotype" src="../images/books.png" alt=""></a>
+            <a href="../index/index.php">
                 <figcaption>BonoLibro</figcaption>
             </a>
         </figure>
-        <img id="menu-icon" src="images\menu.svg" alt="">
+        <img id="menu-icon" src="../images/menu.svg" alt="">
 
         <nav>
             <ul>
@@ -84,7 +84,7 @@ if (isset($_SESSION['userId'])) {
                 ?>
                 <li id="liCreateList"><button id="createList" onclick="addList()">+ Skapa ny lista</button></li>
                 <li>
-                    <form action="includes/logout.inc.php" method="post">
+                    <form action="../login-logout/logout.inc.php" method="post">
                         <button type="submit" name="logout-submit" id="btn-logout">Logga ut</button>
                     </form>
                 </li>
@@ -161,7 +161,7 @@ if (isset($_SESSION['userId'])) {
                                     <img src="'.$book['8'].'" class="book-cover" alt="">
                 
                                     <div class="bookItem-description">
-                                        <a href="bookpage.php?bookId='.$book['0'].'" class="list-bookTitle">'.$book['1'].'</a>
+                                        <a href="../bookpage/bookpage.php?bookId='.$book['0'].'" class="list-bookTitle">'.$book['1'].'</a>
                                         <p>Skriven av</p>
                                         <a href="author.php" class="list-bookAuthor">'.$book['2'].'</a>
                                     </div>
@@ -296,7 +296,7 @@ if (isset($_SESSION['userId'])) {
             h6.setAttribute('class','h6');
             var btnYes = document.createElement('A');
             btnYes.innerText = "Ja";
-            btnYes.setAttribute('href','includes/lists.inc.php?type=removeList&listName='+listName);
+            btnYes.setAttribute('href','../includes/listHandler.inc.php?type=removeList&listName='+listName);
             btnYes.setAttribute('class','btnYes');
             var btnNo = document.createElement('BUTTON');
             btnNo.innerText = "Nej";

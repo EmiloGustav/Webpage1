@@ -9,11 +9,11 @@
 
 if (isset($_POST['login-submit'])) {
 
-    require 'dbh.inc.php';
+    require '../includes/dbh.inc.php';
     $username = $_POST['username'];
     $password = $_POST['password'];
     //$page = $_GET['page'];
-    $page = "/Webpage1/index.php";
+    $page = "/Webpage1/index/index.php";
     if (empty($username) || empty($password)) {
         if(!contains('?',$page)) {
             header("Location: http://$_SERVER[HTTP_HOST]$page?error=emptyfields");

@@ -1,6 +1,6 @@
 <?php
-require "header.php";
-include "includes/getDb.inc.php";
+require "../header.php";
+include "../includes/getDb.inc.php";
 $userInfo = getUserInfo($_SESSION["userId"]);
 /*
     0: dateOfBirth

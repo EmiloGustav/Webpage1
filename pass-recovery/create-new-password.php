@@ -1,10 +1,10 @@
 <?php
-require "header.php";
+require "../header.php";
 ?>
 <main class="container">
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="js/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="../js/index.js"></script>
 
     <div class="workspace">
         <div class="col">
@@ -21,7 +21,7 @@ require "header.php";
                 if (ctype_xdigit($selector) !== false && ctype_xdigit($validator) !== false) {
                     ?>
 
-                    <form action="includes/reset-password.inc.php" method="post">
+                    <form action="reset-password.inc.php" method="post">
                         <input type="hidden" name="selector" value="<?php echo $selector ?>;">
                         <input type="hidden" name="validator" value="<?php echo $validator ?>;">
                         <input type="password" name="pwd" placeholder="Ange ett nytt lösenord...">
@@ -40,5 +40,5 @@ require "header.php";
 </main>
 
 <?php
-require "footer.php"
+require "../footer.php"
 ?>

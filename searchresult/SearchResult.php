@@ -1,10 +1,10 @@
 <?php
-require "header.php";
-include "includes/getDb.inc.php"
+require "../header.php";
+include "../includes/getDb.inc.php"
 ?>
     <main class="container">
 
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
         <style>
             li > .grid-container {
                 display: grid;
@@ -78,22 +78,22 @@ include "includes/getDb.inc.php"
 
                     <div class="mySlides fade">
                         <div class="numbertext">1 / 4</div>
-                        <img src="images/greatgatsby.jpg" width=" 200 px " height=" 300 px ">
+                        <img src="../images/greatgatsby.jpg" width=" 200 px " height=" 300 px ">
                     </div>
 
                     <div class="mySlides fade">
                         <div class=" numbertext ">2 / 4</div>
-                        <img src=" images/tokillamockingbird.jpg " width=" 200 px " height=" 300 px ">
+                        <img src="../images/tokillamockingbird.jpg " width=" 200 px " height=" 300 px ">
                     </div>
 
                     <div class="mySlides fade">
                         <div class=" numbertext ">3 / 4</div>
-                        <img src=" images/harrypotter.jpg " width=" 200 px " height=" 300 px ">
+                        <img src="../images/harrypotter.jpg " width=" 200 px " height=" 300 px ">
                     </div>
 
                     <div class="mySlides fade">
                         <div class=" numbertext ">4 / 4</div>
-                        <img src=" images/fahrenheit.jpg " width=" 200 px " height=" 300 px ">
+                        <img src="../images/fahrenheit.jpg " width=" 200 px " height=" 300 px ">
                     </div>
 
                     <a class=" prev " onclick=" plusSlides (- 1) ">&#10094;</a>
@@ -266,7 +266,7 @@ include "includes/getDb.inc.php"
                     if ($page < $amountOfPages) {
                         echo '<ul>';
                         for ($x = ($page - 1) * $articlesPerPage % $maxResults; $x < ($page - 1) * $articlesPerPage % $maxResults + $articlesPerPage; $x++) {
-                            $hrefurl = 'bookpage.php?bookId=' . strval($array[strval($x)]['0']);
+                            $hrefurl = '../bookpage/bookpage.php?bookId=' . strval($array[strval($x)]['0']);
                             echo '
                         <li><a href="'.$hrefurl.'" class="grid-container">
                             <div class="item1"><img src="'.$array[strval($x)]['8'].'"></div>
@@ -280,7 +280,7 @@ include "includes/getDb.inc.php"
                     }else {
                         echo '<ul>';
                         for ($x = ($amountOfPages - 1) * $articlesPerPage ; $x < $tot; $x++) {
-                            $hrefurl = 'bookpage.php?bookId=' . strval($array[strval($x)]['0']);
+                            $hrefurl = '../bookpage/bookpage.php?bookId=' . strval($array[strval($x)]['0']);
                             echo '
                         <li><a href="'.$hrefurl.'" class="grid-container">
                             <div class="item1"><img src="'.$array[strval($x)]['8'].'"></div>
@@ -346,7 +346,7 @@ include "includes/getDb.inc.php"
                 if (!isset($_SESSION['userId'])) {
                     echo '
                 <h2 class="newUserMessage">
-                    Ny här? <a href="signup.php">Skapa ett konto gratis!</a>
+                    Ny här? <a href="../singup/signup.php">Skapa ett konto gratis!</a>
                 </h2>
 
                 ';
@@ -365,5 +365,5 @@ include "includes/getDb.inc.php"
 
 
 <?php
-require  "footer.php"
+require  "../footer.php"
 ?>

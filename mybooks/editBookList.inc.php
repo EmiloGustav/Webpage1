@@ -1,6 +1,6 @@
 <?php
 session_start();
-require ("getDb.inc.php");
+require("getDb.inc.php");
 if(isset($_POST['bookItem']) && isset($_GET['listName'])) {
     if(strcasecmp($_GET['listName'], "Vill läsa") == 0) {
         $_GET['listName'] = "tbr";

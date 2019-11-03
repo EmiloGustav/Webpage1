@@ -35,11 +35,11 @@ if (isset($_GET['type']) && isset($_SESSION['userId'])) {
     else if(strcasecmp($_GET['type'],'removeBook') == 0) {
 
     }
-    header("Location: ../myBooksV2.php");
+    header("Location: ../myBooks.php");
     exit();
 }else {
     // TODO lägga till en header så att man kommer tillbaka om man kommit hit otillåtet eller om man inte är ionloggad
     //
-    header("Location: ../myBooksV2.php?msg=error");
+    header("Location: ../myBooks.php?msg=error");
     exit();
 }

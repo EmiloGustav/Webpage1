@@ -1,8 +1,8 @@
 <?php
-include 'includes/getDb.inc.php';
+include '../includes/getDb.inc.php';
 session_start();
 if (isset($_SESSION['userId'])) {
-	header("Location: http://$_SERVER[HTTP_HOST]/Webpage1/index-loggedin.php");
+	header("Location: http://$_SERVER[HTTP_HOST]/Webpage1/index/index-loggedin.php");
 	exit();
 }
 ?>
@@ -13,7 +13,7 @@ if (isset($_SESSION['userId'])) {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="css/index/index.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
 
 	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
@@ -23,16 +23,16 @@ if (isset($_SESSION['userId'])) {
 <body>
 	<aside>
 		<figure>
-			<img id="logotype" src="images/books.png" alt="">
+			<img id="logotype" src="../images/books.png" alt="">
 			<figcaption>BonoLibro</figcaption>
 		</figure>
-		<img id="menu-icon" src="images\menu.svg" alt="">
+		<img id="menu-icon" src="../images/menu.svg" alt="">
 
 		<nav>
 			<ul>
-				<li><a href="login.php">Logga in</a></li>
+				<li><a href="../login-logout/login.php">Logga in</a></li>
 				<hr>
-				<li><a href="signup.php">Registrera</a></li>
+				<li><a href="../singup/signup.php">Registrera</a></li>
 				<hr>
 			</ul>
 		</nav>
@@ -49,7 +49,7 @@ if (isset($_SESSION['userId'])) {
 
 			<div class="main-container-search">
 				<h1>Sök och utforska böcker</h1>
-				<form action="SearchResult.php" method="get">
+				<form action="../searchresult/SearchResult.php" method="get">
 					<input type="text" id="searchbar" name="book" placeholder="Titel, författare eller ISBN.." autocomplete="off">
 					<input type="submit" id="btnSearch" value="Sök">
 				</form>
@@ -70,7 +70,7 @@ if (isset($_SESSION['userId'])) {
 
 				<div class="slideshow-item">
 					<div class="book">
-						<?php echo '<a href="bookpage.php" class="img-link"><img src="'.$data[0]['smallthumbnail'].'" alt=""></a>'; ?>
+						<?php echo '<a href="../bookpage/bookpage.php" class="img-link"><img src="'.$data[0]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
 							<?php echo '<h1>'.$data[0]['title'].'</h1>';
 							echo '<p>Skriven av</p>';
@@ -82,7 +82,7 @@ if (isset($_SESSION['userId'])) {
 
 				<div class="slideshow-item">
 					<div class="book">
-						<?php echo '<a href="bookpage.php" class="img-link"><img src="'.$data[1]['smallthumbnail'].'" alt=""></a>'; ?>
+						<?php echo '<a href="../bookpage/bookpage.php?bookId=12" class="img-link"><img src="'.$data[1]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
 							<?php echo '<h1>'.$data[1]['title'].'</h1>';
 							echo '<p>Skriven av</p>';
@@ -94,7 +94,7 @@ if (isset($_SESSION['userId'])) {
 
 				<div class="slideshow-item">
 					<div class="book">
-						<?php echo '<a href="bookpage.php" class="img-link"><img src="'.$data[2]['smallthumbnail'].'" alt=""></a>'; ?>
+						<?php echo '<a href="../bookpage/bookpage.php" class="img-link"><img src="'.$data[2]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
 							<?php echo '<h1>'.$data[2]['title'].'</h1>';
 							echo '<p>Skriven av</p>';

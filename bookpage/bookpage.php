@@ -5,8 +5,8 @@ if(isset($_GET['bookId'])) {
     // TODO Send the user back
 }
 
-require "header.php";
-include "includes/getDb.inc.php";
+require "../header.php";
+include "../includes/getDb.inc.php";
 
 $array = getBookByBookId($bookId);
 if(isset($_SESSION['userId'])) {
@@ -16,13 +16,14 @@ if(isset($_SESSION['userId'])) {
 }
 
 ?>
+
     <script type="text/javascript">
         function switchRating() {
 
             var rating = document.getElementById("rating");
             var button = document.getElementById("ratingButton");
             button.innerText=rating.style.display;
-            if(rating.style.display == "none" ||rating.style.display == ""||rating.style.display == null ){
+            if(rating.style.display == "none"||rating.style.display == ""||rating.style.display == null ){
                 rating.style.display = "block";
                 button.innerText = "Dölj betyg";
             }else if(rating.style.display == "block") {
@@ -86,14 +87,14 @@ if(isset($_SESSION['userId'])) {
         }
     </style>
     <main class="container">
-        <link rel="stylesheet" type="text/css" href="css/bookpage.css">
+        <link rel="stylesheet" type="text/css" href="bookpage.css">
         <div class="container-grid">
 
             <div class="item1">
 
 
 
-                <?php echo '<img src="'.$array['9'].'" alt="Books" width="250px" height="400px">'; ?>
+                <?php echo '<img src=../"'.$array['9'].'" alt="Books" width="250px" height="400px">'; ?>
 
                 <ul>
                     <li>
@@ -102,7 +103,7 @@ if(isset($_SESSION['userId'])) {
                             //TODO error
                         }else {
                             if($userinfo['1'] == NULL) {
-                                echo '  <form action="includes/addBook.inc.php?type=tbr&bookId='.$bookId.'" method="post">
+                                echo '  <form action="../includes/bookHandler.inc.php?type=tbr&bookId='.$bookId.'" method="post">
                                         <input class="inputs" type="submit" value="Lägg till i \'vill läsa\' listan!">
                                         </form>';
                             }else {
@@ -111,7 +112,7 @@ if(isset($_SESSION['userId'])) {
                                 foreach ($tmpArray as $x) {
                                     if(strcasecmp($x,$bookId) == 0) {
                                         // TODO lägg till i addBook
-                                        echo '  <form action="includes/addBook.inc.php?type=tbrRemove&bookId='.$bookId.'" method="post">
+                                        echo '  <form action="../includes/bookHandler.inc.php?type=tbrRemove&bookId='.$bookId.'" method="post">
                                         <input class="inputs" type="submit" value="Ta bort från \'vill läsa\' listan!">
                                         </form>';
                                         $tbr = true;
@@ -119,7 +120,7 @@ if(isset($_SESSION['userId'])) {
                                     }
                                 }
                                 if($tbr == false) {
-                                    echo '  <form action="includes/addBook.inc.php?type=tbr&bookId='.$bookId.'" method="post">
+                                    echo '  <form action="../includes/bookHandler.inc.php?type=tbr&bookId='.$bookId.'" method="post">
                                             <input class="inputs" type="submit" value="Lägg till i \'vill läsa\' listan!">
                                             </form>';
                                 }
@@ -134,7 +135,7 @@ if(isset($_SESSION['userId'])) {
                             //TODO error
                         }else {
                             if($userinfo['2'] == NULL) {
-                                echo '      <form action="includes/addBook.inc.php?type=hr&bookId='.$bookId.'" method="post">
+                                echo '      <form action="../includes/bookHandler.inc.php?type=hr&bookId='.$bookId.'" method="post">
                                             <input class="inputs" type="submit" value="Lägg till i \'har läst\' listan!">
                                             </form>';
                             }else {
@@ -143,7 +144,7 @@ if(isset($_SESSION['userId'])) {
                                 foreach ($tmpArray as $x) {
                                     if(strcasecmp($x,$bookId) == 0) {
                                         // TODO lägg till i addBook
-                                        echo '      <form action="includes/addBook.inc.php?type=hrRemove&bookId='.$bookId.'" method="post">
+                                        echo '      <form action="../includes/bookHandler.inc.php?type=hrRemove&bookId='.$bookId.'" method="post">
                                                     <input class="inputs" type="submit" value="Ta bort från \'har läst\' listan!">
                                                     </form>';
                                         $read = true;
@@ -151,7 +152,7 @@ if(isset($_SESSION['userId'])) {
                                     }
                                 }
                                 if($read == false) {
-                                    echo '  <form action="includes/addBook.inc.php?type=hr&bookId='.$bookId.'" method="post">
+                                    echo '  <form action="../includes/bookHandler.inc.php?type=hr&bookId='.$bookId.'" method="post">
                                             <input class="inputs" type="submit" value="Lägg till i \'vill läsa\' listan!">
                                             </form>';
                                 }
@@ -162,7 +163,7 @@ if(isset($_SESSION['userId'])) {
                     </li>
                         <?php
                         if($userinfo[11] != NULL) {
-                            echo '<li><form action="includes/addBook.inc.php?type=userCreatedList&bookId='.$bookId.'" method="post"><select name="personalList" id="personalList">';
+                            echo '<li><form action="../includes/listHandler.inc.php?type=userCreatedList&bookId='.$bookId.'" method="post"><select name="personalList" id="personalList">';
                             $listName = getLists($_SESSION['userId'])['1'];
                             if(!contains(';:',$listName)) {
                                 echo '<option value="'.$listName.'">'.$listName.'</option>';
@@ -206,7 +207,7 @@ if(isset($_SESSION['userId'])) {
                         </div>
                     </li>
                     <li>
-                        <form action="includes/addBook.inc.php?type=rating&bookId=<?php echo $bookId?>" method="post" class="rate">
+                        <form action="../includes/bookHandler.inc.php?type=rating&bookId=<?php echo $bookId?>" method="post" class="rate">
                             <?php
                             function isBookRated($bookId,$userinfo){
                                 if(isset($userinfo['4'])) {
@@ -286,7 +287,7 @@ if(isset($_SESSION['userId'])) {
                         $commentUserinfo = getUserInfo($comment['0']);
                         echo '<div class="comment"><div class="name">'.$commentUserinfo['8'].' '.$commentUserinfo['9'].'</div>';
                         if(isset($_SESSION['userId']) && $_SESSION['userId'] == $comment['0']) {
-                            echo '<div class="edit-remove"><a href="includes/addBook.inc.php?type=removeComment&bookId='.$bookId.'&comment='.$array['12'].'">radera</a></div>';
+                            echo '<div class="edit-remove"><a href="../includes/bookHandler.inc.php?type=removeComment&bookId='.$bookId.'&comment='.$array['12'].'">radera</a></div>';
                         }
                         echo '<br><div class="comment-text">'.$comment['1'].'</div></div>';
                     }else {
@@ -296,7 +297,7 @@ if(isset($_SESSION['userId'])) {
                             $commentUserinfo = getUserInfo($comment['0']);
                             echo '<div class="comment"><div class="name">'.$commentUserinfo['8'].' '.$commentUserinfo['9'].'</div>';
                             if($_SESSION['userId'] == $comment['0']) {
-                                echo '<div class="edit-remove"><a href="includes/addBook.inc.php?type=removeComment&bookId='.$bookId.'&comment='.$x.'">radera</a></div>';
+                                echo '<div class="edit-remove"><a href="../includes/bookHandler.inc.php?type=removeComment&bookId='.$bookId.'&comment='.$x.'">radera</a></div>';
                             }
                             echo '<br><div class="comment-text">'.$comment['1'].'</div></div>';
                         }
@@ -304,7 +305,7 @@ if(isset($_SESSION['userId'])) {
                     if(isset($_SESSION['userId'])) {
                         // TODO ta hand om tom textarea här
                         // TODO lägga till så att man kan edita och ta bor kommentarer
-                        echo '<form action="includes/addBook.inc.php?type=comment&bookId='.$bookId.'" method="post">
+                        echo '<form action="../includes/bookHandler.inc.php?type=comment&bookId='.$bookId.'" method="post">
                             Kommentera:<br>
                             <textarea class="text" name="comment"></textarea>
                             <button type="submit" class="button1">Publicera</button>

@@ -1,10 +1,10 @@
 <?php
-require "header.php";
+require "../header.php";
 ?>
 
 <main class="container">
     <!--uses the full size of the browser and hides the overflow if any -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <div class="workspace">
         <!-- sets max size to 1280px and centers it.-->
         <!-- Three columns to work within left to right, from top to bottom in code -->
@@ -32,7 +32,7 @@ require "header.php";
             }
             ?>
 
-            <form action="includes/signup.inc.php" method="post">
+            <form action="signup.inc.php" method="post">
                 <!-- Kanske göra som en lista och ha divs i varje li så att dem alltid blir på exakt samma höjd-->
                 <ul id="register">
                     <li id="space">
@@ -73,7 +73,7 @@ require "header.php";
                     </li>
                     <li id="space">
                         <div id="floatleft">Land: </div>
-                        <div id="floatright"><?php readfile('html/countryDropdown.html'); ?></div>
+                        <div id="floatright"><?php readfile('../html/countryDropdown.html'); ?></div>
                     </li>
                     <li id="space"><button type="submit" name="signup-submit">Registrera</button></li>
                     <li>
@@ -91,5 +91,5 @@ require "header.php";
 </main>
 
 <?php
-require "footer.php";
+require "../footer.php";
 ?>
