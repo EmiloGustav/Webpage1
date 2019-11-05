@@ -1,5 +1,5 @@
 <?php
-include '../includes/getDb.inc.php';
+include '../includes/getDb.php';
 session_start();
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@ session_start();
 
     <!--<link rel="stylesheet" type="text/css" href="css/styleNewIndex.css">-->
 
-    <link rel="stylesheet" type="text/css" href="index-loggedin.css">
+    <link rel="stylesheet" type="text/css" href="css/index-loggedin.css">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 

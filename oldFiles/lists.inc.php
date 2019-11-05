@@ -5,7 +5,7 @@
  * Date: 2019-07-18
  * Time: 18:39
  */
-require "getDb.inc.php";
+require "getDb.php";
 session_start();
 if (isset($_GET['type']) && isset($_SESSION['userId'])) {
     $userinfo = getUserInfo($_SESSION['userId']);

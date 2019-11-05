@@ -1,6 +1,7 @@
 <?php
 require "../header.php";
-include "../includes/getDb.inc.php"
+include "../includes/getDb.php";
+$getDb = new getDb();
 ?>
     <main class="container">
 
@@ -158,7 +159,7 @@ include "../includes/getDb.inc.php"
                     } else {
                         for ($x = 0; $x < $maxResults; $x++) {
                             // TODO FICA checkbook in db argument
-                            if (!empty($array) && !checkBookInDbById($array['items'][strval($x)]['id'])) {
+                            if (!empty($array) && !$getDb->checkBookInDbById($array['items'][strval($x)]['id'])) {
                                 if (!empty($array['items'][strval($x)]['volumeInfo']['title'])) {
                                     $foundTitle = $array['items'][strval($x)]['volumeInfo']['title'];
                                 } else {
@@ -238,11 +239,11 @@ include "../includes/getDb.inc.php"
                                 }
                                 if ($googleId != NULL) {
                                     // TODO implement getBookId
-                                    addToBookTable($foundTitle, $foundAuthors, $publisher, $publishedDate, $description, $isbn13, $isbn10, $smallthumbnail, $thumbnail, $textsnippet, $googleId);
-                                    array_push($tmparray, array(getBookByGoogleId($googleId)['0'],$foundTitle, $foundAuthors, $publisher, $publishedDate, $description, $isbn13, $isbn10, $smallthumbnail, $thumbnail, $textsnippet, $googleId));
+                                    $getDb->addToBookTable($foundTitle, $foundAuthors, $publisher, $publishedDate, $description, $isbn13, $isbn10, $smallthumbnail, $thumbnail, $textsnippet, $googleId);
+                                    array_push($tmparray, array($getDb->getBookByGoogleId($googleId)['0'],$foundTitle, $foundAuthors, $publisher, $publishedDate, $description, $isbn13, $isbn10, $smallthumbnail, $thumbnail, $textsnippet, $googleId));
                                 }
-                            } else if (checkBookInDbById($array['items'][strval($x)]['id'])) {
-                                array_push($tmparray, getBookByGoogleId($array['items'][strval($x)]['id']));
+                            } else if ($getDb->checkBookInDbById($array['items'][strval($x)]['id'])) {
+                                array_push($tmparray, $getDb->getBookByGoogleId($array['items'][strval($x)]['id']));
                             }
                         }
                     }

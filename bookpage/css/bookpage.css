@@ -85,3 +85,58 @@ h4 {
 .rate > label:hover ~ input:checked ~ label {
     color: #c59b08;
 }
+
+/* STYLING FRÅN INUTI FILEN */
+.container-grid{
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: 30% 60% 10%;
+    grid-gap: 3px;
+    padding: 3px;
+    overflow: hidden;
+    margin: auto;
+    text-align: center;
+}
+.item1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.item2{
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+.item3{
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+.inputs{
+    border: none;
+    background:cadetblue;
+    font-size: large;
+    padding:12px 6px;
+    min-width: 90%;
+}
+.inputs:hover {
+    background:lightcoral;
+}
+.text{
+    width:80%;
+}
+.button1{
+    float: right;
+    padding: 9px 20px;
+}
+.name{
+    float:left;
+    font-style: italic;
+    font-size: 15px;
+}
+.comment-text{
+    font-style: normal;
+    font-size: 12px;
+}
+.edit-remove{
+    float:right;
+    font-size: 8px;
+}
+

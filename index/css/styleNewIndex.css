@@ -238,7 +238,7 @@ main p {
         padding: 5em;
         margin-left: 0;
         margin-right: 0;
-        background: #fff url('../images/artshape.svg') no-repeat bottom right;
+        background: #fff url('../../images/artshape.svg') no-repeat bottom right;
         background-size: 35%;
     }
     #title-desktop {

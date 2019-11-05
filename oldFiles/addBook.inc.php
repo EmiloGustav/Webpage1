@@ -1,5 +1,5 @@
 <?php
-require "getDb.inc.php";
+require "../includes/getDb.php";
 session_start();
 if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])) {
     $userinfo = getUserInfo($_SESSION['userId']);
@@ -202,51 +202,8 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
         }
         changeUserData($userinfo);
     }
-    else if (strcasecmp($_GET['type'],'comment') == 0 ){
-        $comment = $_POST['comment'];
-        $bookId = $_GET['bookId'];
-        $currentComments = getCommentsByBookId($bookId);
-        // TODO check if already commented, max amount of comments?
-
-        if($currentComments == NULL) {
-            $currentComments = $_SESSION['userId'].'::'.$comment;
-            addComment($currentComments,$bookId);
-        }else {
-            $currentComments = $currentComments.';:'.$_SESSION['userId'].'::'.$comment;
-            addComment($currentComments,$bookId);
-        }
-    }
-    else if (strcasecmp($_GET['type'],'removeComment') == 0) {
-        $comment = $_GET['comment'];
-        $bookId = $_GET['bookId'];
-        $currentComments = getCommentsByBookId($bookId);
-        if(!contains(';:',$currentComments)) {
-            $currentComments = NULL;
-        }else {
-            $currentComments = explode(';:',$currentComments);
-            for($x = 0; $x < sizeof($currentComments);$x++){
-                if(strcasecmp($currentComments[strval($x)],$comment) == 0) {
-                    $match = $x;
-                }
-            }
-            array_splice($currentComments,$match,1);
-            $tmpString="";
-            for($x = 0;$x < sizeof($currentComments);$x++) {
-                if($x  == 0) {
-                    $tmpString = $currentComments[strval($x)];
-                }else {
-                    $tmpString = $tmpString.';:'.$currentComments[strval($x)];
-                }
-            }
-            if(strcasecmp('',$tmpString) == 0) {
-                $tmpString = NULL;
-            }
-            $currentComments = $tmpString;
-        }
-        addComment($currentComments,$bookId);
-    }
     $bookId = $_GET['bookId'];
-    header("Location: ../bookpage.php?bookId=".$bookId);
+    header("Location: bookpage.php?bookId=".$bookId);
     exit();
 }else {
     // TODO lägga till en header så att man kommer tillbaka om man kommit hit otillåtet eller om man inte är ionloggad

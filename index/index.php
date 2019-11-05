@@ -1,6 +1,7 @@
 <?php
-include '../includes/getDb.inc.php';
+include '../includes/getDb.php';
 session_start();
+$getDb = new getDb();
 if (isset($_SESSION['userId'])) {
 	header("Location: http://$_SERVER[HTTP_HOST]/Webpage1/index/index-loggedin.php");
 	exit();
@@ -32,7 +33,7 @@ if (isset($_SESSION['userId'])) {
 			<ul>
 				<li><a href="../login-logout/login.php">Logga in</a></li>
 				<hr>
-				<li><a href="../singup/signup.php">Registrera</a></li>
+				<li><a href="../signup/signup.php">Registrera</a></li>
 				<hr>
 			</ul>
 		</nav>
@@ -65,12 +66,12 @@ if (isset($_SESSION['userId'])) {
 				<h1>Populärast just nu</h1>
 
 				<?php
-				$data = getTheThreeHighestRatedBooks();
+				$data = $getDb->getTheThreeHighestRatedBooks();
 				?>
 
 				<div class="slideshow-item">
 					<div class="book">
-						<?php echo '<a href="../bookpage/bookpage.php" class="img-link"><img src="'.$data[0]['smallthumbnail'].'" alt=""></a>'; ?>
+						<?php echo '<a href="../bookpage/bookpage.php" class="img-link"><img src="' .$data[0]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
 							<?php echo '<h1>'.$data[0]['title'].'</h1>';
 							echo '<p>Skriven av</p>';

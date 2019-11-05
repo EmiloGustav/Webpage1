@@ -1,8 +1,9 @@
 <?php
-require "getDb.inc.php";
+include "getDb.php";
+$getDb = new getDb();
 session_start();
 if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])) {
-    $userinfo = getUserInfo($_SESSION['userId']);
+    $userinfo = $getDb->getUserInfo($_SESSION['userId']);
     if (strcasecmp($_GET['type'],'tbr') == 0 ) {
         // Check if there are any book in wtr
         if($userinfo['1'] == NULL ) {
@@ -10,7 +11,7 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
         }else {
             $userinfo['1'] = $userinfo['1'].';:'.$_GET['bookId'];
         }
-        changeUserData($userinfo);
+        $getDb->changeUserData($userinfo);
     }
     else if (strcasecmp($_GET['type'],'hr') == 0 ){
         // Check if there are any book in wtr
@@ -19,7 +20,7 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
         }else {
             $userinfo['2'] = $userinfo['1'].';:'.$_GET['bookId'];
         }
-        changeUserData($userinfo);
+        $getDb->changeUserData($userinfo);
         // TODO Lägga till så att man frågar användaren om den vill sätta betyg eller ge en kommentar till boken
     }
     else if (strcasecmp($_GET['type'],'rating') == 0 ){
@@ -29,19 +30,19 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
             // Check if the user has NULL ratings
             $tmpArrayBookId = $bookId;
             $tmpArrayRating = $rating;
-            updateSqlWithRating($rating,$bookId);
-        }else if(!contains(';:',$userinfo['4'])) {
+            $getDb->updateSqlWithRating($rating,$bookId);
+        }else if(!$getDb->sqlErrorHandler->help->contains(';:',$userinfo['4'])) {
             // Check if the user has more than one rated book
             if (strcasecmp($bookId, $userinfo['4']) == 0 && $userinfo['5'] == $rating) {
-                updateSqlWithRating(-1,$bookId,$rating);
+                $getDb->updateSqlWithRating(-1,$bookId,$rating);
                 $tmpArrayBookId = null;
                 $tmpArrayRating = null;
             }else if(strcasecmp($bookId, $userinfo['4']) == 0){
-                updateSqlWithRating(-2,$bookId,$userinfo['5'],$rating);
+                $getDb->updateSqlWithRating(-2,$bookId,$userinfo['5'],$rating);
                 $tmpArrayBookId = $bookId;
                 $tmpArrayRating = $rating;
             }else {
-                updateSqlWithRating($rating,$bookId);
+                $getDb->updateSqlWithRating($rating,$bookId);
                 $tmpArrayBookId = $userinfo['4'].';:'.$bookId;
                 $tmpArrayRating = $userinfo['5'].';:'.$rating;
             }
@@ -54,10 +55,10 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
             for ($x = 0; $x < sizeof($arrayBookId); $x++) {
                 // If rating and name is the same as the entered info just remove the rating
                 if (strcasecmp($bookId, $arrayBookId[strval($x)]) == 0 && $arrayRating[strval($x)] == $rating) {
-                    updateSqlWithRating(-1,$bookId, $rating);
+                    $getDb->updateSqlWithRating(-1,$bookId, $rating);
                     $bookMatch=$x;
                 }else if(strcasecmp($bookId, $arrayBookId[strval($x)]) == 0 ){
-                    updateSqlWithRating(-2,$bookId, $arrayRating[strval($x)],$rating);
+                    $getDb->updateSqlWithRating(-2,$bookId, $arrayRating[strval($x)],$rating);
                     $bookMatch=$x;
                     $changeRating = true;
                 }
@@ -93,27 +94,27 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
                 }
 
             }else if ($bookMatch == false) {
-                updateSqlWithRating($rating,$bookId);
+                $getDb->updateSqlWithRating($rating,$bookId);
                 $tmpArrayBookId = $userinfo['4'].';:'.$bookId;
                 $tmpArrayRating = $userinfo['5'].';:'.$rating;
             }
         }
         $userinfo['4'] = $tmpArrayBookId;
         $userinfo['5'] = $tmpArrayRating;
-        changeUserData($userinfo);
-        //changeUserData($userinfo);
+        $getDb->changeUserData($userinfo);
+        //getDb->changeUserData($userinfo);
     }
     else if (strcasecmp($_GET['type'],'tbrRemove') == 0 ) {
         // Check if there are any book in wtr
         if($userinfo['1'] == NULL ) {
             // TODO error ska inte kunna vara null
         }else {
-            if(!contains(';:',$userinfo['1'])) {
+            if(!$getDb->sqlErrorHandler->help->contains(';:',$userinfo['1'])) {
                 $userinfo['1'] = null;
             }else {
                 $tmpArray = explode(';:',$userinfo['1']);
                 $index = array_search(strval($_GET['bookId']),$tmpArray);
-                if($index == false) {
+                if($index === false) {
                     // TODO error
                 }else {
                     array_splice($tmpArray, $index, 1);
@@ -129,19 +130,19 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
                 }
             }
         }
-        changeUserData($userinfo);
+        $getDb->changeUserData($userinfo);
     }
     else if (strcasecmp($_GET['type'],'hrRemove') == 0 ) {
         // Check if there are any book in wtr
         if($userinfo['2'] == NULL ) {
             // TODO error ska inte kunna vara null
         }else {
-            if(!contains(';:',$userinfo['2'])) {
+            if(!$getDb->sqlErrorHandler->help->contains(';:',$userinfo['2'])) {
                 $userinfo['2'] = null;
             }else {
                 $tmpArray = explode(';:',$userinfo['2']);
                 $index = array_search(strval($_GET['bookId']),$tmpArray);
-                if($index == false) {
+                if($index === false) {
                     // TODO error
                 }else {
                     array_splice($tmpArray, $index, 1);
@@ -153,54 +154,12 @@ if (isset($_GET['type']) && isset($_GET['bookId']) && isset($_SESSION['userId'])
                             $tmpUserinfo = $tmpUserinfo . $tmpArray[strval($x)];
                         }
                     }
+                    var_dump($tmpUserinfo);
                     $userinfo['2'] = $tmpUserinfo;
                 }
             }
         }
-        changeUserData($userinfo);
-    }
-    else if (strcasecmp($_GET['type'],'comment') == 0 ){
-        $comment = $_POST['comment'];
-        $bookId = $_GET['bookId'];
-        $currentComments = getCommentsByBookId($bookId);
-        // TODO check if already commented, max amount of comments?
-
-        if($currentComments == NULL) {
-            $currentComments = $_SESSION['userId'].'::'.$comment;
-            addComment($currentComments,$bookId);
-        }else {
-            $currentComments = $currentComments.';:'.$_SESSION['userId'].'::'.$comment;
-            addComment($currentComments,$bookId);
-        }
-    }
-    else if (strcasecmp($_GET['type'],'removeComment') == 0) {
-        $comment = $_GET['comment'];
-        $bookId = $_GET['bookId'];
-        $currentComments = getCommentsByBookId($bookId);
-        if(!contains(';:',$currentComments)) {
-            $currentComments = NULL;
-        }else {
-            $currentComments = explode(';:',$currentComments);
-            for($x = 0; $x < sizeof($currentComments);$x++){
-                if(strcasecmp($currentComments[strval($x)],$comment) == 0) {
-                    $match = $x;
-                }
-            }
-            array_splice($currentComments,$match,1);
-            $tmpString="";
-            for($x = 0;$x < sizeof($currentComments);$x++) {
-                if($x  == 0) {
-                    $tmpString = $currentComments[strval($x)];
-                }else {
-                    $tmpString = $tmpString.';:'.$currentComments[strval($x)];
-                }
-            }
-            if(strcasecmp('',$tmpString) == 0) {
-                $tmpString = NULL;
-            }
-            $currentComments = $tmpString;
-        }
-        addComment($currentComments,$bookId);
+        $getDb->changeUserData($userinfo);
     }
     $bookId = $_GET['bookId'];
     header("Location: ../bookpage/bookpage.php?bookId=".$bookId);

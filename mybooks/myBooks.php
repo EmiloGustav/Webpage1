@@ -1,8 +1,9 @@
 <?php
 session_start();
-include '../includes/getDb.inc.php';
+include '../includes/getDb.php';
+$getDb = new getDb();
 if (isset($_SESSION['userId'])) {
-    $userinfo = getUserInfo($_SESSION['userId']);
+    $userinfo = $getDb->getUserInfo($_SESSION['userId']);
 }
 // TODO konstig skalning på bilderna när skärmen är under ett visst antal px
 ?>
@@ -16,37 +17,13 @@ if (isset($_SESSION['userId'])) {
 
     <title>Mina böcker</title>
 
-    <link rel="stylesheet" href="myBooks.css">
+    <link rel="stylesheet" href="css/myBooks.css">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<script type="text/javascript">
-    function addList() {
-        document.getElementById('createList').remove();
-        var li = document.createElement('LI');
-        li.setAttribute('id','jsNew');
-        var form = document.createElement('FORM');
-        form.setAttribute('action','../includes/listHandler.inc.php?type=addList');
-        form.setAttribute('method','POST');
-        form.setAttribute('id','formNew')
-        var input = document.createElement('INPUT') ;
-        input.setAttribute('type','text')
-        input.setAttribute('placeholder','Listans namn...')
-        input.setAttribute('name','listName')
-        var button = document.createElement('BUTTON');
-
-        button.innerHTML = 'Skapa';
-        button.setAttribute('type','submit');
-
-        document.getElementById('liCreateList').parentNode.insertBefore(li,document.getElementById('liCreateList'));
-        document.getElementById('jsNew').appendChild(form);
-        document.getElementById('formNew').appendChild(input);
-        document.getElementById('formNew').appendChild(button);
-    }
-
-</script>
+<link rel="stylesheet" type="text/css" href="css/myBooks.css">
     <aside>
         <figure>
             <a href="../index/index.php"><img id="logotype" src="../images/books.png" alt=""></a>
@@ -67,8 +44,8 @@ if (isset($_SESSION['userId'])) {
                 <?php
                 $numberOfLists = $userinfo['11'];
                 if ($numberOfLists != NULL) {
-                    $lists = getLists($_SESSION['userId']);
-                    if (!contains(';:', $lists['1'])) {
+                    $lists = $getDb->getLists($_SESSION['userId']);
+                    if (!$getDb->sqlErrorHandler->help->contains(';:', $lists['1'])) {
                         $delfkn = "deleteList('" . $lists['1'] . "');";
                         echo '<li><a href=myBooks.php?list=' . $lists['1'] . '">' . $lists['1'] . '</a><button class="closeBtn" onclick="'.$delfkn.'">&times;</button></li>';
                         echo '<hr>';
@@ -174,14 +151,14 @@ if (isset($_SESSION['userId'])) {
                                 </div>
                                 <hr>';
                 }
-                function printItems($listname,$list) {
+                function printItems($listname,$list,$getDb) {
                     echo '<h1>'.$listname.'</h1>';
                     printArticlesPerPage();
-                    echo '<form action="includes/editBookList.inc.php?listName='.$listname.'" method="post" id="editedList">';
+                    echo '<form action="editBookList.inc.php?listName='.$listname.'" method="post" id="editedList">';
                     $list = explode(';:',$list);
                     // TODO hantera antal resultat per sida
                     if(gettype($list) == "string") {
-                        echoBook(getBookByBookId($list));
+                        echoBook($getDb->getBookByBookId($list));
                     }else if(gettype($list) == "array") {
                         if(isset($_GET['perPage'])) {
                             $articlesPerPage = $_GET['perPage'];
@@ -197,7 +174,7 @@ if (isset($_SESSION['userId'])) {
                             }
                             for($x = ($page - 1) * $articlesPerPage; $x < $page * $articlesPerPage;$x++) {
                                 if (isset($list[strval($x)])) {
-                                    $book = getBookByBookId($list[strval($x)]);
+                                    $book = $getDb->getBookByBookId($list[strval($x)]);
                                     if ($book['11'] == NULL) {
                                         $book['11'] = "Inget betyg";
                                     }
@@ -206,7 +183,7 @@ if (isset($_SESSION['userId'])) {
                             }
                         }else{
                             foreach($list as $i) {
-                                echoBook(getBookByBookId($i));
+                                echoBook($getDb->getBookByBookId($i));
                             }
                         }
                     }
@@ -214,18 +191,18 @@ if (isset($_SESSION['userId'])) {
 
                 if(!isset($_GET['list'])) {
                     $tbr = $userinfo['1'];
-                    printItems("Vill läsa",$tbr);
+                    printItems("Vill läsa",$tbr,$getDb);
                 }else {
                     $list = $_GET['list'];
                     if(strcasecmp($list,"hr") == 0) {
                         $hr = $userinfo['2'];
-                        printItems("Har läst",$hr);
+                        printItems("Har läst",$hr,$getDb);
                     }
                     else if(strcasecmp($list,"tbr") == 0) {
                         $tbr = $userinfo['1'];
-                        printItems("Vill läsa",$tbr);
+                        printItems("Vill läsa",$tbr,$getDb);
                     }else {
-                        printItems($list,str_replace('::',';:',getListItems($_GET['list'],$_SESSION['userId'])));
+                        printItems($list,str_replace('::',';:',$getDb->getListItems($_GET['list'],$_SESSION['userId'])),$getDb);
                     }
                 }
                 echo '  <div id="myModal" class="modal">
@@ -255,77 +232,7 @@ if (isset($_SESSION['userId'])) {
             </div>
         </div>
     </main>
-
-    <script>
-        (function() {
-            var menu = document.querySelector('ul'),
-                menulink = document.querySelector('#menu-icon');
-
-            menulink.addEventListener('click', function(e) {
-                menu.classList.toggle('active');
-                e.preventDefault();
-            });
-        })();
-    </script>
-    <script type="text/javascript">
-        var span = document.getElementById('modalSpan');
-        var modal = document.getElementById('myModal');
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-            document.getElementsByClassName("h6")[0].remove();
-            document.getElementsByClassName("btnNo")[0].remove();
-            document.getElementsByClassName("btnYes")[0].remove();
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-                document.getElementsByClassName("h6")[0].remove();
-                document.getElementsByClassName("btnNo")[0].remove();
-                document.getElementsByClassName("btnYes")[0].remove();
-            }
-        }
-        function deleteList(listName) {
-            var modal = document.getElementById('myModal');
-            modal.style.display='block';
-            var mc = document.getElementById('modalContent');
-            var h6 = document.createElement('H6');
-            h6.innerText = 'Är du säker på att du vill ta bort listan '+listName+' och alla böcker i den?';
-            h6.setAttribute('class','h6');
-            var btnYes = document.createElement('A');
-            btnYes.innerText = "Ja";
-            btnYes.setAttribute('href','../includes/listHandler.inc.php?type=removeList&listName='+listName);
-            btnYes.setAttribute('class','btnYes');
-            var btnNo = document.createElement('BUTTON');
-            btnNo.innerText = "Nej";
-            btnNo.setAttribute('class','btnNo');
-            btnNo.setAttribute('onClick','document.getElementById("myModal").style.display="none";document.getElementsByClassName("h6")[0].remove();document.getElementsByClassName("btnNo")[0].remove();document.getElementsByClassName("btnYes")[0].remove();');
-            mc.appendChild(h6);
-            mc.appendChild(btnYes);
-            mc.appendChild(btnNo);
-
-        }
-        function toggleEdit() {
-            var elements = document.getElementsByClassName("edit-list");
-
-            if(elements[0].getAttribute("style") == null) {
-                for(var i=0;i<elements.length;i++) {
-                    elements[i].style="display:inline-block";
-                }
-            }else if(elements[0].style.display === "none") {
-                for(var i=0;i<elements.length;i++) {
-                    elements[i].style="display:inline-block";
-                }
-            }else {
-                for(var i=0;i<elements.length;i++) {
-                    elements[i].style="display:none";
-                }
-            }
-
-        }
-    </script>
+    <script type="text/javascript" src="javascript/addAndDeleteLists.js"></script>
+    <script type="text/javascript" src="javascript/myBooks.js"></script>
 </body>
-
 </html>

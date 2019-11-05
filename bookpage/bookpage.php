@@ -6,96 +6,24 @@ if(isset($_GET['bookId'])) {
 }
 
 require "../header.php";
-include "../includes/getDb.inc.php";
-
-$array = getBookByBookId($bookId);
+include "../includes/getDb.php";
+include "php/bookpageHelper.php";
+$getDb = new getDb();
+$help = new helper();
+$bookpageHelper = new bookpageHelper();
+$array = $getDb->getBookByBookId($bookId);
 if(isset($_SESSION['userId'])) {
-    $userinfo = getUserInfo($_SESSION['userId']);
+    $userinfo = $getDb->getUserInfo($_SESSION['userId']);
 }else {
     $userinfo = NULL;
 }
 
 ?>
-
-    <script type="text/javascript">
-        function switchRating() {
-
-            var rating = document.getElementById("rating");
-            var button = document.getElementById("ratingButton");
-            button.innerText=rating.style.display;
-            if(rating.style.display == "none"||rating.style.display == ""||rating.style.display == null ){
-                rating.style.display = "block";
-                button.innerText = "Dölj betyg";
-            }else if(rating.style.display == "block") {
-                rating.style.display ="none";
-                button.innerText = "Visa betyg";
-            }
-        }
-    </script>
-    <style>
-        .container-grid{
-            max-width: 900px;
-            display: grid;
-            grid-template-columns: 30% 60% 10%;
-            grid-gap: 3px;
-            padding: 3px;
-            overflow: hidden;
-            margin: auto;
-            text-align: center;
-        }
-        .item1 {
-            grid-column-start: 1;
-            grid-column-end: 2;
-        }
-        .item2{
-            grid-column-start: 2;
-            grid-column-end: 3;
-        }
-        .item3{
-            grid-column-start: 3;
-            grid-column-end: 4;
-        }
-        .inputs{
-            border: none;
-            background:cadetblue;
-            font-size: large;
-            padding:12px 6px;
-            min-width: 90%;
-        }
-        .inputs:hover {
-            background:lightcoral;
-        }
-        .text{
-            width:80%;
-        }
-        .button1{
-            float: right;
-            padding: 9px 20px;
-        }
-        .name{
-            float:left;
-            font-style: italic;
-            font-size: 15px;
-        }
-        .comment-text{
-            font-style: normal;
-            font-size: 12px;
-        }
-        .edit-remove{
-            float:right;
-            font-size: 8px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="bookpage.css">
     <main class="container">
-        <link rel="stylesheet" type="text/css" href="bookpage.css">
         <div class="container-grid">
-
             <div class="item1">
-
-
-
-                <?php echo '<img src=../"'.$array['9'].'" alt="Books" width="250px" height="400px">'; ?>
-
+                <?php echo '<img src="'.$array['9'].'" alt="Books" width="250px" height="400px">'; ?>
                 <ul>
                     <li>
                         <?php
@@ -163,9 +91,9 @@ if(isset($_SESSION['userId'])) {
                     </li>
                         <?php
                         if($userinfo[11] != NULL) {
-                            echo '<li><form action="../includes/listHandler.inc.php?type=userCreatedList&bookId='.$bookId.'" method="post"><select name="personalList" id="personalList">';
-                            $listName = getLists($_SESSION['userId'])['1'];
-                            if(!contains(';:',$listName)) {
+                            echo '<li><form action="../includes/listsHandler.inc.php?type=userCreatedList&bookId='.$bookId.'" method="post"><select name="personalList" id="personalList">';
+                            $listName = $getDb->getLists($_SESSION['userId'])['1'];
+                            if(!$help->contains(';:',$listName)) {
                                 echo '<option value="'.$listName.'">'.$listName.'</option>';
                             }else {
                                 $listNameArray = explode(';:',$listName);
@@ -209,25 +137,7 @@ if(isset($_SESSION['userId'])) {
                     <li>
                         <form action="../includes/bookHandler.inc.php?type=rating&bookId=<?php echo $bookId?>" method="post" class="rate">
                             <?php
-                            function isBookRated($bookId,$userinfo){
-                                if(isset($userinfo['4'])) {
-                                    if(!contains(';:',$userinfo['4']) && strcasecmp($userinfo['4'],$bookId) == 0) {
-                                        return $userinfo['5'];
-                                    }else if(!contains(';:',$userinfo['4']) && strcasecmp($userinfo['4'],$bookId) != 0){
-                                        return false;
-                                    }else {
-                                        $ratedBooksId = explode(";:" , $userinfo['4']);
-                                        for($x = 0; $x < sizeof($ratedBooksId); $x++){
-                                            if(strcasecmp($bookId,$ratedBooksId[strval($x)]) == 0) {
-                                                $tmpArray = explode(';:',$userinfo['5']);
-                                                return $tmpArray[strval($x)];
-                                            }
-                                        }
-                                        return false;
-                                    }
-                                }
-                            }
-                            $bookRated = isBookRated($bookId,$userinfo);
+                            $bookRated = $bookpageHelper->isBookRated($bookId,$userinfo);
                             if($bookRated == false){
                                 echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
@@ -282,12 +192,12 @@ if(isset($_SESSION['userId'])) {
                     // TODO kanske ändra så att man inte får all info i getuserinfo
                     if($array['12'] == NULL) {
                         echo '<div class="comment">Var den första att skriva en kommentar för denna bok</div>';
-                    }else if (!contains(';:',$array['12'])) {
+                    }else if (!$getDb->sqlErrorHandler->help->contains(';:',$array['12'])) {
                         $comment = explode('::',$array['12']);
-                        $commentUserinfo = getUserInfo($comment['0']);
+                        $commentUserinfo = $getDb->getUserInfo($comment['0']);
                         echo '<div class="comment"><div class="name">'.$commentUserinfo['8'].' '.$commentUserinfo['9'].'</div>';
                         if(isset($_SESSION['userId']) && $_SESSION['userId'] == $comment['0']) {
-                            echo '<div class="edit-remove"><a href="../includes/bookHandler.inc.php?type=removeComment&bookId='.$bookId.'&comment='.$array['12'].'">radera</a></div>';
+                            echo '<div class="edit-remove"><a href="php/commentHandler.php?type=removeComment&bookId='.$bookId.'&comment='.$array['12'].'">radera</a></div>';
                         }
                         echo '<br><div class="comment-text">'.$comment['1'].'</div></div>';
                     }else {
@@ -297,7 +207,7 @@ if(isset($_SESSION['userId'])) {
                             $commentUserinfo = getUserInfo($comment['0']);
                             echo '<div class="comment"><div class="name">'.$commentUserinfo['8'].' '.$commentUserinfo['9'].'</div>';
                             if($_SESSION['userId'] == $comment['0']) {
-                                echo '<div class="edit-remove"><a href="../includes/bookHandler.inc.php?type=removeComment&bookId='.$bookId.'&comment='.$x.'">radera</a></div>';
+                                echo '<div class="edit-remove"><a href="php/commentHandler.php?type=removeComment&bookId='.$bookId.'&comment='.$x.'">radera</a></div>';
                             }
                             echo '<br><div class="comment-text">'.$comment['1'].'</div></div>';
                         }
@@ -305,7 +215,7 @@ if(isset($_SESSION['userId'])) {
                     if(isset($_SESSION['userId'])) {
                         // TODO ta hand om tom textarea här
                         // TODO lägga till så att man kan edita och ta bor kommentarer
-                        echo '<form action="../includes/bookHandler.inc.php?type=comment&bookId='.$bookId.'" method="post">
+                        echo '<form action="php/commentHandler.php?type=comment&bookId='.$bookId.'" method="post">
                             Kommentera:<br>
                             <textarea class="text" name="comment"></textarea>
                             <button type="submit" class="button1">Publicera</button>
@@ -326,9 +236,9 @@ if(isset($_SESSION['userId'])) {
             </div>
         </div>
     </main>
-
+    <script type="text/javascript" src="javascript/bookpage.js"></script>
 <?php
-require "footer.php";
+require "../footer.php";
 ?>
 <?php
 /**

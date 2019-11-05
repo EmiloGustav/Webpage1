@@ -1,6 +1,6 @@
 <?php
 require "header.php";
-include "includes/getDb.inc.php";
+include "includes/getDb.php";
 if (isset($_SESSION['userId'])) {
     $userinfo = getUserInfo($_SESSION['userId']);
 }
@@ -170,7 +170,7 @@ if (isset($_SESSION['userId'])) {
             //$userunfo = getUserInfo($_SESSION['userId']);
             $tbr = $userinfo['1'];
             $hr = $userinfo['2'];
-            echo '<ul id="jsparent"><li><a href="myBooks.php?list=tbr">Vill läsa</a></li>';
+            echo '<ul id="jsparent"><li><a href="../myBooks.php?list=tbr">Vill läsa</a></li>';
             echo '<li><a href="myBooks.php?list=hr">Har läst</a></li>';
             // Get nr of lists
             $numberOfLists = $userinfo['11'];

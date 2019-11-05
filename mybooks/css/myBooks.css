@@ -14,7 +14,7 @@ body {
     /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(45deg, #00342c 0%, #00f7bd 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00342c', endColorstr='#00f7bd', GradientType=1);
+    /*filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00342c', endColorstr='#00f7bd', GradientType=1);
     /* IE6-9 fallback on horizontal gradient */
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -226,6 +226,9 @@ main {
     background-color: rgba(0, 0, 0, 0.4);
     /* Black w/ opacity */
 }
+.edit-list {
+    display: none;
+}
 
 @media only screen and (min-width: 768px) {
     body {
@@ -304,8 +307,5 @@ main {
     }
     .bookItem-data {
         display: block;
-    }
-    .edit-list {
-        display: none;
     }
 }

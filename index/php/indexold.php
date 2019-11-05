@@ -1,5 +1,5 @@
 <?php
-include "includes/getDb.inc.php";
+include "includes/getDb.php";
 require "includes/dbh.inc.php";
 if(isset($_SESSION['userId'])){
     header("Location: http://$_SERVER[HTTP_HOST]/Webpage1/index-loggedin.php");
@@ -343,5 +343,5 @@ if(isset($_SESSION['userId'])){
 
 
 <?php
-require  "footer.php"
+require "footer.php"
 ?>
