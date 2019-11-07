@@ -24,7 +24,6 @@ aside {
     display: grid;
     grid-template-columns: auto 40px;
     padding: 2em;
-    /*max-height: 100vh;*/
     max-height: calc(100vh - 4em);
 }
 
@@ -34,10 +33,6 @@ aside figure {
 
 #logotype {
     display: none;
-}
-
-aside figure a {
-    text-decoration: none;
 }
 
 aside figure figcaption {
@@ -94,138 +89,87 @@ ul li a:hover {
     background-color: rgb(201, 201, 201);
 }
 
-ul li button {
-    border-width: 0;
-    display: block;
-    padding: 1em 1.5em;
-    background-color: rgba(255, 255, 255, 0.35);
-    color: #111;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-#btn-logout {
-    display: block;
-    margin: 4em auto;
-    width: 70%;
-    cursor: pointer;
-    font-size: 0.9em;
-    color: rgb(255, 255, 255);
-    padding: 0.5em;
-    border: 1px solid rgb(110, 110, 110);
-    background: rgb(43, 161, 140);
-    transition: 0.3s;
-}
-
-#btn-logout:hover {
-    background: rgb(29, 105, 91);
-}
-
 main {
     background-color: #f9f9f9;
     padding: 1em 1em;
 }
 
-.container-list,
-.container-ads {
+main h1 {
+    font-size: 18px;
+}
+
+main p {
+    font-size: 14px;
+    line-height: 1.2em;
+    margin: 0;
+}
+
+.main-container-book,
+.main-container-comments {
     margin: 0 auto;
     margin-bottom: 20px;
     font-size: 14px;
-    padding: 0.5em;
+    padding: 1em;
     background: #ffffff;
-    border: 1px solid #868686;
+    border: 1px solid #c9c9c9;
     border-radius: 3px;
 }
 
-.container-list img,
-.container-ads img {
-    max-width: 70%;
-    max-height: 70%;
+.book-information .header {
+    text-align: center;
 }
 
-.container-list hr {
-    border: 0;
-    height: 1px;
-    width: 100%;
-    background: #d1d1d1;
+.book-information #book-title {
+    font-size: 30px;
+    height: auto;
 }
 
-.list-bookItem {
-    display: grid;
-    grid-template-columns: auto 230px;
-    grid-template-rows: 100px;
+.book-image {
+    margin: 0 auto;
+    text-align: center;
 }
 
-.bookItem-description .list-bookTitle {
-    display: block;
-    text-decoration: none;
-    font-size: 18px;
-    width: 100%;
-    color: black;
+.book-image img {
+    max-width: 100%;
 }
 
-.bookItem-description .list-bookAuthor {
-    display: block;
-    text-decoration: none;
+.tab-container {
+    margin: 0 auto;
+    margin-bottom: 20px;
     font-size: 14px;
+    background: #ffffff;
+    border-radius: 3px;
+}
+
+.tab-container .tabButton-container {
     width: 100%;
-    color: rgb(23, 32, 160);
+    height: 15%;
 }
 
-.bookItem-data {
-    display: none;
-}
-
-.container-item {
-    border: 1px solid #868686;
-}
-
-.closeBtn {
-    float: right;
-    font-size: 14px;
-    border: none;
-    font-weight: bold;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%;
-    /* Could be more or less, depending on screen size */
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-
-/* The Modal (background) */
-
-.modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
+.tab-container .tabButton-container button {
+    width: 49%;
     height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+}
+
+.tab-container .tabButton-container button:hover {
+    background-color: #d7d4d4
+}
+
+.tab-container .tabPanel {
+    box-sizing: border-box;
+    height: 85%;
+    color: rgb(0, 0, 0);
+    display: none;
+    padding: 1em;
+    border: 1px solid #e4e4e4;
 }
 
 @media only screen and (min-width: 768px) {
@@ -271,41 +215,29 @@ main {
         width: 100% !important;
     }
     main {
-        display: grid;
-        grid-template-columns: 78% 22%;
-        padding: 1em;
+        padding: 2em;
         margin-left: 20px;
         margin-right: 0;
         background-size: 35%;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
     }
     main p {
-        line-height: 1.5em;
-        margin: 0;
+        font-size: 14px;
+        line-height: 1.3em;
     }
-    .list-side {
-        margin-right: 1em;
+    .main-firstRow {
+        margin-bottom: 20px;
     }
-    .container-list {
-        margin-bottom: 0;
-    }
-    .container-list img,
-    .container-ads img {
-        max-width: 60px;
-    }
-    .list-bookItem {
+    .main-container-book {
         display: grid;
-        grid-template-columns: 20% 40% 35% 5%;
-        grid-template-rows: 90px;
+        grid-template-columns: 20% 80%;
     }
-    .bookItem-description p {
-        margin-top: 1em;
-        font-size: 12px;
-        font-style: italic;
+    .book-information .header {
+        text-align: left;
     }
-    .bookItem-data {
-        display: block;
-    }
-    .edit-list {
-        display: none;
+    .tab-container .tabButton-container button {
+        width: 25%;
     }
 }

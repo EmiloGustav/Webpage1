@@ -195,6 +195,12 @@ main p {
     height: 95%;
 }
 
+.book .description p {
+    margin-top: 1em;
+    font-size: 12px;
+    font-style: italic;
+}
+
 @media only screen and (min-width: 768px) {
     body {
         display: grid;
@@ -241,7 +247,7 @@ main p {
         padding: 3em;
         margin-left: 20px;
         margin-right: 0;
-        background: #f9f9f9 url('images/artshape.svg') no-repeat bottom right;
+        background: #f9f9f9 url('../../images/artshape.svg') no-repeat bottom right;
         background-size: 35%;
         display: grid;
         grid-template-columns: 65% 35%;

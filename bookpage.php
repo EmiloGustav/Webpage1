@@ -90,9 +90,6 @@ if(isset($_SESSION['userId'])) {
         <div class="container-grid">
 
             <div class="item1">
-
-
-
                 <?php echo '<img src="'.$array['9'].'" alt="Books" width="250px" height="400px">'; ?>
 
                 <ul>
