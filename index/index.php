@@ -71,9 +71,9 @@ if (isset($_SESSION['userId'])) {
 
 				<div class="slideshow-item">
 					<div class="book">
-						<?php echo '<a href="../bookpage/bookpage.php" class="img-link"><img src="' .$data[0]['smallthumbnail'].'" alt=""></a>'; ?>
+						<?php echo '<a href="bookpage.php?bookId='.$data[0]['bookId'].'" class="img-link"><img src="'.$data[0]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
-							<?php echo '<h1>'.$data[0]['title'].'</h1>';
+							<?php echo '<a href="bookpage.php?bookId='.$data[0]['bookId'].'"><h1>'.$data[0]['title'].'</h1></a>';
 							echo '<p>Skriven av</p>';
 							echo '<a href="author.php" class="list-bookAuthor">'.$data[0]['author'].'</a>';
 							?>
@@ -83,9 +83,9 @@ if (isset($_SESSION['userId'])) {
 
 				<div class="slideshow-item">
 					<div class="book">
-						<?php echo '<a href="../bookpage/bookpage.php?bookId=12" class="img-link"><img src="'.$data[1]['smallthumbnail'].'" alt=""></a>'; ?>
+						<?php echo '<a href="bookpage.php?bookId='.$data[1]['bookId'].'" class="img-link"><img src="'.$data[1]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
-							<?php echo '<h1>'.$data[1]['title'].'</h1>';
+							<?php echo '<a href="bookpage.php?bookId='.$data[1]['bookId'].'"><h1>'.$data[1]['title'].'</h1></a>';
 							echo '<p>Skriven av</p>';
 							echo '<a href="author.php" class="list-bookAuthor">'.$data[1]['author'].'</a>';
 							?>
@@ -95,9 +95,9 @@ if (isset($_SESSION['userId'])) {
 
 				<div class="slideshow-item">
 					<div class="book">
-						<?php echo '<a href="../bookpage/bookpage.php" class="img-link"><img src="'.$data[2]['smallthumbnail'].'" alt=""></a>'; ?>
+						<?php echo '<a href="bookpage.php?bookId='.$data[2]['bookId'].'" class="img-link"><img src="'.$data[2]['smallthumbnail'].'" alt=""></a>'; ?>
 						<div class="description">
-							<?php echo '<h1>'.$data[2]['title'].'</h1>';
+							<?php echo '<a href="bookpage.php?bookId='.$data[2]['bookId'].'"><h1>'.$data[2]['title'].'</h1></a>';
 							echo '<p>Skriven av</p>';
 							echo '<a href="author.php" class="list-bookAuthor">'.$data[2]['author'].'</a>';
 							?>

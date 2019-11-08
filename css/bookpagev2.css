@@ -2,7 +2,7 @@ body,
 html {
     height: calc(100% - 2em);
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 body {
@@ -24,6 +24,7 @@ aside {
     display: grid;
     grid-template-columns: auto 40px;
     padding: 2em;
+    max-height: calc(100vh - 4em);
 }
 
 aside figure {
@@ -97,64 +98,147 @@ main h1 {
     font-size: 18px;
 }
 
-#title-mobile {
+main p {
+    font-size: 16px;
+    line-height: 1.3em;
     margin: 0;
 }
 
-#title-desktop {
-    display: none;
-}
-
-main p {
-    font-size: 1.1em;
-    line-height: 1.5em;
-}
-
-.cna {
-    display: block;
-    color: white;
-    background: rgb(43, 161, 140);
-    text-decoration: none;
-    padding: 8px 50px;
-    font-size: 1.2em;
-    text-align: center;
-    border-radius: 4px;
-    margin: 2em 0;
-}
-
-.main-container-search {
+.main-container-book,
+.main-container-comments,
+.main-container-reviews {
     margin: 0 auto;
     margin-bottom: 20px;
-    padding: 0.5em;
+    font-size: 14px;
+    padding: 1em;
     background: #ffffff;
     border: 1px solid #c9c9c9;
     border-radius: 3px;
 }
 
-.main-container-search form {
-    margin-bottom: 15px;
+.book-information .header {
+    text-align: center;
 }
 
-#searchbar {
-    width: 70%;
-    min-height: 25px;
-    padding: 6px 8px;
-    line-height: 20px;
-    color: #24292e;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    border: 1px solid #d1d5da;
-    border-radius: 3px;
-    outline: none;
-    box-shadow: inset 0 1px 2px rgba(27, 31, 35, .075);
-    box-sizing: border-box;
-}
-
-#btnSearch {
+.book-image {
     margin: 0 auto;
-    margin-left: 7px;
-    width: 25%;
+    text-align: center;
+}
+
+.book-image img {
+    max-width: 100%;
+}
+
+.book-information #book-title {
+    font-size: 30px;
+    height: auto;
+}
+
+#rating {
+    display: none;
+    float: right;
+    text-align: left;
+    border: none;
+    margin: 5px 12px;
+    padding: 6px 20px;
+    border-radius: 10px;
+    background-color: lightblue;
+}
+
+#ratingButton {
+    float: left;
+    padding: 6px 20px;
+}
+
+#ratingBox {
+    margin-bottom: 50px;
+}
+
+.rate {
+    height: 46px;
+}
+
+.rate:not(:checked)>input {
+    position: absolute;
+    top: -9999px;
+}
+
+.rate:not(:checked)>label {
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+}
+
+.rate:not(:checked)>label:before {
+    content: "★ ";
+}
+
+.rate>input:checked~label {
+    color: #ffc700;
+}
+
+.rate:not(:checked)>label:hover,
+.rate:not(:checked)>label:hover~label {
+    color: #deb217;
+}
+
+.rate>input:checked+label:hover,
+.rate>input:checked+label:hover~label,
+.rate>input:checked~label:hover,
+.rate>input:checked~label:hover~label,
+.rate>label:hover~input:checked~label {
+    color: #c59b08;
+}
+
+.tab-container {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-size: 14px;
+    background: #ffffff;
+    border-radius: 3px;
+}
+
+.tab-container .tabButton-container {
+    width: 100%;
+    height: 15%;
+}
+
+.tab-container .tabButton-container button {
+    width: 49%;
+    height: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+    transition: 0.2s;
+}
+
+.tab-container .tabButton-container button:hover {
+    background-color: #d7d4d4
+}
+
+.tab-container .tabPanel {
+    box-sizing: border-box;
+    height: 85%;
+    color: rgb(0, 0, 0);
+    display: none;
+    padding: 1em;
+    border: 1px solid #e4e4e4;
+}
+
+.tabPanel #more {
+    display: none;
+}
+
+#btnReadMore {
+    width: 33%;
+    margin-top: 5px;
     background: rgb(152, 152, 152);
     color: rgb(255, 255, 255);
     padding: 6px 8px;
@@ -165,40 +249,8 @@ main p {
     transition: 0.2s;
 }
 
-#btnSearch:hover {
+#btnReadMore:hover {
     background: rgb(73, 73, 73);
-}
-
-.main-container-slideshowOfPopularBooks,
-.main-container-latestUpdates {
-    margin: 0 auto;
-    margin-bottom: 20px;
-    font-size: 14px;
-    padding: 0.5em;
-    background: #ffffff;
-    border: 1px solid #c9c9c9;
-    border-radius: 3px;
-}
-
-.slideshow-item {
-    margin-bottom: 15px;
-}
-
-.slideshow-item .book {
-    display: grid;
-    grid-template-columns: 30% 70%;
-    grid-template-rows: minmax(0, 130px);
-}
-
-.slideshow-item .book img {
-    width: 95%;
-    height: 95%;
-}
-
-.book .description p {
-    margin-top: 1em;
-    font-size: 12px;
-    font-style: italic;
 }
 
 @media only screen and (min-width: 768px) {
@@ -244,30 +296,29 @@ main p {
         width: 100% !important;
     }
     main {
-        padding: 3em;
+        padding: 2em;
         margin-left: 20px;
         margin-right: 0;
-        background: #f9f9f9 url('../../images/artshape.svg') no-repeat bottom right;
         background-size: 35%;
         display: grid;
-        grid-template-columns: 65% 35%;
-    }
-    .main-leftColumn {
-        margin-right: 30px;
-    }
-    #title-desktop {
-        display: block;
-        font-size: 2.8em;
-        margin: 0;
-    }
-    #title-mobile {
-        display: none;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
     }
     main p {
-        font-size: 1.1em;
-        line-height: 1.5em;
+        font-size: 15px;
+        line-height: 1.4em;
     }
-    .cna {
-        display: none;
+    .main-container-book {
+        display: grid;
+        grid-template-columns: 20% 80%;
+    }
+    .book-information .header {
+        text-align: left;
+    }
+    .tab-container .tabButton-container button {
+        width: 25%;
+    }
+    #btnReadMore {
+        width: 15%;
     }
 }
