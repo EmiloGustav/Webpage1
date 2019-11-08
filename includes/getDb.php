@@ -681,7 +681,7 @@ class getDb {
     function getTheThreeHighestRatedBooks() {
         $data = array();
         $conn = getConnection();
-        $sql = "SELECT title, author, published, smallthumbnail FROM books ORDER BY rating DESC LIMIT 3";
+        $sql = "SELECT bookId, title, author, published, smallthumbnail FROM books ORDER BY rating DESC LIMIT 3";
         $stmt = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt, $sql)) {
             return false;

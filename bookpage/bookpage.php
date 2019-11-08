@@ -1,11 +1,10 @@
 <?php
-if(isset($_GET['bookId'])) {
-    $bookId = $_GET['bookId'];
-}else {
-    // TODO Send the user back
+if (isset($_GET['bookId'])) {
+	$bookId = $_GET['bookId'];
+} else {
+	// TODO Send the user back
 }
 
-require "../header.php";
 include "../includes/getDb.php";
 include "php/bookpageHelper.php";
 $getDb = new getDb();
@@ -17,233 +16,285 @@ if(isset($_SESSION['userId'])) {
 }else {
     $userinfo = NULL;
 }
-
 ?>
-    <link rel="stylesheet" type="text/css" href="bookpage.css">
-    <main class="container">
-        <div class="container-grid">
-            <div class="item1">
-                <?php echo '<img src="'.$array['9'].'" alt="Books" width="250px" height="400px">'; ?>
-                <ul>
-                    <li>
-                        <?php
-                        if($userinfo == NULL){
-                            //TODO error
-                        }else {
-                            if($userinfo['1'] == NULL) {
-                                echo '  <form action="../includes/bookHandler.inc.php?type=tbr&bookId='.$bookId.'" method="post">
-                                        <input class="inputs" type="submit" value="Lägg till i \'vill läsa\' listan!">
-                                        </form>';
-                            }else {
-                                $tmpArray = explode(';:',$userinfo['1']);
-                                $tbr = false;
-                                foreach ($tmpArray as $x) {
-                                    if(strcasecmp($x,$bookId) == 0) {
-                                        // TODO lägg till i addBook
-                                        echo '  <form action="../includes/bookHandler.inc.php?type=tbrRemove&bookId='.$bookId.'" method="post">
-                                        <input class="inputs" type="submit" value="Ta bort från \'vill läsa\' listan!">
-                                        </form>';
-                                        $tbr = true;
-                                        break;
-                                    }
-                                }
-                                if($tbr == false) {
-                                    echo '  <form action="../includes/bookHandler.inc.php?type=tbr&bookId='.$bookId.'" method="post">
-                                            <input class="inputs" type="submit" value="Lägg till i \'vill läsa\' listan!">
-                                            </form>';
-                                }
-                            }
-                        }
 
-                        ?>
-                    </li>
-                    <li>
-                        <?php
-                        if($userinfo == NULL){
-                            //TODO error
-                        }else {
-                            if($userinfo['2'] == NULL) {
-                                echo '      <form action="../includes/bookHandler.inc.php?type=hr&bookId='.$bookId.'" method="post">
-                                            <input class="inputs" type="submit" value="Lägg till i \'har läst\' listan!">
-                                            </form>';
-                            }else {
-                                $tmpArray = explode(';:',$userinfo['2']);
-                                $read = false;
-                                foreach ($tmpArray as $x) {
-                                    if(strcasecmp($x,$bookId) == 0) {
-                                        // TODO lägg till i addBook
-                                        echo '      <form action="../includes/bookHandler.inc.php?type=hrRemove&bookId='.$bookId.'" method="post">
-                                                    <input class="inputs" type="submit" value="Ta bort från \'har läst\' listan!">
-                                                    </form>';
-                                        $read = true;
-                                        break;
-                                    }
-                                }
-                                if($read == false) {
-                                    echo '  <form action="../includes/bookHandler.inc.php?type=hr&bookId='.$bookId.'" method="post">
-                                            <input class="inputs" type="submit" value="Lägg till i \'vill läsa\' listan!">
-                                            </form>';
-                                }
-                            }
-                        }
+<!DOCTYPE html>
+<html>
 
-                        ?>
-                    </li>
-                        <?php
-                        if($userinfo[11] != NULL) {
-                            echo '<li><form action="../includes/listsHandler.inc.php?type=userCreatedList&bookId='.$bookId.'" method="post"><select name="personalList" id="personalList">';
-                            $listName = $getDb->getLists($_SESSION['userId'])['1'];
-                            if(!$help->contains(';:',$listName)) {
-                                echo '<option value="'.$listName.'">'.$listName.'</option>';
-                            }else {
-                                $listNameArray = explode(';:',$listName);
-                                foreach ($listNameArray as $i) {
-                                    echo '<option value="'.$i.'">'.$i.'</option>';
-                                }
-                            }
-                            echo '</select><input type="submit" value="Lägg till i listan"></form></li>';
-                        }
-                        ?>
-                </ul>
-            </div>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
 
-            <div class="item2">
+	<link rel="stylesheet" type="text/css" href="css/bookpagev2.css">
 
-                <h3><?php echo $array['1'];?></h3>
-                <h4><?php echo $array['2']?></h4>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
-                <!-- vi måste hitta summeringen någonstans så att vi kan lägga in den -->
+	<title>BonoLibro</title>
+</head>
 
-                <div class="summarise">
-                    <?php echo $array['5']; ?>
-                </div>
+<body>
+	<script type="text/javascript">
+		function switchRating() {
 
-                <!-- lägga till databs så att ratingen tas från den och läggs in där när någon klickar på stjärnorna -->
-                <ul>
-                    <li>
-                        <div id="ratingBox" >
-                            <button type="button" onclick="switchRating()" id="ratingButton">Visa betyg</button>
-                            <p id="rating">
-                                <?php
-                                if ($array['11'] == NULL) {
-                                    echo 'Inga betyg för denna bok än';
-                                }else {
-                                    echo $array['11'];
-                                }
-                                ?>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <form action="../includes/bookHandler.inc.php?type=rating&bookId=<?php echo $bookId?>" method="post" class="rate">
-                            <?php
-                            $bookRated = $bookpageHelper->isBookRated($bookId,$userinfo);
-                            if($bookRated == false){
-                                echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+			var rating = document.getElementById("rating");
+			var button = document.getElementById("ratingButton");
+			button.innerText = rating.style.display;
+			if (rating.style.display == "none" || rating.style.display == "" || rating.style.display == null) {
+				rating.style.display = "block";
+				button.innerText = "Dölj betyg";
+			} else if (rating.style.display == "block") {
+				rating.style.display = "none";
+				button.innerText = "Visa betyg";
+			}
+		}
+	</script>
+
+	<aside>
+		<figure>
+			<img id="logotype" src="images/books.png" alt="">
+			<figcaption>BonoLibro</figcaption>
+		</figure>
+		<img id="menu-icon" src="images\menu.svg" alt="">
+
+		<nav>
+			<ul>
+				<li><a href="login.php">Logga in</a></li>
+				<hr>
+				<li><a href="signup.php">Registrera</a></li>
+				<hr>
+			</ul>
+		</nav>
+	</aside>
+
+	<main>
+		<div class="main-firstRow">
+			<div class="main-container-book">
+				<div class="book-image">
+					<?php echo '<img src="' . $array['9'] . '" alt="Books">'; ?>
+
+					<div class="container-addButtons">
+						<button>Läser</button>
+						<button>Vill läsa</button>
+						<button>Har läst</button>
+					</div>
+				</div>
+
+				<div class="book-information">
+					<div class="header">
+						<h1 id="book-title"><?php echo $array['1']; ?></h1>
+						<p>Skriven av <a href="author.php"><?php echo $array['2'] ?></a></p>
+
+						<br>
+
+						<button type="button" onclick="switchRating()" id="ratingButton">Visa betyg</button>
+						<p id="rating">
+							<?php
+							if ($array['11'] == NULL) {
+								echo 'Inga betyg för denna bok än';
+							} else {
+								echo $array['11'];
+							}
+							?>
+						</p>
+
+						<form action="includes/addBook.inc.php?type=rating&bookId=<?php echo $bookId ?>" method="post" class="rate">
+							<?php
+							function isBookRated($bookId, $userinfo)
+							{
+								if (isset($userinfo['4'])) {
+									if (!contains(';:', $userinfo['4']) && strcasecmp($userinfo['4'], $bookId) == 0) {
+										return $userinfo['5'];
+									} else if (!contains(';:', $userinfo['4']) && strcasecmp($userinfo['4'], $bookId) != 0) {
+										return false;
+									} else {
+										$ratedBooksId = explode(";:", $userinfo['4']);
+										for ($x = 0; $x < sizeof($ratedBooksId); $x++) {
+											if (strcasecmp($bookId, $ratedBooksId[strval($x)]) == 0) {
+												$tmpArray = explode(';:', $userinfo['5']);
+												return $tmpArray[strval($x)];
+											}
+										}
+										return false;
+									}
+								}
+							}
+							$bookRated = isBookRated($bookId, $userinfo);
+							if ($bookRated == false) {
+								echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                            }
-                            else {
-                                if ($bookRated == 1) {
-                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+							} else {
+								if ($bookRated == 1) {
+									echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();" checked="checked"><label for="star1" title="Väldigt dålig"></label>';
-                                } else if ($bookRated == 2) {
-                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+								} else if ($bookRated == 2) {
+									echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();" checked="checked"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                                } else if ($bookRated == 3) {
-                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+								} else if ($bookRated == 3) {
+									echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();" checked="checked"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                                } else if ($bookRated == 4) {
-                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
+								} else if ($bookRated == 4) {
+									echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();" checked="checked"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                                } else if ($bookRated == 5) {
-                                    echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();" checked="checked"><label for="star5" title="Perfekt" ></label>
+								} else if ($bookRated == 5) {
+									echo '  <input type="radio" id="star5" name="rate" value="5" onclick="this.form.submit();" checked="checked"><label for="star5" title="Perfekt" ></label>
                                         <input type="radio" id="star4" name="rate" value="4" onclick="this.form.submit();"><label for="star4" title="Bra"></label>
                                         <input type="radio" id="star3" name="rate" value="3" onclick="this.form.submit();"><label for="star3" title="Okej"></label>
                                         <input type="radio" id="star2" name="rate" value="2" onclick="this.form.submit();"><label for="star2" title="Inte så bra"></label>
                                         <input type="radio" id="star1" name="rate" value="1" onclick="this.form.submit();"><label for="star1" title="Väldigt dålig"></label>';
-                                }
-                            }
-                            ?>
-                        </form>
-                    </li>
-                </ul>
-                <!-- ladda kommentarer från en databas som hör ihop med boken -->
+								}
+							}
+							?>
+						</form>
+					</div>
 
-                <div class="commentfield">
-                    Kommentarer:
-                    <?php
+					<hr>
 
-                    // TODO lägga till så att ;: och :: är illegala tecken när man skriven en kommentar
-                    // TODO kanske ändra så att man inte får all info i getuserinfo
-                    if($array['12'] == NULL) {
-                        echo '<div class="comment">Var den första att skriva en kommentar för denna bok</div>';
-                    }else if (!$getDb->sqlErrorHandler->help->contains(';:',$array['12'])) {
-                        $comment = explode('::',$array['12']);
-                        $commentUserinfo = $getDb->getUserInfo($comment['0']);
-                        echo '<div class="comment"><div class="name">'.$commentUserinfo['8'].' '.$commentUserinfo['9'].'</div>';
-                        if(isset($_SESSION['userId']) && $_SESSION['userId'] == $comment['0']) {
-                            echo '<div class="edit-remove"><a href="php/commentHandler.php?type=removeComment&bookId='.$bookId.'&comment='.$array['12'].'">radera</a></div>';
-                        }
-                        echo '<br><div class="comment-text">'.$comment['1'].'</div></div>';
-                    }else {
-                        $comments = explode(';:',$array['12']);
-                        foreach ($comments as $x) {
-                            $comment = explode('::',$x);
-                            $commentUserinfo = getUserInfo($comment['0']);
-                            echo '<div class="comment"><div class="name">'.$commentUserinfo['8'].' '.$commentUserinfo['9'].'</div>';
-                            if($_SESSION['userId'] == $comment['0']) {
-                                echo '<div class="edit-remove"><a href="php/commentHandler.php?type=removeComment&bookId='.$bookId.'&comment='.$x.'">radera</a></div>';
-                            }
-                            echo '<br><div class="comment-text">'.$comment['1'].'</div></div>';
-                        }
-                    }
-                    if(isset($_SESSION['userId'])) {
-                        // TODO ta hand om tom textarea här
-                        // TODO lägga till så att man kan edita och ta bor kommentarer
-                        echo '<form action="php/commentHandler.php?type=comment&bookId='.$bookId.'" method="post">
-                            Kommentera:<br>
+					<div class="tab-container">
+						<div class="tabButton-container">
+							<button onclick="showTabPanel(0, 'rgb(43, 161, 140)')">Beskrivning</button>
+							<button onclick="showTabPanel(1, 'rgb(43, 161, 140)')">Information</button>
+						</div>
+
+						<div class="tabPanel">
+							<?php
+							$bookDescription = $array['5'];
+							if (strlen($bookDescription) <= 400) {
+								echo $bookDescription;
+							} else {
+								$firstPart = substr($bookDescription, 0, 400);
+								$secondPart = substr($bookDescription, 401);
+								echo '<p>' . $firstPart . '<span id="dots">...</span><span id="more">' . $secondPart . '</span></p>';
+							}
+							?>
+							<button id="btnReadMore" onclick="readMore()">Läs mer</button>
+						</div>
+
+						<div class="tabPanel">
+							<p><strong>Författare:</strong> <?php echo $array['2'] ?></p>
+							<p><strong>Förlag:</strong> <?php echo $array['3'] ?></p>
+							<p><strong>Utgiven:</strong> <?php echo $array['4'] ?></p>
+							<p><strong>ISBN:</strong> <?php echo $array['6'] ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-secondRow">
+			<div class="main-container-comments">
+				<h2>Kommentarer</h2>
+				<?php
+
+				// TODO lägga till så att ;: och :: är illegala tecken när man skriven en kommentar
+				// TODO kanske ändra så att man inte får all info i getuserinfo
+				if ($array['12'] == NULL) {
+					echo '<p>Var den första att skriva en kommentar för denna bok!</p>';
+				} else if (!contains(';:', $array['12'])) {
+					$comment = explode('::', $array['12']);
+					$commentUserinfo = getUserInfo($comment['0']);
+					echo '<div class="comment"><div class="name">' . $commentUserinfo['8'] . ' ' . $commentUserinfo['9'] . '</div>';
+					if (isset($_SESSION['userId']) && $_SESSION['userId'] == $comment['0']) {
+						echo '<div class="edit-remove"><a href="includes/addBook.inc.php?type=removeComment&bookId=' . $bookId . '&comment=' . $array['12'] . '">radera</a></div>';
+					}
+					echo '<br><div class="comment-text">' . $comment['1'] . '</div></div>';
+				} else {
+					$comments = explode(';:', $array['12']);
+					foreach ($comments as $x) {
+						$comment = explode('::', $x);
+						$commentUserinfo = getUserInfo($comment['0']);
+						echo '<div class="comment"><div class="name">' . $commentUserinfo['8'] . ' ' . $commentUserinfo['9'] . '</div>';
+						if ($_SESSION['userId'] == $comment['0']) {
+							echo '<div class="edit-remove"><a href="includes/addBook.inc.php?type=removeComment&bookId=' . $bookId . '&comment=' . $x . '">radera</a></div>';
+						}
+						echo '<br><div class="comment-text">' . $comment['1'] . '</div></div>';
+					}
+				}
+				if (isset($_SESSION['userId'])) {
+					// TODO ta hand om tom textarea här
+					// TODO lägga till så att man kan edita och ta bor kommentarer
+					echo '<form action="includes/addBook.inc.php?type=comment&bookId=' . $bookId . '" method="post">
+                            Skriv en kommentar:<br>
                             <textarea class="text" name="comment"></textarea>
                             <button type="submit" class="button1">Publicera</button>
                         </form>';
-                    }else {
-                        // TODO länka till inlogning och skapa konto
-                        echo 'Logga in eller skapa ett konto för att skriva en kommentar';
-                    }
+				} else {
+					// TODO länka till inlogning och skapa konto
+					echo '<p><a href="login.php">Logga</a> in eller <a href="signup.php">skapa ett konto</a> för att skriva en kommentar.</p>';
+				}
+				?>
+			</div>
 
+			<div class="main-container-reviews">
+				<h2>Recensioner</h2>
+			</div>
+		</div>
+	</main>
 
-                    ?>
+	<script>
+		// Mobile version menu/navigation
+		(function() {
+			var menu = document.querySelector('ul'),
+				menulink = document.querySelector('#menu-icon');
 
-                </div>
-            </div>
+			menulink.addEventListener('click', function(e) {
+				menu.classList.toggle('active');
+				e.preventDefault();
+			});
+		})();
 
-            <div class="item3">
+		// Tab container (Beskrivning, specifik information)
+		var tabButtons = document.querySelectorAll(".tab-container .tabButton-container button");
+		var tabPanels = document.querySelectorAll(".tab-container .tabPanel");
 
-            </div>
-        </div>
-    </main>
-    <script type="text/javascript" src="javascript/bookpage.js"></script>
-<?php
-require "../footer.php";
-?>
-<?php
-/**
- * Created by PhpStorm.
- * User: Emil
- * Date: 2019-06-22
- * Time: 13:31
- */
+		function showTabPanel(panelIndex, colorCode) {
+			tabButtons.forEach(function(btn) {
+				btn.style.backgroundColor = "";
+				btn.style.color = "";
+				btn.style.textDecoration = "none";
+			});
+			tabButtons[panelIndex].style.backgroundColor = colorCode;
+			tabButtons[panelIndex].style.color = "white";
+
+			tabPanels.forEach(function(tab) {
+				tab.style.display = "none";
+			});
+			tabPanels[panelIndex].style.display = "block";
+			tabPanels[panelIndex].style.backgroundColor = "white";
+		}
+		showTabPanel(0, 'rgb(43, 161, 140)');
+
+		// Read more (book description)
+		function readMore() {
+			var dots = document.getElementById("dots");
+			var moreText = document.getElementById("more");
+			var btnText = document.getElementById("btnReadMore");
+			if (dots.style.display === "none") {
+				dots.style.display = "inline";
+				btnText.innerHTML = "Läs mer";
+				moreText.style.display = "none";
+			} else {
+				dots.style.display = "none";
+				btnText.innerHTML = "Läs mindre";
+				moreText.style.display = "inline";
+			}
+		}
+	</script>
+</body>
+
+</html>
