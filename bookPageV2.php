@@ -24,6 +24,7 @@ if (isset($_SESSION['userId'])) {
 	<link rel="stylesheet" type="text/css" href="css/bookpagev2.css">
 
 	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
 	<title>BonoLibro</title>
 </head>
@@ -68,10 +69,10 @@ if (isset($_SESSION['userId'])) {
 				<div class="book-image">
 					<?php echo '<img src="' . $array['9'] . '" alt="Books">'; ?>
 
-					<div class="container-addToList">
-						<button>Lägg till i lista</button>
-						<button>Lägg till i lista</button>
-						<button>Lägg till i lista</button>
+					<div class="container-addButtons">
+						<button>Läser</button>
+						<button>Vill läsa</button>
+						<button>Har läst</button>
 					</div>
 				</div>
 
@@ -158,7 +159,6 @@ if (isset($_SESSION['userId'])) {
 						</form>
 					</div>
 
-
 					<hr>
 
 					<div class="tab-container">
@@ -169,8 +169,16 @@ if (isset($_SESSION['userId'])) {
 
 						<div class="tabPanel">
 							<?php
-							echo '<p>' . $array['5'] . '</p>';
+							$bookDescription = $array['5'];
+							if (strlen($bookDescription) <= 400) {
+								echo $bookDescription;
+							} else {
+								$firstPart = substr($bookDescription, 0, 400);
+								$secondPart = substr($bookDescription, 401);
+								echo '<p>' . $firstPart . '<span id="dots">...</span><span id="more">' . $secondPart . '</span></p>';
+							}
 							?>
+							<button id="btnReadMore" onclick="readMore()">Läs mer</button>
 						</div>
 
 						<div class="tabPanel">
@@ -192,7 +200,7 @@ if (isset($_SESSION['userId'])) {
 				// TODO lägga till så att ;: och :: är illegala tecken när man skriven en kommentar
 				// TODO kanske ändra så att man inte får all info i getuserinfo
 				if ($array['12'] == NULL) {
-					echo '<div class="comment">Var den första att skriva en kommentar för denna bok!</div>';
+					echo '<p>Var den första att skriva en kommentar för denna bok!</p>';
 				} else if (!contains(';:', $array['12'])) {
 					$comment = explode('::', $array['12']);
 					$commentUserinfo = getUserInfo($comment['0']);
@@ -223,13 +231,13 @@ if (isset($_SESSION['userId'])) {
                         </form>';
 				} else {
 					// TODO länka till inlogning och skapa konto
-					echo '<a href="login.php">Logga</a> in eller <a href="signup.php">skapa ett konto</a> för att skriva en kommentar.';
+					echo '<p><a href="login.php">Logga</a> in eller <a href="signup.php">skapa ett konto</a> för att skriva en kommentar.</p>';
 				}
 				?>
 			</div>
 
 			<div class="main-container-reviews">
-
+				<h2>Recensioner</h2>
 			</div>
 		</div>
 	</main>
@@ -258,7 +266,6 @@ if (isset($_SESSION['userId'])) {
 			});
 			tabButtons[panelIndex].style.backgroundColor = colorCode;
 			tabButtons[panelIndex].style.color = "white";
-			tabButtons[panelIndex].style.textDecoration = "underline";
 
 			tabPanels.forEach(function(tab) {
 				tab.style.display = "none";
@@ -267,6 +274,22 @@ if (isset($_SESSION['userId'])) {
 			tabPanels[panelIndex].style.backgroundColor = "white";
 		}
 		showTabPanel(0, 'rgb(43, 161, 140)');
+
+		// Read more (book description)
+		function readMore() {
+			var dots = document.getElementById("dots");
+			var moreText = document.getElementById("more");
+			var btnText = document.getElementById("btnReadMore");
+			if (dots.style.display === "none") {
+				dots.style.display = "inline";
+				btnText.innerHTML = "Läs mer";
+				moreText.style.display = "none";
+			} else {
+				dots.style.display = "none";
+				btnText.innerHTML = "Läs mindre";
+				moreText.style.display = "inline";
+			}
+		}
 	</script>
 </body>
 

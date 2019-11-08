@@ -2,7 +2,7 @@ body,
 html {
     height: calc(100% - 2em);
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 body {
@@ -99,13 +99,14 @@ main h1 {
 }
 
 main p {
-    font-size: 14px;
-    line-height: 1.2em;
+    font-size: 16px;
+    line-height: 1.3em;
     margin: 0;
 }
 
 .main-container-book,
-.main-container-comments {
+.main-container-comments,
+.main-container-reviews {
     margin: 0 auto;
     margin-bottom: 20px;
     font-size: 14px;
@@ -119,11 +120,6 @@ main p {
     text-align: center;
 }
 
-.book-information #book-title {
-    font-size: 30px;
-    height: auto;
-}
-
 .book-image {
     margin: 0 auto;
     text-align: center;
@@ -131,6 +127,70 @@ main p {
 
 .book-image img {
     max-width: 100%;
+}
+
+.book-information #book-title {
+    font-size: 30px;
+    height: auto;
+}
+
+#rating {
+    display: none;
+    float: right;
+    text-align: left;
+    border: none;
+    margin: 5px 12px;
+    padding: 6px 20px;
+    border-radius: 10px;
+    background-color: lightblue;
+}
+
+#ratingButton {
+    float: left;
+    padding: 6px 20px;
+}
+
+#ratingBox {
+    margin-bottom: 50px;
+}
+
+.rate {
+    height: 46px;
+}
+
+.rate:not(:checked)>input {
+    position: absolute;
+    top: -9999px;
+}
+
+.rate:not(:checked)>label {
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+}
+
+.rate:not(:checked)>label:before {
+    content: "★ ";
+}
+
+.rate>input:checked~label {
+    color: #ffc700;
+}
+
+.rate:not(:checked)>label:hover,
+.rate:not(:checked)>label:hover~label {
+    color: #deb217;
+}
+
+.rate>input:checked+label:hover,
+.rate>input:checked+label:hover~label,
+.rate>input:checked~label:hover,
+.rate>input:checked~label:hover~label,
+.rate>label:hover~input:checked~label {
+    color: #c59b08;
 }
 
 .tab-container {
@@ -154,9 +214,9 @@ main p {
     cursor: pointer;
     padding: 10px;
     font-family: inherit;
-    font-weight: bold;
     font-size: 16px;
     background-color: rgb(255, 255, 255);
+    transition: 0.2s;
 }
 
 .tab-container .tabButton-container button:hover {
@@ -170,6 +230,27 @@ main p {
     display: none;
     padding: 1em;
     border: 1px solid #e4e4e4;
+}
+
+.tabPanel #more {
+    display: none;
+}
+
+#btnReadMore {
+    width: 33%;
+    margin-top: 5px;
+    background: rgb(152, 152, 152);
+    color: rgb(255, 255, 255);
+    padding: 6px 8px;
+    line-height: 20px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#btnReadMore:hover {
+    background: rgb(73, 73, 73);
 }
 
 @media only screen and (min-width: 768px) {
@@ -224,11 +305,8 @@ main p {
         grid-template-rows: auto auto;
     }
     main p {
-        font-size: 14px;
-        line-height: 1.3em;
-    }
-    .main-firstRow {
-        margin-bottom: 20px;
+        font-size: 15px;
+        line-height: 1.4em;
     }
     .main-container-book {
         display: grid;
@@ -239,5 +317,8 @@ main p {
     }
     .tab-container .tabButton-container button {
         width: 25%;
+    }
+    #btnReadMore {
+        width: 15%;
     }
 }
