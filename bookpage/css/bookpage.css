@@ -1,0 +1,142 @@
+h3 {
+    color:black;
+    font-family: "Times New Roman";
+    font-size: 200%;
+}
+h4 {
+    color:black;
+    font-family: "Times New Roman";
+    font-size: 150%;
+}
+.summarise {
+    color:black;
+    font-family: "Times New Roman";
+    font-size: 100%;
+    text-align: left;
+}
+.commentfield{
+    width: 100%;
+
+    border-style: solid;
+    border-width: thin;
+    border-radius: 10px;
+    border-color: deepskyblue;
+
+    text-align: left;
+}
+.comment{
+    width: 80%;
+
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+    border-color: deepskyblue;
+
+    margin: 10px auto;
+    text-align: left;
+}
+#rating {
+    display:none;
+    float:right;
+    text-align: left;
+    border:none;
+    margin: 5px 12px;
+    padding: 6px 20px;
+    border-radius: 10px;
+    background-color: lightblue;
+}
+#ratingButton {
+    float:left;
+    padding:6px 20px;
+}
+#ratingBox{
+    margin-bottom: 50px;
+}
+.rate{
+    height: 46px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content:"★ ";
+}
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+/* STYLING FRÅN INUTI FILEN */
+.container-grid{
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: 30% 60% 10%;
+    grid-gap: 3px;
+    padding: 3px;
+    overflow: hidden;
+    margin: auto;
+    text-align: center;
+}
+.item1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.item2{
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+.item3{
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+.inputs{
+    border: none;
+    background:cadetblue;
+    font-size: large;
+    padding:12px 6px;
+    min-width: 90%;
+}
+.inputs:hover {
+    background:lightcoral;
+}
+.text{
+    width:80%;
+}
+.button1{
+    float: right;
+    padding: 9px 20px;
+}
+.name{
+    float:left;
+    font-style: italic;
+    font-size: 15px;
+}
+.comment-text{
+    font-style: normal;
+    font-size: 12px;
+}
+.edit-remove{
+    float:right;
+    font-size: 8px;
+}
+

@@ -1,0 +1,324 @@
+body,
+html {
+    height: calc(100% - 2em);
+    margin: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+body {
+    background: #00342c;
+    /* Old browsers */
+    background: -moz-linear-gradient(45deg, #00342c 0%, #00f7bd 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #00342c 0%, #00f7bd 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #00342c 0%, #00f7bd 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00342c', endColorstr='#00f7bd', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+aside {
+    display: grid;
+    grid-template-columns: auto 40px;
+    padding: 2em;
+    max-height: calc(100vh - 4em);
+}
+
+aside figure {
+    margin: 0;
+}
+
+#logotype {
+    display: none;
+}
+
+aside figure figcaption {
+    color: #fff;
+    font-size: 1.6em;
+    font-weight: 100;
+}
+
+#menu-icon {
+    width: 40px;
+    cursor: pointer;
+}
+
+aside nav {
+    background-color: #fff;
+}
+
+.active {
+    position: absolute;
+    display: block;
+    background: #fff;
+    width: 50%;
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+
+ul {
+    display: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul hr {
+    border: 0;
+    height: 1px;
+    width: 90%;
+    background: #d1d1d1;
+}
+
+ul li a {
+    text-decoration: none;
+    font-size: 1.1em;
+    display: block;
+    padding: 1em 1.5em;
+    background-color: rgba(255, 255, 255, 0.35);
+    color: #111;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+ul li a:hover {
+    background-color: rgb(201, 201, 201);
+}
+
+main {
+    background-color: #f9f9f9;
+    padding: 1em 1em;
+}
+
+main h1 {
+    font-size: 18px;
+}
+
+main p {
+    font-size: 16px;
+    line-height: 1.3em;
+    margin: 0;
+}
+
+.main-container-book,
+.main-container-comments,
+.main-container-reviews {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-size: 14px;
+    padding: 1em;
+    background: #ffffff;
+    border: 1px solid #c9c9c9;
+    border-radius: 3px;
+}
+
+.book-information .header {
+    text-align: center;
+}
+
+.book-image {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.book-image img {
+    max-width: 100%;
+}
+
+.book-information #book-title {
+    font-size: 30px;
+    height: auto;
+}
+
+#rating {
+    display: none;
+    float: right;
+    text-align: left;
+    border: none;
+    margin: 5px 12px;
+    padding: 6px 20px;
+    border-radius: 10px;
+    background-color: lightblue;
+}
+
+#ratingButton {
+    float: left;
+    padding: 6px 20px;
+}
+
+#ratingBox {
+    margin-bottom: 50px;
+}
+
+.rate {
+    height: 46px;
+}
+
+.rate:not(:checked)>input {
+    position: absolute;
+    top: -9999px;
+}
+
+.rate:not(:checked)>label {
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+}
+
+.rate:not(:checked)>label:before {
+    content: "★ ";
+}
+
+.rate>input:checked~label {
+    color: #ffc700;
+}
+
+.rate:not(:checked)>label:hover,
+.rate:not(:checked)>label:hover~label {
+    color: #deb217;
+}
+
+.rate>input:checked+label:hover,
+.rate>input:checked+label:hover~label,
+.rate>input:checked~label:hover,
+.rate>input:checked~label:hover~label,
+.rate>label:hover~input:checked~label {
+    color: #c59b08;
+}
+
+.tab-container {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    font-size: 14px;
+    background: #ffffff;
+    border-radius: 3px;
+}
+
+.tab-container .tabButton-container {
+    width: 100%;
+    height: 15%;
+}
+
+.tab-container .tabButton-container button {
+    width: 49%;
+    height: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 16px;
+    background-color: rgb(255, 255, 255);
+    transition: 0.2s;
+}
+
+.tab-container .tabButton-container button:hover {
+    background-color: #d7d4d4
+}
+
+.tab-container .tabPanel {
+    box-sizing: border-box;
+    height: 85%;
+    color: rgb(0, 0, 0);
+    display: none;
+    padding: 1em;
+    border: 1px solid #e4e4e4;
+}
+
+.tabPanel #more {
+    display: none;
+}
+
+#btnReadMore {
+    width: 33%;
+    margin-top: 5px;
+    background: rgb(152, 152, 152);
+    color: rgb(255, 255, 255);
+    padding: 6px 8px;
+    line-height: 20px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#btnReadMore:hover {
+    background: rgb(73, 73, 73);
+}
+
+@media only screen and (min-width: 768px) {
+    body {
+        display: grid;
+        grid-template-columns: 20% auto;
+        padding: 2em;
+    }
+    button,
+    input {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+    #menu-icon {
+        display: none;
+    }
+    aside {
+        background: #727272;
+        grid-template-columns: auto;
+        grid-template-rows: 25% 75%;
+        padding: 0;
+    }
+    figure {
+        text-align: center;
+    }
+    #logotype {
+        display: block;
+        padding: 1em;
+        max-width: 50%;
+        max-height: 50%;
+        margin: 0 auto;
+    }
+    nav {
+        background: none;
+    }
+    ul {
+        display: block;
+        background: #706f6f;
+        margin-top: 1em;
+        position: relative !important;
+        background: none !important;
+        width: 100% !important;
+    }
+    main {
+        padding: 2em;
+        margin-left: 20px;
+        margin-right: 0;
+        background-size: 35%;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+    }
+    main p {
+        font-size: 15px;
+        line-height: 1.4em;
+    }
+    .main-container-book {
+        display: grid;
+        grid-template-columns: 20% 80%;
+    }
+    .book-information .header {
+        text-align: left;
+    }
+    .tab-container .tabButton-container button {
+        width: 25%;
+    }
+    #btnReadMore {
+        width: 15%;
+    }
+}

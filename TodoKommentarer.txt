@@ -7,10 +7,16 @@ getDb.inc.php
 - se till så att connectionen är stäng överallt i getDB.inc.php
 - kolla över alla eroors vilka som inte borde loggas
 
+myBooks.php
+- Se till att all info är i samma ruta i mobilvarianten, långa titlar får författarnamnet att hamnai boxen under.
+- när man är under 768px så skalar bilderna konstigt.
+
 Övrigt
 - skapa en .htacess fil så att vi kan ha snygga url's
 - göra så att det inte går att ha ;: och :: i fält som ska fyllas i
 - hasha idn som ges till varje person och inte ha siffror utan blandat siffror och bokstyäver
+
+
 
 
 
