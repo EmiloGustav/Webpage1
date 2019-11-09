@@ -5,16 +5,17 @@ if (isset($_GET['bookId'])) {
 	// TODO Send the user back
 }
 
+session_start();
 include "../includes/getDb.php";
 include "php/bookpageHelper.php";
 $getDb = new getDb();
 $help = new helper();
 $bookpageHelper = new bookpageHelper();
 $array = $getDb->getBookByBookId($bookId);
-if(isset($_SESSION['userId'])) {
-    $userinfo = $getDb->getUserInfo($_SESSION['userId']);
-}else {
-    $userinfo = NULL;
+if (isset($_SESSION['userId'])) {
+	$userinfo = $getDb->getUserInfo($_SESSION['userId']);
+} else {
+	$userinfo = NULL;
 }
 ?>
 
@@ -52,17 +53,28 @@ if(isset($_SESSION['userId'])) {
 
 	<aside>
 		<figure>
-			<img id="logotype" src="images/books.png" alt="">
-			<figcaption>BonoLibro</figcaption>
+			<a href="../index/index.php"><img id="logotype" src="../images/books.png" alt=""></a>
+			<a href="../index/index.php">
+				<figcaption>BonoLibro</figcaption>
+			</a>
 		</figure>
 		<img id="menu-icon" src="images\menu.svg" alt="">
 
 		<nav>
 			<ul>
-				<li><a href="login.php">Logga in</a></li>
+				<?php
+				if (isset($_SESSION['userId'])) {
+					echo '<li><a href="../myBooks/myBooks.php">Mina böcker</a></li>
 				<hr>
-				<li><a href="signup.php">Registrera</a></li>
+				<li><a href="../profile/myProfile.php">Min profil</a></li>
+				<hr>';
+				} else {
+					echo '<li><a href="../login-logout/login.php">Logga in</a></li>
 				<hr>
+				<li><a href="../signup/signup.php">Registrera</a></li>
+				<hr>';
+				}
+				?>
 			</ul>
 		</nav>
 	</aside>
@@ -74,9 +86,25 @@ if(isset($_SESSION['userId'])) {
 					<?php echo '<img src="' . $array['9'] . '" alt="Books">'; ?>
 
 					<div class="container-addButtons">
-						<button>Läser</button>
-						<button>Vill läsa</button>
-						<button>Har läst</button>
+						<a href="../includes/bookHandler.inc.php?type=tbr&bookId=<?php echo $bookId ?>">Läser</a>
+						<a href="../includes/bookHandler.inc.php?type=tbr&bookId=<?php echo $bookId ?>">Vill läsa</a>
+						<a href="../includes/bookHandler.inc.php?type=hr&bookId=<?php echo $bookId ?>">Har läst</a>
+						<a href="../includes/bookHandler.inc.php?type=tbr&bookId=<?php echo $bookId ?>">Favoriter</a>
+						<?php
+						if ($userinfo[11] != NULL) {
+							echo '<form action="../includes/listsHandler.inc.php?type=userCreatedList&bookId=' . $bookId . '" method="post"><select name="personalList" id="personalList">';
+							$listName = $getDb->getLists($_SESSION['userId'])['1'];
+							if (!$help->contains(';:', $listName)) {
+								echo '<option value="' . $listName . '">' . $listName . '</option>';
+							} else {
+								$listNameArray = explode(';:', $listName);
+								foreach ($listNameArray as $i) {
+									echo '<option value="' . $i . '">' . $i . '</option>';
+								}
+							}
+							echo '</select><input type="submit" value="Lägg till i listan"></form>';
+						}
+						?>
 					</div>
 				</div>
 
@@ -98,7 +126,7 @@ if(isset($_SESSION['userId'])) {
 							?>
 						</p>
 
-						<form action="includes/addBook.inc.php?type=rating&bookId=<?php echo $bookId ?>" method="post" class="rate">
+						<form action="../includes/bookHandler.inc.php?type=rating&bookId=<?php echo $bookId ?>" method="post" class="rate">
 							<?php
 							function isBookRated($bookId, $userinfo)
 							{
@@ -163,7 +191,7 @@ if(isset($_SESSION['userId'])) {
 						</form>
 					</div>
 
-					<hr>
+					<br>
 
 					<div class="tab-container">
 						<div class="tabButton-container">
@@ -199,28 +227,28 @@ if(isset($_SESSION['userId'])) {
 		<div class="main-secondRow">
 			<div class="main-container-comments">
 				<h2>Kommentarer</h2>
+				
 				<?php
-
 				// TODO lägga till så att ;: och :: är illegala tecken när man skriven en kommentar
 				// TODO kanske ändra så att man inte får all info i getuserinfo
 				if ($array['12'] == NULL) {
 					echo '<p>Var den första att skriva en kommentar för denna bok!</p>';
-				} else if (!contains(';:', $array['12'])) {
+				} else if (!$help->contains(';:', $array['12'])) {
 					$comment = explode('::', $array['12']);
-					$commentUserinfo = getUserInfo($comment['0']);
+					$commentUserinfo = $getDb->getUserInfo($comment['0']);
 					echo '<div class="comment"><div class="name">' . $commentUserinfo['8'] . ' ' . $commentUserinfo['9'] . '</div>';
 					if (isset($_SESSION['userId']) && $_SESSION['userId'] == $comment['0']) {
-						echo '<div class="edit-remove"><a href="includes/addBook.inc.php?type=removeComment&bookId=' . $bookId . '&comment=' . $array['12'] . '">radera</a></div>';
+						echo '<div class="edit-remove"><a href="php/commentHandler.inc.php?type=removeComment&bookId=' . $bookId . '&comment=' . $array['12'] . '">radera</a></div>';
 					}
 					echo '<br><div class="comment-text">' . $comment['1'] . '</div></div>';
 				} else {
 					$comments = explode(';:', $array['12']);
 					foreach ($comments as $x) {
 						$comment = explode('::', $x);
-						$commentUserinfo = getUserInfo($comment['0']);
+						$commentUserinfo = $getDb->getUserInfo($comment['0']);
 						echo '<div class="comment"><div class="name">' . $commentUserinfo['8'] . ' ' . $commentUserinfo['9'] . '</div>';
 						if ($_SESSION['userId'] == $comment['0']) {
-							echo '<div class="edit-remove"><a href="includes/addBook.inc.php?type=removeComment&bookId=' . $bookId . '&comment=' . $x . '">radera</a></div>';
+							echo '<div class="edit-remove"><a href="php/commentHandler.inc.php?type=removeComment&bookId=' . $bookId . '&comment=' . $x . '">radera</a></div>';
 						}
 						echo '<br><div class="comment-text">' . $comment['1'] . '</div></div>';
 					}
@@ -228,14 +256,14 @@ if(isset($_SESSION['userId'])) {
 				if (isset($_SESSION['userId'])) {
 					// TODO ta hand om tom textarea här
 					// TODO lägga till så att man kan edita och ta bor kommentarer
-					echo '<form action="includes/addBook.inc.php?type=comment&bookId=' . $bookId . '" method="post">
+					echo '<form action="php/commentHandler.inc.php?type=comment&bookId=' . $bookId . '" method="post">
                             Skriv en kommentar:<br>
                             <textarea class="text" name="comment"></textarea>
                             <button type="submit" class="button1">Publicera</button>
                         </form>';
 				} else {
 					// TODO länka till inlogning och skapa konto
-					echo '<p><a href="login.php">Logga</a> in eller <a href="signup.php">skapa ett konto</a> för att skriva en kommentar.</p>';
+					echo '<p><a href="../login-logout/login.php">Logga</a> in eller <a href="../signup/signup.php">skapa ett konto</a> för att skriva en kommentar.</p>';
 				}
 				?>
 			</div>
@@ -246,55 +274,7 @@ if(isset($_SESSION['userId'])) {
 		</div>
 	</main>
 
-	<script>
-		// Mobile version menu/navigation
-		(function() {
-			var menu = document.querySelector('ul'),
-				menulink = document.querySelector('#menu-icon');
-
-			menulink.addEventListener('click', function(e) {
-				menu.classList.toggle('active');
-				e.preventDefault();
-			});
-		})();
-
-		// Tab container (Beskrivning, specifik information)
-		var tabButtons = document.querySelectorAll(".tab-container .tabButton-container button");
-		var tabPanels = document.querySelectorAll(".tab-container .tabPanel");
-
-		function showTabPanel(panelIndex, colorCode) {
-			tabButtons.forEach(function(btn) {
-				btn.style.backgroundColor = "";
-				btn.style.color = "";
-				btn.style.textDecoration = "none";
-			});
-			tabButtons[panelIndex].style.backgroundColor = colorCode;
-			tabButtons[panelIndex].style.color = "white";
-
-			tabPanels.forEach(function(tab) {
-				tab.style.display = "none";
-			});
-			tabPanels[panelIndex].style.display = "block";
-			tabPanels[panelIndex].style.backgroundColor = "white";
-		}
-		showTabPanel(0, 'rgb(43, 161, 140)');
-
-		// Read more (book description)
-		function readMore() {
-			var dots = document.getElementById("dots");
-			var moreText = document.getElementById("more");
-			var btnText = document.getElementById("btnReadMore");
-			if (dots.style.display === "none") {
-				dots.style.display = "inline";
-				btnText.innerHTML = "Läs mer";
-				moreText.style.display = "none";
-			} else {
-				dots.style.display = "none";
-				btnText.innerHTML = "Läs mindre";
-				moreText.style.display = "inline";
-			}
-		}
-	</script>
+	<script type="text/javascript" src="javascript/bookpage.js"></script>
 </body>
 
 </html>

@@ -1,18 +1,24 @@
-<?php
-require "../header.php";
-?>
+<!DOCTYPE html>
+<html lang="en">
 
-<main class="container">
-    <!--uses the full size of the browser and hides the overflow if any -->
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <div class="workspace">
-        <!-- sets max size to 1280px and centers it.-->
-        <!-- Three columns to work within left to right, from top to bottom in code -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BonoLibro</title>
 
-        <div class="col">
-            <h2>
-                Skapa ditt konto genom att fylla i nedastående.
-            </h2>
+    <link rel="stylesheet" type="text/css" href="signup.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="application-main">
+        <main id="container">
+            <div class="header">
+                <h1>Skapa ett nytt konto</h1>
+            </div>
 
             <?php
             if (isset($_GET['error'])) {
@@ -32,64 +38,44 @@ require "../header.php";
             }
             ?>
 
-            <form action="signup.inc.php" method="post">
-                <!-- Kanske göra som en lista och ha divs i varje li så att dem alltid blir på exakt samma höjd-->
-                <ul id="register">
-                    <li id="space">
-                        <div id="floatleft">Förnamn: </div>
-                        <div id="floatright"><input type="text" placeholder="Förnamn" name="fornamn"></div>
-                    </li>
-                    <li id="space">
-                        <div id="floatleft">Efternamn: </div>
-                        <div id="floatright"><input type="text" placeholder="Efternamn" name="efternamn"></div>
-                    </li>
-                    <li id="space">
-                        <div id="floatleft">Användarnamn: </div>
-                        <?php
-                        if (isset($_GET['username'])) {
-                            echo '<div id="floatright"><input type="text" placeholder="Användarnamn" name="username" id="username" value="' . $_GET['username'] . '"></div>';
-                        } else {
-                            echo '<div id="floatright"><input type="text" placeholder="Användarnamn" name="username" id="username"></div>';
-                        }
-                        ?>
-                    </li>
-                    <li id=space>
-                        <div id="floatleft">Epost: </div>
-                        <?php
-                        if (isset($_GET['email'])) {
-                            echo '<div id="floatright"><input type="text" placeholder="E-post adress" name="email" id="user_email" value="' . $_GET['email'] . '"></div>';
-                        } else {
-                            echo '<div id="floatright"><input type="text" placeholder="E-post adress" name="email" id="user_email"></div>';
-                        }
-                        ?>
-                    </li>
-                    <li id="space">
-                        <div id="floatleft">Lösenord: </div>
-                        <div id="floatright"><input type="password" placeholder="Lösenord" name="password" id="user_password_signup"></div>
-                    </li>
-                    <li id="space">
-                        <div id="floatleft">Återuppreppa Lösenord: </div>
-                        <div id="floatright"><input type="password" placeholder="Lösenord" name="re-password" id="user_repassword_signup"></div>
-                    </li>
-                    <li id="space">
-                        <div id="floatleft">Land: </div>
-                        <div id="floatright"><?php readfile('../html/countryDropdown.html'); ?></div>
-                    </li>
-                    <li id="space"><button type="submit" name="signup-submit">Registrera</button></li>
-                    <li>
-                        <p class="linkToTandC">Genom att klicka på Skapa konto godkänner du våra <a href="">användarvillkor</a>. Du kan läsa mer om hur vi samlar in och använder din data i vår <a href="">datapolicy</a> och hur vår <a href="">cookiespolicy</a> ser ut.</p>
-                    </li>
-                </ul>
-            </form>
-        </div>
+            <div class="signup-form">
+                <form action="signup.inc.php" method="post">
+                    <label for="username">Användarnamn</label>
+                    <?php
+                    if (isset($_GET['username'])) {
+                        echo '<input type="text" class="input-block" name="username" value="' . $_GET['username'] . '">';
+                    } else {
+                        echo '<input type="text" class="input-block" name="username">';
+                    }
+                    ?>
 
-        <div class="col">
+                    <label for="password">Lösenord</label>
+                    <input type="password" class="input-block" name="password">
+                    <p>Säkerställ att lösenordet är minst 15 tecken långt ELLER 8 tecken långt som inkluderar en siffra och en stor
+                        bokstav</p>
 
-        </div>
+                    <label for="email">E-postadress</label>
+                    <?php
+                    if (isset($_GET['email'])) {
+                        echo '<input type="text" class="input-block" name="email" value="' . $_GET['email'] . '">';
+                    } else {
+                        echo '<input type="text" class="input-block" name="email">';
+                    }
+                    ?>
+                    <div class="form-checkbox">
+                        <label for="checkbox-subscription" id="lbl-checkbox">
+                            <input type="checkbox" name="subscription" id="checkbox-subscription">Skicka tillfälliga produktuppdateringar
+                            och erbjudanden.
+                        </label>
+                    </div>
 
+                    <button type="submit" id="btn-signup" name="signup-submit">Registrera</button>
+
+                    <p>Genom att klicka på Registrera godkänner du våra <a href="">användarvillkor</a>. Du kan läsa mer om hur vi samlar in och använder din data i vår <a href="">datapolicy</a> och hur vår <a href="">cookiespolicy</a> ser ut.</p>
+                </form>
+            </div>
+        </main>
     </div>
-</main>
+</body>
 
-<?php
-require "../footer.php";
-?>
+</html>

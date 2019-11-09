@@ -32,7 +32,7 @@ if(isset($_SESSION['userId'])) {
                         }else {
                             if($userinfo['1'] == NULL) {
                                 echo '  <form action="../includes/bookHandler.inc.php?type=tbr&bookId='.$bookId.'" method="post">
-                                        <input class="inputs" type="submit" value="Lägg till i \'vill läsa\' listan!">
+                                            <input class="inputs" type="submit" value="Lägg till i \'vill läsa\' listan!">
                                         </form>';
                             }else {
                                 $tmpArray = explode(';:',$userinfo['1']);
