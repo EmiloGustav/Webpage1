@@ -58,7 +58,7 @@ if (isset($_SESSION['userId'])) {
 				<figcaption>BonoLibro</figcaption>
 			</a>
 		</figure>
-		<img id="menu-icon" src="images\menu.svg" alt="">
+		<img id="menu-icon" src="../images/menu.svg" alt="">
 
 		<nav>
 			<ul>
@@ -85,26 +85,27 @@ if (isset($_SESSION['userId'])) {
 				<div class="book-image">
 					<?php echo '<img src="' . $array['9'] . '" alt="Books">'; ?>
 
-					<div class="container-addButtons">
+					<button id="btnShowAddButtons" onclick="showContainerWithAddButtons()">LÄGG TILL</button>
+					<div id="container-addButtons">
 						<a href="../includes/bookHandler.inc.php?type=tbr&bookId=<?php echo $bookId ?>">Läser</a>
 						<a href="../includes/bookHandler.inc.php?type=tbr&bookId=<?php echo $bookId ?>">Vill läsa</a>
 						<a href="../includes/bookHandler.inc.php?type=hr&bookId=<?php echo $bookId ?>">Har läst</a>
 						<a href="../includes/bookHandler.inc.php?type=tbr&bookId=<?php echo $bookId ?>">Favoriter</a>
 						<?php
-						if ($userinfo[11] != NULL) {
-							echo '<form action="../includes/listsHandler.inc.php?type=userCreatedList&bookId=' . $bookId . '" method="post"><select name="personalList" id="personalList">';
-							$listName = $getDb->getLists($_SESSION['userId'])['1'];
-							if (!$help->contains(';:', $listName)) {
-								echo '<option value="' . $listName . '">' . $listName . '</option>';
-							} else {
-								$listNameArray = explode(';:', $listName);
-								foreach ($listNameArray as $i) {
-									echo '<option value="' . $i . '">' . $i . '</option>';
+							if ($userinfo[11] != NULL) {
+								echo '<form action="../includes/listsHandler.inc.php?type=userCreatedList&bookId=' . $bookId . '" method="post"><select name="personalList" id="personalList">';
+								$listName = $getDb->getLists($_SESSION['userId'])['1'];
+								if (!$help->contains(';:', $listName)) {
+									echo '<option value="' . $listName . '">' . $listName . '</option>';
+								} else {
+									$listNameArray = explode(';:', $listName);
+									foreach ($listNameArray as $i) {
+										echo '<option value="' . $i . '">' . $i . '</option>';
+									}
 								}
+								echo '</select><input type="submit" value="Lägg till i listan"></form>';
 							}
-							echo '</select><input type="submit" value="Lägg till i listan"></form>';
-						}
-						?>
+							?>
 					</div>
 				</div>
 
@@ -227,7 +228,7 @@ if (isset($_SESSION['userId'])) {
 		<div class="main-secondRow">
 			<div class="main-container-comments">
 				<h2>Kommentarer</h2>
-				
+
 				<?php
 				// TODO lägga till så att ;: och :: är illegala tecken när man skriven en kommentar
 				// TODO kanske ändra så att man inte får all info i getuserinfo

@@ -1,6 +1,11 @@
 <?php
-include '../includes/getDb.php';
+include 'php/index_getDb.php';
 session_start();
+$index_getDb = new index_getDb();
+if (!isset($_SESSION['userId'])) {
+    header("Location: http://$_SERVER[HTTP_HOST]/Webpage1/index/index-loggedin.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,9 +18,9 @@ session_start();
 
     <link rel="stylesheet" type="text/css" href="css/index-loggedin.css">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
-    <title>BonoLibro</title>
+    <title>BonoLibro - Hem</title>
 </head>
 
 <body>
@@ -25,23 +30,20 @@ session_start();
 
         <aside>
             <figure>
-                <img id="logotype" src="../images/books.png" alt="">
-                <figcaption>BonoLibro</figcaption>
+                <a href="../index/index.php"><img id="logotype" src="../images/books.png" alt=""></a>
+                <a href="../index/index.php"><figcaption>BonoLibro</figcaption></a>
             </figure>
             <img id="menu-icon" src="../images/menu.svg" alt="">
 
             <nav>
                 <ul>
-                    <li><a href="index-loggedin.php">Hem</a></li>
-                    <hr>
                     <li><a href="../mybooks/myBooks.php">Mina böcker</a></li>
                     <hr>
                     <li><a href="../profile/myProfile.php">Min profil</a></li>
                     <hr>
-                    <li><a href="inbox.php">Meddelanden</a></li>
-                    <hr>
                     <li>
                         <form action="../login-logout/logout.inc.php" method="post">
+                            <p>Inloggad som >användarnamn<</p>
                             <button type="submit" name="logout-submit" id="btn-logout">Logga ut</button>
                         </form>
                     </li>
@@ -51,25 +53,15 @@ session_start();
         </aside>
 
         <main>
-            <div class="1of3">
-                <div class="container-readsNow">
-                    <h1>Läser nu</h1>
-                    <img src="../images/greatgatsby.jpg" alt="">
-                    <img src="../images/fahrenheit.jpg" alt="">
-                    <img src="../images/harrypotter.jpg" alt="">
-                    <a href="../mybooks/myBooks.php?list=hr">Redigera</a>
+            <div class="left">
+                <div class="container-search">
+                    <h1>Sök och utforska böcker</h1>
+                    <form action="../searchresult/SearchResult.php" method="get">
+                        <input type="text" id="searchbar" name="book" placeholder="Titel, författare eller ISBN.." autocomplete="off">
+                        <input type="submit" id="btnSearch" value="Sök">
+                    </form>
                 </div>
 
-                <div class="container-wantToRead">
-                    <h1>Vill läsa</h1>
-                    <img src="../images/tokillamockingbird.jpg" alt="">
-                    <img src="../images/fahrenheit.jpg" alt="">
-                    <img src="../images/harrypotter.jpg" alt="">
-                    <a href="../mybooks/myBooks.php?list=tbr">Redigera</a>
-                </div>
-            </div>
-
-            <div class="2of3">
                 <div class="container-latestUpdates">
                     <h1>Senaste uppdateringarna</h1>
                     <p><strong>ExampleName:</strong> Lorem ipsum dolor sit amet consectetur. Debitis, ea. <a>Läs mer</a></p>
@@ -79,26 +71,36 @@ session_start();
                 </div>
             </div>
 
-            <div class="3of3">
+            <div class="right">
+                <div class="container-readsNow">
+                    <?php
+                        $data = $index_getDb->getLatestBookFromCurrentlyReading(3);
+                        ?>
+
+                    <h1>Du läser just nu</h1>
+                    <div class="book">
+                        <?php echo '<a href="../bookpage/bookpage.php?bookId=' . $data[0]['bookId'] . '" class="img-link"><img src="' . $data[0]['smallthumbnail'] . '" alt=""></a>'; ?>
+                        <div class="description">
+                            <?php echo '<a href="../bookpage/bookpage.php?bookId=' . $data[0]['bookId'] . '"><h1>' . $data[0]['title'] . '</h1></a>';
+                                echo '<p>Skriven av</p>';
+                                echo '<a href="author.php" class="list-bookAuthor">' . $data[0]['author'] . '</a>';
+                                ?>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="container-feed">
                     <h1>Nyheter</h1>
                     <p><strong>ExampleName:</strong> Lorem ipsum dolor sit amet consectetur. Debitis, ea. <a>Läs mer</a></p>
                     <p><strong>ExampleName:</strong> Lorem ipsum dolor sit amet consectetur. Debitis, ea. <a>Läs mer</a></p>
                     <p><strong>ExampleName:</strong> Lorem ipsum dolor sit amet consectetur. Debitis, ea. <a>Läs mer</a></p>
                 </div>
-                <div class="container-ad">
-                    <h1>Det här är reklam!</h1>
-                </div>
             </div>
         </main>
 
     <?php
         // Error message.
-    } else {
-        ?>
-
-    <?php
-    }
+    } else { }
     ?>
 
     <script>

@@ -16,7 +16,7 @@ if (isset($_SESSION['userId'])) {
 
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 
-	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
 	<title>BonoLibro</title>
 </head>

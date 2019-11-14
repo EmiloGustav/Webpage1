@@ -67,3 +67,13 @@ function setActionInAddForm(bookId, listToAddBook) {
     document.getElementById("form-addToList").setAttribute("action", "../includes/bookHandler.inc.php?type=" + listToAddBook + "&bookId=" + bookId);
     document.getElementById("form-addToList").submit();
 }
+
+function showContainerWithAddButtons() {
+    var container = document.getElementById("container-addButtons");
+    if (container.style.display === "none") {
+        container.style.display = "block";
+    } else {
+        container.style.display = "none";
+    }
+}
+showContainerWithAddButtons();

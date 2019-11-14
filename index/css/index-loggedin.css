@@ -2,7 +2,7 @@ body,
 html {
     height: calc(100% - 2em);
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 body {
@@ -28,6 +28,10 @@ aside {
 
 aside figure {
     margin: 0;
+}
+
+aside figure a {
+    text-decoration: none;
 }
 
 #logotype {
@@ -131,40 +135,23 @@ main p {
     line-height: 1.5em;
 }
 
-.cna {
-    display: block;
-    color: white;
-    background: #1E7364;
-    text-decoration: none;
-    padding: 8px 50px;
-    font-size: 1.2em;
-    text-align: center;
-    border-radius: 4px;
-    margin: 2em 0;
-}
-
 .container-readsNow,
-.container-wantToRead,
 .container-latestUpdates,
 .container-feed,
-.container-ad {
-    margin: 0 auto;
+.container-search {
     margin-bottom: 20px;
     font-size: 14px;
     padding: 0.5em;
     background: #ffffff;
-    border: 1px solid #868686;
+    border: 1px solid #d4d4d4;
     border-radius: 3px;
 }
 
-.container-readsNow img,
-.container-wantToRead img {
+.container-readsNow img {
     max-width: 30%;
     max-height: 30%;
 }
 
-.container-readsNow a,
-.container-wantToRead a,
 .container-latestUpdates #link-seeAll {
     display: block;
     text-align: center;
@@ -178,8 +165,6 @@ main p {
     transition: 0.3s;
 }
 
-.container-readsNow a:hover,
-.container-wantToRead a:hover,
 .container-latestUpdates #link-seeAll:hover {
     background: rgb(29, 105, 91);
 }
@@ -239,12 +224,37 @@ main p {
     }
     main {
         display: grid;
-        grid-template-columns: 33% 33% 33%;
+        grid-template-columns: 60% 40%;
         padding: 1em;
         margin-left: 20px;
         margin-right: 0;
-        background: #f9f9f9 url('images/artshape.svg') no-repeat bottom right;
+        background: #f9f9f9;
         background-size: 35%;
+    }
+    .left {
+        margin-right: 20px;
+    }
+    .container-search {
+        width: 50%;
+    }
+    .right {
+        display: grid;
+        grid-template-rows: 25% 75%;
+    }
+    .container-readsNow {
+        width: 70%;
+    }
+    .container-readsNow h1 {
+        margin: 0;
+    }
+    .container-readsNow .book {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-rows: minmax(0, 130px);
+    }
+    .container-readsNow .book img {
+        width: 95%;
+        height: 95%;
     }
     #title-desktop {
         display: block;
@@ -257,10 +267,5 @@ main p {
     main p {
         font-size: 1.1em;
         line-height: 1.5em;
-    }
-    .cna {
-        display: none;
-        font-size: 1.1em;
-        padding: .7em 2em;
     }
 }

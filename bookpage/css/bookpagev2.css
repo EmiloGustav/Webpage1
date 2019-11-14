@@ -78,6 +78,49 @@ ul hr {
     background: #d1d1d1;
 }
 
+#btnShowAddButtons {
+    margin: auto;
+    margin-top: 10px;
+    padding: 7px;
+    width: 50%;
+    background-color: rgb(43, 163, 95);
+    color: #fff;
+    font-size: inherit;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-style: inherit;
+    font-weight: inherit;
+    transition: 0.2s;
+}
+
+#btnShowAddButtons:hover {
+    background-color: rgb(36, 133, 78);
+}
+
+#container-addButtons {
+    width: 50%;
+    margin: auto;
+}
+
+#container-addButtons a {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 5px;
+    background: rgb(255, 255, 255);
+    border: 2px solid #cccccc;
+    color: rgb(0, 0, 0);
+    padding: 6px 8px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+#container-addButtons a:hover {
+    color: rgb(43, 161, 140);
+    border: 2px solid rgb(43, 161, 140);
+}
+
 ul li a {
     text-decoration: none;
     font-size: 1.1em;
@@ -191,24 +234,6 @@ main p {
 .rate>input:checked~label:hover~label,
 .rate>label:hover~input:checked~label {
     color: #c59b08;
-}
-
-.container-addButtons a {
-    width: 60%;
-    text-decoration: none;
-    margin-top: 5px;
-    background: rgb(255, 255, 255);
-    border: 2px solid #cccccc;
-    color: rgb(0, 0, 0);
-    padding: 6px 8px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.1s;
-}
-
-.container-addButtons a:hover {
-    color: rgb(43, 161, 140);
-    border: 2px solid rgb(43, 161, 140);
 }
 
 .tab-container {
