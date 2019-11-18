@@ -39,6 +39,8 @@ if (!isset($_SESSION['userId'])) {
                 <ul>
                     <li><a href="../mybooks/myBooks.php">Mina böcker</a></li>
                     <hr>
+                    <li><a href="../profile/myProfile.php">Gemenskap</a></li>
+                    <hr>
                     <li><a href="../profile/myProfile.php">Min profil</a></li>
                     <hr>
                     <li>
@@ -54,14 +56,6 @@ if (!isset($_SESSION['userId'])) {
 
         <main>
             <div class="left">
-                <div class="container-search">
-                    <h1>Sök och utforska böcker</h1>
-                    <form action="../searchresult/SearchResult.php" method="get">
-                        <input type="text" id="searchbar" name="book" placeholder="Titel, författare eller ISBN.." autocomplete="off">
-                        <input type="submit" id="btnSearch" value="Sök">
-                    </form>
-                </div>
-
                 <div class="container-latestUpdates">
                     <h1>Senaste uppdateringarna</h1>
                     <p><strong>ExampleName:</strong> Lorem ipsum dolor sit amet consectetur. Debitis, ea. <a>Läs mer</a></p>

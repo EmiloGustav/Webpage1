@@ -30,10 +30,6 @@ aside figure {
     margin: 0;
 }
 
-aside figure a {
-    text-decoration: none;
-}
-
 #logotype {
     display: none;
 }
@@ -92,42 +88,13 @@ ul li a:hover {
     background-color: rgb(201, 201, 201);
 }
 
-#btn-logout {
-    display: block;
-    margin: 4em auto;
-    width: 70%;
-    cursor: pointer;
-    font-size: 0.9em;
-    color: rgb(255, 255, 255);
-    padding: 0.5em;
-    border: 1px solid rgb(110, 110, 110);
-    background: rgb(43, 161, 140);
-    transition: 0.3s;
-}
-
-#btn-logout:hover {
-    background: rgb(29, 105, 91);
-}
-
-.login-form {
-    display: none;
-}
-
 main {
     background-color: #f9f9f9;
     padding: 1em 1em;
 }
 
 main h1 {
-    font-size: 18px;
-}
-
-#title-mobile {
-    margin: 0;
-}
-
-#title-desktop {
-    display: none;
+    font-size: 22px;
 }
 
 main p {
@@ -135,49 +102,37 @@ main p {
     line-height: 1.5em;
 }
 
-.container-readsNow,
-.container-latestUpdates,
-.container-feed,
-.container-search {
-    margin-bottom: 20px;
-    font-size: 14px;
+#title-searchResult {
+    display: block;
+    font-size: 1.4em;
+    margin: 0;
+}
+
+#p-searchHits {
+    margin: 0 0 15px 0;
+}
+
+.container-searchItem {
+    display: grid;
+    grid-template-columns: auto 230px;
+    grid-template-rows: auto;
+    margin-bottom: 15px;
     padding: 0.5em;
     background: #ffffff;
-    border: 1px solid #d4d4d4;
+    border: 1px solid #c9c9c9;
     border-radius: 3px;
 }
 
-.container-readsNow img {
-    max-width: 30%;
-    max-height: 30%;
+.container-searchItem img {
+    width: 90%;
 }
 
-.container-latestUpdates #link-seeAll {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    font-size: 17px;
-    color: rgb(255, 255, 255);
-    padding: 0.5em;
-    margin: 5px;
-    border: 1px solid rgb(110, 110, 110);
-    background: rgb(43, 161, 140);
-    transition: 0.3s;
+.searchItem-info h3 {
+    margin-top: 0;
 }
 
-.container-latestUpdates #link-seeAll:hover {
-    background: rgb(29, 105, 91);
-}
-
-.container-latestUpdates p {
-    padding: 5px;
-    background: #f9f9f9;
-    border: 1px solid rgb(161, 161, 161);
-}
-
-.container-latestUpdates a {
-    text-decoration: none;
-    color: blue;
+.searchItem-info a {
+    color: #000;
 }
 
 @media only screen and (min-width: 768px) {
@@ -196,6 +151,7 @@ main p {
         display: none;
     }
     aside {
+        height: 92vh;
         background: #727272;
         grid-template-columns: auto;
         grid-template-rows: 25% 75%;
@@ -223,49 +179,25 @@ main p {
         width: 100% !important;
     }
     main {
-        display: grid;
-        grid-template-columns: 60% 40%;
-        padding: 1em;
+        padding: 3em;
         margin-left: 20px;
         margin-right: 0;
         background: #f9f9f9;
         background-size: 35%;
-    }
-    .left {
-        margin-right: 20px;
-    }
-    .container-search {
-        width: 100%;
-    }
-    .right {
         display: grid;
-        grid-template-rows: 25% 75%;
+        grid-template-columns: 65% 35%;
     }
-    .container-readsNow {
-        width: 70%;
+    .main-leftColumn {
+        margin-right: 30px;
     }
-    .container-readsNow h1 {
-        margin: 0;
-    }
-    .container-readsNow .book {
-        display: grid;
-        grid-template-columns: 30% 70%;
-        grid-template-rows: minmax(0, 130px);
-    }
-    .container-readsNow .book img {
-        width: 95%;
-        height: 95%;
-    }
-    #title-desktop {
-        display: block;
-        font-size: 2.8em;
-        margin: 0;
-    }
-    #title-mobile {
-        display: none;
+    .container-searchItem {
+        grid-template-columns: 15% 85%;
+        grid-template-rows: auto;
+        padding: 0.5em;
     }
     main p {
         font-size: 1.1em;
         line-height: 1.5em;
+        margin: 0;
     }
 }
