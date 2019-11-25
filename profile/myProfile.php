@@ -1,7 +1,8 @@
 <?php
 require "../header.php";
 include "../includes/getDb.php";
-$userInfo = getUserInfo($_SESSION["userId"]);
+$getDb = new getDb();
+$userInfo = $getDb->getUserInfo($_SESSION['userId']);
 /*
     0: dateOfBirth
     1: tbr

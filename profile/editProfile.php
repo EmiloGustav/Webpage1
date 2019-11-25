@@ -1,7 +1,6 @@
 <?php
 require "../header.php";
 include "../includes/getDb.php";
-$userInfo = getUserInfo($_SESSION["userId"]);
 ?>
 
 <main class="container">

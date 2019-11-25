@@ -14,9 +14,23 @@ $bookpageHelper = new bookpageHelper();
 $array = $getDb->getBookByBookId($bookId);
 if (isset($_SESSION['userId'])) {
 	$userinfo = $getDb->getUserInfo($_SESSION['userId']);
+	$user_id = getDb::query('SELECT idUsers FROM users WHERE idUsers=:idUsers', array(':idUsers' => $_SESSION['userId']))[0]['idUsers'];
+	$hasLiked = False;
+
+	if(isset($_GET['review_id'])) {
+		if(!getDB::query('SELECT user_id FROM review_likes WHERE user_id=:user_id AND review_id=:review_id', array(':user_id'=>$user_id, ':review_id'=>$_GET['review_id']))) {
+			getDB::query('UPDATE reviews SET likes=likes+1 WHERE id=:review_id', array(':review_id' => $_GET['review_id']));
+			getDB::query('INSERT INTO review_likes(review_id, user_id) VALUES (:review_id, :user_id)', array(':review_id'=>$_GET['review_id'], ':user_id'=>$user_id));
+		} else {
+			getDB::query('UPDATE reviews SET likes=likes-1 WHERE id=:review_id', array(':review_id' => $_GET['review_id']));
+			getDB::query('DELETE FROM review_likes WHERE review_id=:review_id AND user_id=:user_id', array(':review_id'=>$_GET['review_id'], ':user_id'=>$user_id));
+		}
+	}
+
 } else {
 	$userinfo = NULL;
 }
+$reviews = getDB::query('SELECT * FROM reviews WHERE book_id=:book_id', array(':book_id'=>$bookId));
 ?>
 
 <!DOCTYPE html>
@@ -107,6 +121,11 @@ if (isset($_SESSION['userId'])) {
 							}
 							?>
 					</div>
+
+					<br>
+
+					<a href="../review/writeAReview.php?bookId=<?php echo $bookId?>">Skriv en recension</a>
+
 				</div>
 
 				<div class="book-information">
@@ -203,7 +222,9 @@ if (isset($_SESSION['userId'])) {
 						<div class="tabPanel">
 							<?php
 							$bookDescription = $array['5'];
-							if (strlen($bookDescription) <= 400) {
+							if (strlen($bookDescription) == 0) {
+								echo 'Det finns ingen beskrivning för den här boken.';
+							} else if (strlen($bookDescription) <= 400) {
 								echo $bookDescription;
 							} else {
 								$firstPart = substr($bookDescription, 0, 400);
@@ -271,6 +292,29 @@ if (isset($_SESSION['userId'])) {
 
 			<div class="main-container-reviews">
 				<h2>Recensioner</h2>
+				<?php
+                foreach ($reviews as $r) {
+					echo $r['id'];
+                  	echo $r['title'];
+                  	echo $r['body'];
+                  	echo $r['posted_at'];
+                  	echo $r['likes'];
+				  	echo $r['user_id'];
+                  	echo '<br>';
+
+					if(!getDB::query('SELECT review_id FROM review_likes WHERE review_id=:review_id AND user_id=:user_id', array(':review_id'=>$r['id'], ':user_id'=>$user_id))) {
+						echo '<form action="../bookpage/bookpage.php?bookId='.$bookId.'&review_id='.$r['id'].'&user_id='.$user_id.'" method="post">
+			              			<input type="submit" name="submit_like" value="Gilla">
+									<span>'.$r['likes'].' gilla-markeringar</span>
+			          			</form>';
+				  	} else {
+					  	echo '<form action="../bookpage/bookpage.php?bookId='.$bookId.'&review_id='.$r['id'].'&user_id='.$user_id.'" method="post">
+									<input type="submit" name="submit_unlike" value="Ogilla">
+									<span>'.$r['likes'].' gilla-markeringar</span>
+								</form>';
+				  	}
+                }
+                 ?>
 			</div>
 		</div>
 	</main>
